@@ -1,4 +1,4 @@
-package com.nexxus.server.controller.dto;
+package com.nexxus.auth.api.dto;
 
 import com.nexxus.common.enums.Gender;
 import lombok.AllArgsConstructor;
@@ -10,10 +10,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private Gender gender;
+public class AuthResponse {
+    private String token;
+    private String tokenType;
+    private Long expiresInSeconds;
 }

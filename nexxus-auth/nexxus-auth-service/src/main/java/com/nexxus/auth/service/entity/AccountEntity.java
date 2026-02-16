@@ -15,11 +15,10 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("user")
-public class UserEntity extends BaseEntity {
-    private String firstName;
-    private String lastName;
-    private String username;
+@TableName("account")
+public class AccountEntity extends BaseEntity {
+    private String displayId;
     private String email;
-    private Gender gender;
+    private String passwordHash;
+    private String orgId;
 }

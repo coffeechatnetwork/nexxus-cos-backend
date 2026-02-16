@@ -1,19 +1,18 @@
 package com.nexxus.auth.api.dto;
 
-import com.nexxus.common.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
-    private Long id;
-    private String firstName;
-    private String lastName;
+public class RegisterRequest implements Serializable {
     private String email;
-    private Gender gender;
+    private String password;
+    private String orgId;
 }
