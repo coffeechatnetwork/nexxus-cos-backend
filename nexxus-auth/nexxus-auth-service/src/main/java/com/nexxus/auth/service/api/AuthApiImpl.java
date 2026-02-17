@@ -20,6 +20,11 @@ public class AuthApiImpl implements AuthApi {
 
     @Override
     public AuthResponse register(RegisterRequest req) {
+        String email = req.getEmail();
+        AccountEntity existingAccount = accountService.getByEmail(email);
+        if (existingAccount != null) {
+            throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("account already exist"));
+        }
         return null;
     }
 }
