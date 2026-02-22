@@ -1,5 +1,6 @@
 package com.nexxus.server.controller.v1;
 
+import com.nexxus.auth.api.dto.LoginRequest;
 import com.nexxus.auth.api.dto.RegisterRequest;
 import com.nexxus.auth.api.AuthApi;
 import com.nexxus.auth.api.dto.AuthResponse;
@@ -17,5 +18,10 @@ public class AuthController {
     @PostMapping("/register")
     public AuthResponse register(@RequestBody @Valid RegisterRequest req) {
         return authApi.register(req);
+    }
+
+    @PostMapping("/login")
+    public AuthResponse login(@RequestBody @Valid LoginRequest req) {
+        return authApi.login(req);
     }
 }

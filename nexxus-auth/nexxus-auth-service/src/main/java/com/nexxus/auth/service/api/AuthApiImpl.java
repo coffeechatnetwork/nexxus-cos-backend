@@ -1,5 +1,6 @@
 package com.nexxus.auth.service.api;
 
+import com.nexxus.auth.api.dto.LoginRequest;
 import com.nexxus.auth.api.dto.RegisterRequest;
 import com.nexxus.auth.service.service.JwtService;
 import com.nexxus.common.NexxusException;
@@ -13,6 +14,7 @@ import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -71,6 +73,34 @@ public class AuthApiImpl implements AuthApi {
             throw new NexxusException(ErrorDefEnum.FAILED_TO_PARSE_JWT, e);
         }
 
+        return AuthResponse.builder().token(signedJWT.serialize()).expiresInSeconds(expiredInSeconds).build();
+    }
+
+    @Override
+    public AuthResponse login(LoginRequest req) {
+        String email = req.getEmail();
+        AccountEntity accountEntity = accountService.getByEmail(email);
+        if (accountEntity == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("account not found"));
+        }
+        // check password
+        String saltedPassword = req.getPassword() + accountEntity.getSalt();
+        boolean matches = passwordEncoder.matches(saltedPassword, accountEntity.getPassword());
+        if (!matches) {
+            throw new BadCredentialsException("password in correct");
+        }
+
+        SignedJWT signedJWT;
+        Long expiredInSeconds = 0L;
+        try {
+            signedJWT = jwtService.generateJWT(accountEntity.getDisplayId(), List.of("test"), accountEntity.getOrgId().toString(), req.getEmail());
+            Instant expiredAt = signedJWT.getJWTClaimsSet().getExpirationTime().toInstant();
+            expiredInSeconds = expiredAt.getEpochSecond() - Instant.now().getEpochSecond();
+        } catch (JOSEException e) {
+            throw new NexxusException(ErrorDefEnum.FAILED_TO_GENERATE_JWT, e);
+        } catch (ParseException e) {
+            throw new NexxusException(ErrorDefEnum.FAILED_TO_PARSE_JWT, e);
+        }
         return AuthResponse.builder().token(signedJWT.serialize()).expiresInSeconds(expiredInSeconds).build();
     }
 }

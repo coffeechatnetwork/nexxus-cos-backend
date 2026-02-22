@@ -5,13 +5,16 @@ import com.nexxus.common.IgnoreResponseAdvice;
 import com.nexxus.common.NResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -54,6 +57,13 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                 .distinct()
                 .collect(Collectors.joining(", "));
         return new NResponse<>(400, msg, null);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public NResponse<?> badCredentialsException(BadCredentialsException e) {
+        log.error("Bad Credentials Exception", e);
+        return new NResponse<>(401, e.getMessage(), null);
     }
 
     @ExceptionHandler(Exception.class)
