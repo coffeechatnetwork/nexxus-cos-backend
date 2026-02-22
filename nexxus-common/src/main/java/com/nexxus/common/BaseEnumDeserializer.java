@@ -40,6 +40,6 @@ public class BaseEnumDeserializer extends JsonDeserializer<Enum> implements Cont
 
         Class<BaseEnum> baseEnumClass = (Class<BaseEnum>) targetClass;
 
-        return (Enum<? extends BaseEnum>)BaseEnum.valueOf(baseEnumClass, value);
+        return (Enum<? extends BaseEnum>) BaseEnum.valueOf(baseEnumClass, value);
     }
 }

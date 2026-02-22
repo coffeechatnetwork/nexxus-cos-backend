@@ -20,6 +20,6 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountEntity
     public AccountEntity getByEmail(String email) {
         LambdaQueryWrapper<AccountEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(AccountEntity::getEmail, email);
-        return  accountMapper.selectOne(queryWrapper);
+        return accountMapper.selectOne(queryWrapper);
     }
 }

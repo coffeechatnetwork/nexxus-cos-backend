@@ -6,5 +6,6 @@ import com.nexxus.auth.api.dto.RegisterRequest;
 
 public interface AuthApi {
     AuthResponse register(RegisterRequest req);
+
     AuthResponse login(LoginRequest req);
 }
