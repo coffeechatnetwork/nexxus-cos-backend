@@ -19,3 +19,7 @@ mybatis-plus:
     cache-enabled: false
     map-underscore-to-camel-case: true
   mapper-locations: classpath*:mapper/**/*.xml
+
+arthas:
+  telnet-port: 30000
+  http-port: 30001
