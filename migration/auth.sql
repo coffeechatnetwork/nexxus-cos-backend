@@ -49,6 +49,7 @@ create unique index if not exists uq_organization_code on organization (code);
 create table if not exists feature
 (
     id          bigint       not null primary key,
+    version     integer      null,
     type        varchar(16)  not null,
     active      smallint     not null,
     name        varchar(64)  null,
@@ -68,6 +69,7 @@ create unique index if not exists uq_feature_code on feature (code);
 create table if not exists organization_feature
 (
     id              bigint      not null primary key,
+    version         integer     null,
     organization_id bigint      not null,
     feature_id      bigint      not null,
     created_by      varchar(64) not null,
@@ -128,6 +130,7 @@ create unique index if not exists uq_permission_module_feature_operation on perm
 create table if not exists role_permission
 (
     id            bigint      not null primary key,
+    version       integer     null,
     role_id       bigint      not null,
     permission_id bigint      not null,
     created_by    varchar(64) not null,
@@ -192,6 +195,7 @@ create unique index if not exists uq_role_permission_role_id_permission_id on ro
 create table if not exists user_role
 (
     id         bigint      not null primary key,
+    version    integer     null,
     account_id bigint      not null,
     role_id    bigint      not null,
     created_by varchar(64) not null,

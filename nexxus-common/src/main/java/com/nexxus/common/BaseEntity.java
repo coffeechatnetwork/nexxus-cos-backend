@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class BaseEntity implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long id;
+    private Integer version;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
     @TableField(fill = FieldFill.INSERT_UPDATE)
