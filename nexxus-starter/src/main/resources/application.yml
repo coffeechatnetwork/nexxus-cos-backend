@@ -23,3 +23,46 @@ mybatis-plus:
 arthas:
   telnet-port: 30000
   http-port: 30001
+
+jwt:
+  issuer: ${JWT_ISSUER:https://auth.nexxus.io/}
+  jwtTtl: 86400
+  publicKey: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCviNdYyOq7BaXZ
+    xHpPubu+bNUUS6LG39wHidXAdwXPGbxq9tWsSoCxb6fySJHypa23uu3NEE1tKyT9
+    03ju4UGtpVdkAMg7wk7U3eqjqpphTjt3TgvtOXYcLHy2MwfqCjg8NqjtZ94h2S6M
+    93P8RRs5XaUfaMweumXwJ0tgH7cZWEwMpvF6tT4KJpZhtWXbMjSDF9dBBl4GfsYP
+    /7aGmKNZdykswn1ojASDRUT3q4afGNTdB6RAmA0Co/RmemFXIAqa6WK3ElSoaH2Q
+    5Y++lAUwZFUA/Xxoq+cT5IrN8OPgzc2yHt0C0bBBkJ6RcYK54Ib3PDt3FETz3Gt5
+    jSFOYD2hAgMBAAECggEACt8jz0jqWNj5s6oalTOAsEOXUuF4XG7i9siPp5L3liMW
+    610MUNZwcAzlTvk1qNygDMAUGF5JHVjNurbNR6ZF5hZWekgeHq1jKoXwEWDwnNQ2
+    lKYN0Qx9BzOuKa6xb8pgP0J3ZfTH6jrESlDNKzOwgvYM0wwvkDulMqGMZpCwS251
+    RAvr5ZnrSdn7kA3ZkwpSrWhaXyQrWFvXRGcC05lr4Z6FW7j2OHxKH8DyVxQY+zM3
+    z2usAHoPfTqMXKSjjjYDTvh0+g2JigFJcsmuHvN9NFW5yStgfaagk5mQa11SgRzi
+    NCXHOVZjfKsOQn3w/ikgmNw7SOF0oL3dv9w3fDseQQKBgQDfT6jjYqRU8j4CK8MZ
+    KFB6KNwwDBy7KUpjom30FTwZiqiXOyoiSGcVd3+WWTr20tRgWbqTMhrITnxvX6dr
+    c0u+XOOv7B11SU/3pTyq6zBF7Ly0G2+Az36iSL+m03OvDgCnjJGQ1HgbTMoyJACB
+    4SUuAvlyk7emvERSeiCXoQgviQKBgQDJOs3/3s9ze5rJsQhVmTgGbnn63nkW0OTw
+    sq0eC2zX0pDThVjpUc+gBFNUrg2qJG0iaz22y2EUDwkVMSTP/pkbDIb+oi5a0+lx
+    y+101lDA2iTAT+FBmp63gMapxQWyjpk5AKhEmvr9BIIfoxnfmjjfGq5fXYtSFF68
+    feGCpe0/WQKBgQDaG6nu/UdYGInsAOY7Sh7gUcxNuWbOftPDYMBX5+2dXMqxev36
+    IhFc7CxXoqturBj2Sm1qm0OBZPcwqJKS5jeSpJNWHh3fkk1iqacJoVCy2zisCSfs
+    /bzHsJpPzLNuxRRqkWcTuBHfSC8srfE46bgwqoMNH63+Ul/A1rvCnWurUQKBgEOc
+    ooKKVqGysjt6ZBZ+uLhQfmOwRHdKEOJe5pPluth5Q3gOoeUjO+PEEEuvf5/fRVv/
+    NGkqxJ98vcyFCp1oKgFQoDsGOxUBhrpZjptnNxLVOOv06vakARgfCKEaNePczda9
+    RcxnVlWVIjOHFbZvlxQ/Xr9kKt+VQI+MrCy9m41hAoGAAuSoUKB+zPJKUtQ6Kzby
+    QR1qTD/BgqMionoeoU2zc97VbyjVpXP5bAG0tIB/vrGefTIssKGpsXASsV2ayBx7
+    E9PKpSJaNlo1GCvEOF+S5NwqNEPoB5v1k72yZt3JjK0f690LEu+IayESgkgqVjRn
+    ePHByig8vFwjVh/dWHLfAzs=
+    -----END PRIVATE KEY-----
+  privateKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr4jXWMjquwWl2cR6T7m7
+    vmzVFEuixt/cB4nVwHcFzxm8avbVrEqAsW+n8kiR8qWtt7rtzRBNbSsk/dN47uFB
+    raVXZADIO8JO1N3qo6qaYU47d04L7Tl2HCx8tjMH6go4PDao7WfeIdkujPdz/EUb
+    OV2lH2jMHrpl8CdLYB+3GVhMDKbxerU+CiaWYbVl2zI0gxfXQQZeBn7GD/+2hpij
+    WXcpLMJ9aIwEg0VE96uGnxjU3QekQJgNAqP0ZnphVyAKmulitxJUqGh9kOWPvpQF
+    MGRVAP18aKvnE+SKzfDj4M3Nsh7dAtGwQZCekXGCueCG9zw7dxRE89xreY0hTmA9
+    oQIDAQAB
+    -----END PUBLIC KEY-----

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @SuperBuilder
 @Data
@@ -18,13 +18,13 @@ public class BaseEntity implements Serializable {
     private Long id;
     private Integer version;
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
     @TableField(fill = FieldFill.INSERT)
     private String createdBy;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updatedBy;
-    private LocalDateTime deletedAt;
+    private Instant deletedAt;
     private String deletedBy;
 }

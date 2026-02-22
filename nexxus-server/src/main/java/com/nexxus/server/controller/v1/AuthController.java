@@ -16,7 +16,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public AuthResponse register(@RequestBody @Valid RegisterRequest req) {
-        authApi.register(req);
-        return null;
+        return authApi.register(req);
     }
 }

@@ -13,7 +13,10 @@ public enum ErrorDefEnum implements Serializable {
     NOT_FOUND_EXCEPTION(404, "Item Not Found"),
     RESOURCE_CONFLICT(409, "Resource Conflict"),
 
-    COMMON_EXCEPTION(500, "Internal Server Error")
+    COMMON_EXCEPTION(500, "Internal Server Error"),
+
+    FAILED_TO_GENERATE_JWT(600, "Failed to generate JWT"),
+    FAILED_TO_PARSE_JWT(601, "Failed to parse JWT"),
     ;
 
     private Integer code;
