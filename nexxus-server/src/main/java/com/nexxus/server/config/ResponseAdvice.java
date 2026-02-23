@@ -54,7 +54,12 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         String msg = Optional.ofNullable(e.getBindingResult().getAllErrors())
                 .orElseGet(Collections::emptyList)
                 .stream()
-                .map(ObjectError::getDefaultMessage)
+                .map(error -> {
+                    String fieldName = error instanceof org.springframework.validation.FieldError
+                            ? ((org.springframework.validation.FieldError) error).getField()
+                            : error.getObjectName();
+                    return fieldName + ": " + error.getDefaultMessage();
+                })
                 .distinct()
                 .collect(Collectors.joining(", "));
         return new NResponse<>(400, msg, null);
