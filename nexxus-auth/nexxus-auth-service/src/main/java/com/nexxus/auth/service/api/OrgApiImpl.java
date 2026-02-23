@@ -68,4 +68,19 @@ public class OrgApiImpl implements OrgApi {
                 .page(entityPage.getCurrent())
                 .build();
     }
+
+    @Override
+    public OrganizationDto getOrganizationByDisplayId(String displayId) {
+        OrganizationEntity organizationEntity = organizationService.getByDisplayId(displayId);
+        if (organizationEntity == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("organization not found"));
+        }
+
+        return OrganizationDto.builder()
+                .displayId(organizationEntity.getDisplayId())
+                .name(organizationEntity.getName())
+                .code(organizationEntity.getCode())
+                .status(organizationEntity.getStatus())
+                .build();
+    }
 }

@@ -21,6 +21,11 @@ public class OrganizationController {
         return orgApi.createOrganization(req);
     }
 
+    @GetMapping("/{displayId}")
+    public OrganizationDto getOrganizationByDisplayId(@PathVariable String displayId) {
+        return orgApi.getOrganizationByDisplayId(displayId);
+    }
+
     @PostMapping("/list")
     public PageResult<OrganizationDto> listOrganizationByCursor(
             @RequestBody @Valid ListOrganizationRequest req) {
