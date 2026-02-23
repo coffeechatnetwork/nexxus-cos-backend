@@ -1,5 +1,6 @@
 package com.nexxus.auth.service.api;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nexxus.auth.api.OrgApi;
 import com.nexxus.auth.api.dto.CreateOrganizationRequest;
 import com.nexxus.auth.api.dto.OrganizationDto;
@@ -7,12 +8,15 @@ import com.nexxus.auth.service.entity.OrganizationEntity;
 import com.nexxus.auth.service.service.OrganizationService;
 import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
+import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.auth.OrganizationStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -41,6 +45,27 @@ public class OrgApiImpl implements OrgApi {
                 .name(newOrg.getName())
                 .code(newOrg.getCode())
                 .status(newOrg.getStatus())
+                .build();
+    }
+
+    @Override
+    public PageResult<OrganizationDto> listOrganization(Long page, Long pageSize) {
+        Page<OrganizationEntity> entityPage = organizationService.listOrganizations(page, pageSize);
+
+        List<OrganizationDto> dtoList = entityPage.getRecords().stream()
+                .map(entity -> OrganizationDto.builder()
+                        .displayId(entity.getDisplayId())
+                        .name(entity.getName())
+                        .code(entity.getCode())
+                        .status(entity.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+
+        return PageResult.<OrganizationDto>builder()
+                .records(dtoList)
+                .total(entityPage.getTotal())
+                .pageSize(entityPage.getSize())
+                .page(entityPage.getCurrent())
                 .build();
     }
 }

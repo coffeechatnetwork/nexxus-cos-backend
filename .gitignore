@@ -1,3 +1,4 @@
 *.class
 target
 .idea
+.flattened-pom.xml
