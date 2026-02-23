@@ -1,11 +1,15 @@
 package com.nexxus.auth.service.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nexxus.auth.service.entity.AccountEntity;
+import com.nexxus.auth.service.entity.OrganizationEntity;
 
 public interface AccountService extends IService<AccountEntity> {
 
-    public AccountEntity getByOrgIdAndEmail(Long orgId, String email);
+    AccountEntity getByOrgIdAndEmail(Long orgId, String email);
 
-    public AccountEntity getByDisplayId(String displayId);
+    AccountEntity getByDisplayId(String displayId);
+
+    Page<AccountEntity> listAccounts(Long page, Long pageSize);
 }
