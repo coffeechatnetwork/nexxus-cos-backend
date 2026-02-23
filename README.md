@@ -1,1 +1,1 @@
-# spring-boot-multi-module-example
+# nexxus-cos-backend

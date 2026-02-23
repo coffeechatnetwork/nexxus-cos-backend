@@ -24,17 +24,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.nexxus.server")
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return true; // intercept all request
+        return true;
     }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         if (returnType.hasMethodAnnotation(IgnoreResponseAdvice.class)) {
-            return false;
+            return body;
         }
         if (body instanceof NResponse) {
             return body;
