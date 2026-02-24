@@ -8,7 +8,9 @@ on:
       - master
       - develop
 jobs:
-  setup:
+  build:
+    needs:
+      - check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,25 +22,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-  check:
-    needs:
-      - setup
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkstyle
         run: mvn checkstyle:check
-  build:
-    needs:
-      - check
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Maven Compile
         run: mvn clean compile
 
-  test:
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    steps:
       - name: Run test
         run: mvn test
