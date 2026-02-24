@@ -61,7 +61,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             AccountInfoContext.set(accountInfo);
             filterChain.doFilter(request, response);
         } catch (ParseException | JOSEException e) {
-            handleAuthenticationException(response, new BadCredentialsException("Invalid JWT token"));
+            handleAuthenticationException(response, new BadCredentialsException(e.getMessage(), e));
         } catch (AuthenticationException e) {
             handleAuthenticationException(response, e);
         } finally {
