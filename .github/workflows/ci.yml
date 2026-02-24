@@ -9,8 +9,6 @@ on:
       - develop
 jobs:
   build:
-    needs:
-      - check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
