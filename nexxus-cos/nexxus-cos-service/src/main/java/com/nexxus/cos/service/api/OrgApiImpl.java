@@ -1,15 +1,15 @@
-package com.nexxus.auth.service.api;
+package com.nexxus.cos.service.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.nexxus.auth.api.OrgApi;
-import com.nexxus.auth.api.dto.CreateOrganizationRequest;
-import com.nexxus.auth.api.dto.OrganizationDto;
-import com.nexxus.auth.service.entity.OrganizationEntity;
-import com.nexxus.auth.service.service.OrganizationService;
 import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.auth.OrganizationStatus;
+import com.nexxus.cos.api.OrgApi;
+import com.nexxus.cos.api.dto.CreateOrganizationRequest;
+import com.nexxus.cos.api.dto.OrganizationDto;
+import com.nexxus.cos.service.entity.OrganizationEntity;
+import com.nexxus.cos.service.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

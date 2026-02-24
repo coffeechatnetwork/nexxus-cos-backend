@@ -1,8 +1,8 @@
-package com.nexxus.auth.api;
+package com.nexxus.cos.api;
 
-import com.nexxus.auth.api.dto.CreateOrganizationRequest;
-import com.nexxus.auth.api.dto.OrganizationDto;
 import com.nexxus.common.PageResult;
+import com.nexxus.cos.api.dto.CreateOrganizationRequest;
+import com.nexxus.cos.api.dto.OrganizationDto;
 
 public interface OrgApi {
     OrganizationDto createOrganization(CreateOrganizationRequest req);

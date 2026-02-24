@@ -1,8 +1,6 @@
 package com.nexxus.cos.service.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.nexxus.auth.api.OrgApi;
-import com.nexxus.auth.api.dto.OrganizationDto;
 import com.nexxus.common.AccountInfo;
 import com.nexxus.common.AccountInfoContext;
 import com.nexxus.common.ErrorDefEnum;
@@ -10,7 +8,9 @@ import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.cos.project.ProjectStatus;
 import com.nexxus.cos.api.CosApi;
+import com.nexxus.cos.api.OrgApi;
 import com.nexxus.cos.api.dto.CreateProjectRequest;
+import com.nexxus.cos.api.dto.OrganizationDto;
 import com.nexxus.cos.api.dto.ProjectDto;
 import com.nexxus.cos.api.dto.ProjectListItem;
 import com.nexxus.cos.service.entity.ProjectEntity;

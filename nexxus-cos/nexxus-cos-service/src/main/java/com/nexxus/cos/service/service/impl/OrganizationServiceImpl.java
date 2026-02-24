@@ -1,11 +1,11 @@
-package com.nexxus.auth.service.service.impl;
+package com.nexxus.cos.service.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.nexxus.auth.service.entity.OrganizationEntity;
-import com.nexxus.auth.service.mapper.OrganizationMapper;
-import com.nexxus.auth.service.service.OrganizationService;
+import com.nexxus.cos.service.entity.OrganizationEntity;
+import com.nexxus.cos.service.mapper.OrganizationMapper;
+import com.nexxus.cos.service.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

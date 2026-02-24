@@ -1,4 +1,4 @@
-package com.nexxus.auth.service.entity;
+package com.nexxus.cos.service.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.nexxus.common.BaseEntity;
@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("organization")
+@TableName("cos_organization")
 public class OrganizationEntity extends BaseEntity {
     private String displayId;
     private String name;

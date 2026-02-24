@@ -5,10 +5,8 @@ import com.nexxus.auth.api.dto.AuthResponse;
 import com.nexxus.auth.api.dto.LoginRequest;
 import com.nexxus.auth.api.dto.RegisterRequest;
 import com.nexxus.auth.service.entity.AccountEntity;
-import com.nexxus.auth.service.entity.OrganizationEntity;
 import com.nexxus.auth.service.service.AccountService;
 import com.nexxus.auth.service.service.JwtService;
-import com.nexxus.auth.service.service.OrganizationService;
 import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
 import com.nexxus.common.enums.auth.AccountStatus;
@@ -35,16 +33,11 @@ public class AuthApiImpl implements AuthApi {
     private final AccountService accountService;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
-    private final OrganizationService organizationService;
 
     @Override
     public AuthResponse register(RegisterRequest req) {
         String email = req.getEmail();
         Long orgId = req.getOrgId();
-        OrganizationEntity organizationEntity = organizationService.getById(orgId);
-        if (organizationEntity == null) {
-            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("organization not found"));
-        }
         AccountEntity existingAccount = accountService.getByOrgIdAndEmail(orgId, email);
         if (existingAccount != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("account already exist"));
@@ -88,10 +81,6 @@ public class AuthApiImpl implements AuthApi {
     public AuthResponse login(LoginRequest req) {
         String email = req.getEmail();
         Long orgId = req.getOrgId();
-        OrganizationEntity organizationEntity = organizationService.getById(orgId);
-        if (organizationEntity == null) {
-            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("organization not found"));
-        }
         AccountEntity accountEntity = accountService.getByOrgIdAndEmail(orgId, email);
         if (accountEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("account not found"));

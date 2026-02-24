@@ -1,4 +1,4 @@
-package com.nexxus.auth.api.dto;
+package com.nexxus.cos.api.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
