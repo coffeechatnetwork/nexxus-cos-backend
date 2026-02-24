@@ -16,15 +16,15 @@ import java.util.regex.Pattern;
  */
 public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
 
-    private static final String PASSWORD_PATTERN = 
-        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-    
+    private static final String PASSWORD_PATTERN =
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
     private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
-    
+
     // Common weak passwords to reject
     private static final String[] WEAK_PASSWORDS = {
-        "password", "password123", "12345678", "qwerty123",
-        "admin123", "letmein", "welcome123", "monkey123"
+            "password", "password123", "12345678", "qwerty123",
+            "admin123", "letmein", "welcome123", "monkey123"
     };
 
     @Override
@@ -37,28 +37,28 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
         if (password == null || password.isEmpty()) {
             return false;
         }
-        
+
         // Check against weak passwords (case-insensitive)
         String lowerPassword = password.toLowerCase();
         for (String weak : WEAK_PASSWORDS) {
             if (lowerPassword.equals(weak.toLowerCase())) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(
-                    "Password is too weak. Please choose a stronger password.")
-                    .addConstraintViolation();
+                                "Password is too weak. Please choose a stronger password.")
+                        .addConstraintViolation();
                 return false;
             }
         }
-        
+
         // Check pattern
         if (!pattern.matcher(password).matches()) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(
-                "Password must be at least 8 characters and contain uppercase, lowercase, digit, and special character.")
-                .addConstraintViolation();
+                            "Password must be at least 8 characters and contain uppercase, lowercase, digit, and special character.")
+                    .addConstraintViolation();
             return false;
         }
-        
+
         return true;
     }
 }
