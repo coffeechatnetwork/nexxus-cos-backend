@@ -46,7 +46,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "nexxus-starter/target/nexxus-starter-0.0.1-SNAPSHOT.jar"
-          target: "/opt/app/"
+          target: "/opt/app"
 
       - name: Start App
         uses: appleboy/ssh-action@v1.0.3
