@@ -9,6 +9,8 @@ public class PublicUriProperties {
     private static final String[] PUBLIC_URI_PATTERNS = new String[]{
             "/actuator/**",
             "/v1/auth/**",
+            "/v1/apps/*/register",
+            "/v1/apps/*/login",
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/api-docs/**",
