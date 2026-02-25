@@ -47,7 +47,7 @@ public class AuthApiImpl implements AuthApi {
         AppCode appCode = req.getAppCode();
         AppEntity appEntity = appService.getByCode(appCode);
         if (appEntity == null) {
-            throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("app already exist"));
+            throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("app does not exist"));
         }
         AccountEntity existingAccount = accountService.getByAppCodeAndEmail(appCode, email);
         if (existingAccount != null) {
