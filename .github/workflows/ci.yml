@@ -45,7 +45,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "target/nexxus-starter-0.0.1-SNAPSHOT.jar"
+          source: "nexxus-starter/target/nexxus-starter-0.0.1-SNAPSHOT.jar"
           target: "/opt/app/app.jar"
 
       - name: Start App
