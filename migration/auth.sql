@@ -41,8 +41,8 @@ create table if not exists app
     updated_at  timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at  timestamp                           null
 );
-create unique index if not exists uq_feature_name on feature (name) where deleted_at is null;
-create unique index if not exists uq_feature_code on feature (code) where deleted_at is null;
+create unique index if not exists uq_app_name on app (name) where deleted_at is null;
+create unique index if not exists uq_app_code on app (code) where deleted_at is null;
 
 
 -- =============================================

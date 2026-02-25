@@ -23,11 +23,8 @@ jobs:
       - name: Checkstyle
         run: mvn checkstyle:check
 
-      - name: Maven Compile
-        run: mvn clean compile
-
-      - name: Run test
-        run: mvn test
+      - name: Maven Package
+        run: mvn clean package
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@v1.0.3
