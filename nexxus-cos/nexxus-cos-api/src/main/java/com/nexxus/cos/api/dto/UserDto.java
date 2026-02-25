@@ -14,7 +14,7 @@ import java.net.URL;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto implements Serializable {
-    private String displayId;
+    private String accountId;
     private String username;
     private String email;
     private URL avatarUrl;

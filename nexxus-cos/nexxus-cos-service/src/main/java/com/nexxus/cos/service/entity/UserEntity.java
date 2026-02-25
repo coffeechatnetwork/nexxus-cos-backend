@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @TableName("cos_user")
 public class UserEntity extends BaseEntity {
-    private String displayId;
+    private String accountId;
     private Long orgId;
     private String email;
     private String username;

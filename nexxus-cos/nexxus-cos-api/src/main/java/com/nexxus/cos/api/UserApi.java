@@ -11,7 +11,7 @@ public interface UserApi {
 
     CosAuthResponse login(CosAuthLoginRequest req);
 
-    UserDto getUserByDisplayId(String displayId);
+    UserDto getUserByAccountId(String accountId);
 
     PageResult<UserDto> listUsers(Long page, Long pageSize);
 }

@@ -47,7 +47,7 @@ public class UserApiImpl implements UserApi {
                 .map(URL::toString)
                 .orElse(null);
         UserEntity newUserEntity = UserEntity.builder()
-                .displayId(accountID.toString())
+                .accountId(accountID.toString())
                 .orgId(req.getOrgId())
                 .email(req.getEmail())
                 .username(req.getUsername())
@@ -86,7 +86,7 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public UserDto getUserByDisplayId(String displayId) {
+    public UserDto getUserByAccountId(String accountId) {
         return null;
     }
 
