@@ -28,3 +28,34 @@ jobs:
 
       - name: Run test
         run: mvn test
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            pkill -9 -f app.jar || true
+            rm -f /opt/app/app.jar
+            echo "uploading..."
+
+      - name: Upload Jar
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "target/nexxus-starter-0.0.1-SNAPSHOT.jar"
+          target: "/opt/app/app.jar"
+
+      - name: Start App
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /opt/app
+            nohup java -jar app.jar > app.log 2>&1 &
+
