@@ -1,5 +1,6 @@
 package com.nexxus.cos.service.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nexxus.cos.service.entity.UserEntity;
 import com.nexxus.cos.service.mapper.UserMapper;
@@ -24,5 +25,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         return lambdaQuery()
                 .eq(UserEntity::getAccountId, accountId)
                 .one();
+    }
+
+    @Override
+    public Page<UserEntity> listUsers(Long orgId, Long page, Long pageSize) {
+        return lambdaQuery()
+                .eq(orgId != null, UserEntity::getOrgId, orgId)
+                .page(new Page<>(page, pageSize));
     }
 }

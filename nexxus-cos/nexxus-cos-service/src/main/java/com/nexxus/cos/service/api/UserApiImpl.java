@@ -1,9 +1,12 @@
 package com.nexxus.cos.service.api;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nexxus.auth.api.AuthApi;
 import com.nexxus.auth.api.dto.AuthLoginRequest;
 import com.nexxus.auth.api.dto.AuthRegisterRequest;
 import com.nexxus.auth.api.dto.AuthResponse;
+import com.nexxus.common.AccountInfo;
+import com.nexxus.common.AccountInfoContext;
 import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
@@ -21,8 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -114,6 +119,36 @@ public class UserApiImpl implements UserApi {
 
     @Override
     public PageResult<UserDto> listUsers(Long page, Long pageSize) {
-        return null;
+        AccountInfo accountInfo = AccountInfoContext.get();
+        Long orgId = accountInfo.getOrgId();
+        Page<UserEntity> entityPage = userService.listUsers(orgId, page, pageSize);
+
+        List<UserDto> userDtos = entityPage.getRecords().stream()
+                .map(entity -> {
+                    URL avatarUrl = Optional.ofNullable(entity.getAvatarUrl())
+                            .map(urlStr -> {
+                                try {
+                                    return new URL(urlStr);
+                                } catch (Exception e) {
+                                    log.warn("Invalid avatar URL for user: {}", entity.getAccountId(), e);
+                                    return null;
+                                }
+                            })
+                            .orElse(null);
+                    return UserDto.builder()
+                            .accountId(entity.getAccountId())
+                            .username(entity.getUsername())
+                            .email(entity.getEmail())
+                            .avatarUrl(avatarUrl)
+                            .status(entity.getStatus())
+                            .build();
+                }).collect(Collectors.toList());
+
+        return PageResult.<UserDto>builder()
+                .records(userDtos)
+                .total(entityPage.getTotal())
+                .pageSize(entityPage.getSize())
+                .page(entityPage.getCurrent())
+                .build();
     }
 }
