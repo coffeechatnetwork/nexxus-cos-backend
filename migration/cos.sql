@@ -60,3 +60,5 @@ create table if not exists cos_user
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at timestamp                           null
 );
+create unique index if not exists uq_cos_user_display_id on cos_user (display_id) where deleted_at is null;
+create unique index if not exists uq_cos_user_org_id_email on cos_user (org_id, email) where deleted_at is null;

@@ -12,4 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
+    @Override
+    public UserEntity getByEmail(String email) {
+        return lambdaQuery()
+                .eq(UserEntity::getEmail, email)
+                .one();
+    }
 }
