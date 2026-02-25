@@ -1,6 +1,7 @@
 package com.nexxus.auth.api.dto;
 
 import com.nexxus.common.enums.auth.AccountType;
+import com.nexxus.common.enums.auth.AppCode;
 import com.nexxus.common.validations.ValidPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -20,8 +21,9 @@ public class RegisterRequest implements Serializable {
     private String email;
     @ValidPassword
     private String password;
-    @NotNull
     private Long orgId;
+    @NotNull
+    private AppCode appCode;
     @NotNull
     private AccountType type;
 }

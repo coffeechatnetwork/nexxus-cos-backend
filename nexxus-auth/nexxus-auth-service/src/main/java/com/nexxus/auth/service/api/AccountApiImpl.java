@@ -28,7 +28,7 @@ public class AccountApiImpl implements AccountApi {
 
         return AccountDto.builder()
                 .displayId(accountEntity.getDisplayId())
-                .orgId(accountEntity.getOrgId())
+                .appCode(accountEntity.getAppCode())
                 .type(accountEntity.getType())
                 .countryCode(accountEntity.getCountryCode())
                 .phoneNumber(accountEntity.getPhoneNumber())
@@ -45,7 +45,7 @@ public class AccountApiImpl implements AccountApi {
         List<AccountDto> dtoList = entityPage.getRecords().stream()
                 .map(entity -> AccountDto.builder()
                         .displayId(entity.getDisplayId())
-                        .orgId(entity.getOrgId())
+                        .appCode(entity.getAppCode())
                         .type(entity.getType())
                         .countryCode(entity.getCountryCode())
                         .phoneNumber(entity.getPhoneNumber())

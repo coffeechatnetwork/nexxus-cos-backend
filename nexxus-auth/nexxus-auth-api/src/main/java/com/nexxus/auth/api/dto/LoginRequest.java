@@ -1,5 +1,6 @@
 package com.nexxus.auth.api.dto;
 
+import com.nexxus.common.enums.auth.AppCode;
 import com.nexxus.common.validations.ValidPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -15,8 +16,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequest implements Serializable {
-    @NotNull
     private Long orgId;
+    @NotNull
+    private AppCode appCode;
     @Email
     private String email;
     @ValidPassword

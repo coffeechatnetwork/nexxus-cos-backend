@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
-import com.nexxus.common.enums.auth.OrganizationStatus;
+import com.nexxus.common.enums.cos.organization.OrganizationStatus;
 import com.nexxus.cos.api.OrgApi;
 import com.nexxus.cos.api.dto.CreateOrganizationRequest;
 import com.nexxus.cos.api.dto.OrganizationDto;

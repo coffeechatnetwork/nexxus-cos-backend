@@ -5,11 +5,14 @@ import com.nexxus.auth.api.dto.AuthResponse;
 import com.nexxus.auth.api.dto.LoginRequest;
 import com.nexxus.auth.api.dto.RegisterRequest;
 import com.nexxus.auth.service.entity.AccountEntity;
+import com.nexxus.auth.service.entity.AppEntity;
 import com.nexxus.auth.service.service.AccountService;
+import com.nexxus.auth.service.service.AppService;
 import com.nexxus.auth.service.service.JwtService;
 import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
 import com.nexxus.common.enums.auth.AccountStatus;
+import com.nexxus.common.enums.auth.AppCode;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
@@ -33,12 +36,18 @@ public class AuthApiImpl implements AuthApi {
     private final AccountService accountService;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
+    private final AppService appService;
 
     @Override
     public AuthResponse register(RegisterRequest req) {
         String email = req.getEmail();
         Long orgId = req.getOrgId();
-        AccountEntity existingAccount = accountService.getByOrgIdAndEmail(orgId, email);
+        AppCode appCode = req.getAppCode();
+        AppEntity appEntity = appService.getByCode(appCode);
+        if (appEntity == null) {
+            throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("app already exist"));
+        }
+        AccountEntity existingAccount = accountService.getByAppCodeAndEmail(appCode, email);
         if (existingAccount != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("account already exist"));
         }
@@ -58,14 +67,14 @@ public class AuthApiImpl implements AuthApi {
                 .password(pwdHash)
                 .salt(salt)
                 .status(AccountStatus.ACTIVE)
-                .orgId(orgId)
+                .appCode(appCode)
                 .build();
 
         accountService.save(accountEntity);
         SignedJWT signedJWT;
         Long expiredInSeconds = 0L;
         try {
-            signedJWT = jwtService.generateJWT(accountEntity.getDisplayId(), List.of("test"), req.getOrgId().toString(), req.getEmail());
+            signedJWT = jwtService.generateJWT(accountEntity.getDisplayId(), List.of("test"), orgId.toString(), req.getEmail());
             Instant expiredAt = signedJWT.getJWTClaimsSet().getExpirationTime().toInstant();
             expiredInSeconds = expiredAt.getEpochSecond() - Instant.now().getEpochSecond();
         } catch (JOSEException e) {
@@ -81,7 +90,8 @@ public class AuthApiImpl implements AuthApi {
     public AuthResponse login(LoginRequest req) {
         String email = req.getEmail();
         Long orgId = req.getOrgId();
-        AccountEntity accountEntity = accountService.getByOrgIdAndEmail(orgId, email);
+        AppCode appCode = req.getAppCode();
+        AccountEntity accountEntity = accountService.getByAppCodeAndEmail(appCode, email);
         if (accountEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("account not found"));
         }
@@ -99,7 +109,7 @@ public class AuthApiImpl implements AuthApi {
         SignedJWT signedJWT;
         Long expiredInSeconds = 0L;
         try {
-            signedJWT = jwtService.generateJWT(accountEntity.getDisplayId(), List.of("test"), accountEntity.getOrgId().toString(), req.getEmail());
+            signedJWT = jwtService.generateJWT(accountEntity.getDisplayId(), List.of("test"), orgId.toString(), req.getEmail());
             Instant expiredAt = signedJWT.getJWTClaimsSet().getExpirationTime().toInstant();
             expiredInSeconds = expiredAt.getEpochSecond() - Instant.now().getEpochSecond();
         } catch (JOSEException e) {

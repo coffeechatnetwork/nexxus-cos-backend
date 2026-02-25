@@ -37,14 +37,14 @@ This file is based on the checkstyle file of Apache Beam.
 
     <module name="NewlineAtEndOfFile">
         <!-- windows can use \r\n vs \n, so enforce the most used one ie UNIx style -->
-        <property name="lineSeparator" value="lf" />
+        <property name="lineSeparator" value="lf"/>
     </module>
 
     <module name="RegexpSingleline">
         <!-- Checks that TODOs don't have stuff in parenthesis, e.g., username. -->
-        <property name="format" value="((//.*)|(\*.*))TODO\(" />
-        <property name="message" value="TODO comments must not include usernames." />
-        <property name="severity" value="error" />
+        <property name="format" value="((//.*)|(\*.*))TODO\("/>
+        <property name="message" value="TODO comments must not include usernames."/>
+        <property name="severity" value="error"/>
     </module>
 
     <module name="RegexpSingleline">
@@ -65,7 +65,7 @@ This file is based on the checkstyle file of Apache Beam.
     <!--</module>-->
 
     <module name="SuppressionFilter">
-        <property name="file" value="${checkstyle.suppressions.file}" default="suppressions.xml" />
+        <property name="file" value="${checkstyle.suppressions.file}" default="suppressions.xml"/>
     </module>
 
     <!-- Check that every module has a package-info.java -->
@@ -135,7 +135,8 @@ This file is based on the checkstyle file of Apache Beam.
         <module name="Regexp">
             <property name="format" value="org\.apache\.commons\.lang3\.Validate"/>
             <property name="illegalPattern" value="true"/>
-            <property name="message" value="Use Guava Checks instead of Commons Validate. Please refer to the coding guidelines."/>
+            <property name="message"
+                      value="Use Guava Checks instead of Commons Validate. Please refer to the coding guidelines."/>
         </module>
         <!-- forbid the use of google.common.base.Preconditions -->
         <module name="Regexp">
@@ -177,11 +178,11 @@ This file is based on the checkstyle file of Apache Beam.
         </module>
 
         <!-- Enforce Java-style array declarations -->
-        <module name="ArrayTypeStyle" />
+        <module name="ArrayTypeStyle"/>
 
         <module name="TodoComment">
             <!-- Checks that disallowed strings are not used in comments.  -->
-            <property name="format" value="(FIXME)|(XXX)|(@author)" />
+            <property name="format" value="(FIXME)|(XXX)|(@author)"/>
         </module>
 
         <!--
@@ -214,7 +215,8 @@ This file is based on the checkstyle file of Apache Beam.
         </module>
 
         <module name="IllegalImport">
-            <property name="illegalPkgs" value="autovalue.shaded, avro.shaded, com.google.api.client.repackaged, com.google.appengine.repackaged, org.codehaus.jackson, io.netty, org.objectweb.asm, com.google.common"/>
+            <property name="illegalPkgs"
+                      value="autovalue.shaded, avro.shaded, com.google.api.client.repackaged, com.google.appengine.repackaged, org.codehaus.jackson, io.netty, org.objectweb.asm, com.google.common"/>
         </module>
 
         <module name="RedundantModifier">
@@ -257,18 +259,18 @@ This file is based on the checkstyle file of Apache Beam.
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
-<!--        <module name="JavadocMethod">-->
-<!--            <property name="scope" value="protected"/>-->
-<!--            <property name="severity" value="error"/>-->
-<!--            <property name="allowMissingJavadoc" value="true"/>-->
-<!--            <property name="allowMissingParamTags" value="true"/>-->
-<!--            <property name="allowMissingReturnTag" value="true"/>-->
-<!--            <property name="allowMissingThrowsTags" value="true"/>-->
-<!--            <property name="allowThrowsTagsForSubclasses" value="true"/>-->
-<!--            <property name="allowUndeclaredRTE" value="true"/>-->
-<!--            &lt;!&ndash; This check sometimes failed for with "Unable to get class information for @throws tag" for custom exceptions &ndash;&gt;-->
-<!--            <property name="suppressLoadErrors" value="true"/>-->
-<!--        </module>-->
+        <!--        <module name="JavadocMethod">-->
+        <!--            <property name="scope" value="protected"/>-->
+        <!--            <property name="severity" value="error"/>-->
+        <!--            <property name="allowMissingJavadoc" value="true"/>-->
+        <!--            <property name="allowMissingParamTags" value="true"/>-->
+        <!--            <property name="allowMissingReturnTag" value="true"/>-->
+        <!--            <property name="allowMissingThrowsTags" value="true"/>-->
+        <!--            <property name="allowThrowsTagsForSubclasses" value="true"/>-->
+        <!--            <property name="allowUndeclaredRTE" value="true"/>-->
+        <!--            &lt;!&ndash; This check sometimes failed for with "Unable to get class information for @throws tag" for custom exceptions &ndash;&gt;-->
+        <!--            <property name="suppressLoadErrors" value="true"/>-->
+        <!--        </module>-->
 
         <!-- Check that paragraph tags are used correctly in Javadoc. -->
         <module name="JavadocParagraph"/>

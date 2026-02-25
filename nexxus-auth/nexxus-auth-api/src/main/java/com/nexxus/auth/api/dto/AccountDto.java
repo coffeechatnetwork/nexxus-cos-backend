@@ -2,6 +2,7 @@ package com.nexxus.auth.api.dto;
 
 import com.nexxus.common.enums.auth.AccountStatus;
 import com.nexxus.common.enums.auth.AccountType;
+import com.nexxus.common.enums.auth.AppCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AccountDto implements Serializable {
     private String displayId;
-    private Long orgId;
+    private AppCode appCode;
     private AccountType type;
     private String countryCode;
     private String phoneNumber;

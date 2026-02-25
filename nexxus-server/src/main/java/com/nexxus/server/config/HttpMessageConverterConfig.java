@@ -3,9 +3,13 @@ package com.nexxus.server.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.nexxus.common.BaseEnum;
 import com.nexxus.common.BaseEnumDeserializer;
 import com.nexxus.common.BaseEnumSerializer;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.convert.converter.ConverterFactory;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -30,5 +34,30 @@ public class HttpMessageConverterConfig implements WebMvcConfigurer {
                     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                     objectMapper.registerModule(simpleModule);
                 });
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverterFactory(new StringToBaseEnumConverterFactory());
+    }
+
+    private static class StringToBaseEnumConverterFactory implements ConverterFactory<String, BaseEnum> {
+        @Override
+        public <T extends BaseEnum> Converter<String, T> getConverter(Class<T> targetType) {
+            return new StringToBaseEnumConverter<>(targetType);
+        }
+    }
+
+    private static class StringToBaseEnumConverter<T extends BaseEnum> implements Converter<String, T> {
+        private final Class<T> enumType;
+
+        StringToBaseEnumConverter(Class<T> enumType) {
+            this.enumType = enumType;
+        }
+
+        @Override
+        public T convert(String source) {
+            return BaseEnum.valueOf(enumType, source);
+        }
     }
 }

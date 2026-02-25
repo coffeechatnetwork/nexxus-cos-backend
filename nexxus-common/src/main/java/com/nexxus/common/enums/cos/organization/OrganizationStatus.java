@@ -1,4 +1,4 @@
-package com.nexxus.common.enums.auth;
+package com.nexxus.common.enums.cos.organization;
 
 import com.nexxus.common.BaseEnum;
 import lombok.Getter;

@@ -3,7 +3,7 @@ create table if not exists account
     id           bigserial                           not null primary key,
     version      integer                             null,
     display_id   varchar(64)                         not null,
-    org_id       bigint                              not null,
+    app_code     varchar(32)                         not null,
     type         varchar(32)                         not null,
     country_code varchar(16)                         null,
     phone_number varchar(64)                         null,
@@ -19,10 +19,30 @@ create table if not exists account
     updated_at   timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at   timestamp                           null
 );
-create unique index if not exists uq_account_org_id_email on account (org_id, email);
+create unique index if not exists uq_account_app_code_email on account (app_code, email);
 create unique index if not exists uq_account_display_id on account (display_id);
-create index if not exists idx_account_org_id on account (org_id);
+create index if not exists idx_account_app_code on account (app_code);
 create index if not exists uq_idx_mobile on account (country_code, phone_number);
+
+-- =============================================
+
+create table if not exists app
+(
+    id          bigserial                           not null primary key,
+    version     integer                             null,
+    name        varchar(64)                         not null,
+    code        varchar(32)                         not null,
+    description varchar(255)                        null,
+    created_by  varchar(64)                         not null,
+    updated_by  varchar(64)                         not null,
+    deleted_by  varchar(64)                         null,
+    created_at  timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    updated_at  timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    deleted_at  timestamp                           null
+);
+create unique index if not exists uq_feature_name on feature (name) where deleted_at is null;
+create unique index if not exists uq_feature_code on feature (code) where deleted_at is null;
+
 
 -- =============================================
 

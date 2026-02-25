@@ -1,8 +1,8 @@
-package com.nexxus.cos.service.entity;
+package com.nexxus.auth.service.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.nexxus.common.BaseEntity;
-import com.nexxus.common.enums.cos.organization.OrganizationStatus;
+import com.nexxus.common.enums.auth.AppCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,10 +14,8 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("cos_organization")
-public class OrganizationEntity extends BaseEntity {
-    private String displayId;
+@TableName("app")
+public class AppEntity extends BaseEntity {
     private String name;
-    private String code;
-    private OrganizationStatus status;
+    private AppCode code;
 }

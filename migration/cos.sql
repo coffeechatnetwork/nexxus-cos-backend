@@ -16,9 +16,9 @@ create table if not exists cos_project
     deleted_at timestamp                           null
 );
 
-create index if not exists idx_project_org_id on cos_project(org_id);
-create unique index if not exists uq_project_display_id on cos_project(display_id);
-create unique index if not exists uq_project_name on cos_project(name);
+create index if not exists idx_project_org_id on cos_project (org_id);
+create unique index if not exists uq_project_display_id on cos_project (display_id);
+create unique index if not exists uq_project_name on cos_project (name);
 
 -- =============================================
 

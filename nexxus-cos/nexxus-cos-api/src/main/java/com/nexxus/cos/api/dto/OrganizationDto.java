@@ -1,6 +1,6 @@
 package com.nexxus.cos.api.dto;
 
-import com.nexxus.common.enums.auth.OrganizationStatus;
+import com.nexxus.common.enums.cos.organization.OrganizationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

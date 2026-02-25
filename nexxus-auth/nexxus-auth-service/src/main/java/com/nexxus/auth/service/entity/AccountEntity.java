@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.nexxus.common.BaseEntity;
 import com.nexxus.common.enums.auth.AccountStatus;
 import com.nexxus.common.enums.auth.AccountType;
+import com.nexxus.common.enums.auth.AppCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @TableName("account")
 public class AccountEntity extends BaseEntity {
     private String displayId;
-    private Long orgId;
+    private AppCode appCode;
     private AccountType type;
     private String countryCode;
     private String phoneNumber;

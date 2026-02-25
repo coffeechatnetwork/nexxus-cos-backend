@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nexxus.auth.service.entity.AccountEntity;
 import com.nexxus.auth.service.mapper.AccountMapper;
 import com.nexxus.auth.service.service.AccountService;
+import com.nexxus.common.enums.auth.AppCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountEntity
     private final AccountMapper accountMapper;
 
     @Override
-    public AccountEntity getByOrgIdAndEmail(Long orgId, String email) {
+    public AccountEntity getByAppCodeAndEmail(AppCode appCode, String email) {
         LambdaQueryWrapper<AccountEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(AccountEntity::getEmail, email);
-        queryWrapper.eq(AccountEntity::getOrgId, orgId);
+        queryWrapper.eq(AccountEntity::getAppCode, appCode);
         return accountMapper.selectOne(queryWrapper);
     }
 

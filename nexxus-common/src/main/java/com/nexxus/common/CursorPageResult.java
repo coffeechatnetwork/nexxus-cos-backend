@@ -12,7 +12,7 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CursorPageResult <T> implements Serializable{
+public class CursorPageResult<T> implements Serializable {
     List<T> records;
     Long nextCursor;
     Boolean hasMore;
