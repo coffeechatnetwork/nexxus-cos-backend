@@ -21,6 +21,7 @@ public class RegisterRequest implements Serializable {
     private String email;
     @ValidPassword
     private String password;
+    private String displayId;
     private Long orgId;
     @NotNull
     private AppCode appCode;
