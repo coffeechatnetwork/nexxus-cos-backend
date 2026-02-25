@@ -36,7 +36,9 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            pkill -9 -f app.jar || true
+            ps aux | grep '[j]ava -jar app.jar' | awk '{print $2}' | xargs -r kill -15 || true
+            sleep 2
+            ps aux | grep '[j]ava -jar app.jar' | awk '{print $2}' | xargs -r kill -9 || true
             rm -f /opt/app/app.jar
             echo "uploading..."
 
