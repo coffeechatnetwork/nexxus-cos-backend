@@ -18,4 +18,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 .eq(UserEntity::getEmail, email)
                 .one();
     }
+
+    @Override
+    public UserEntity getByAccountId(String accountId) {
+        return lambdaQuery()
+                .eq(UserEntity::getAccountId, accountId)
+                .one();
+    }
 }

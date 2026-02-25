@@ -24,7 +24,7 @@ public class AccountController {
     @GetMapping("/me")
     public AccountDto getMyAccount() {
         AccountInfo accountInfo = AccountInfoContext.get();
-        String displayId = accountInfo.getDisplayId();
+        String displayId = accountInfo.getAccountId();
         return accountApi.getByDisplayId(displayId);
     }
 

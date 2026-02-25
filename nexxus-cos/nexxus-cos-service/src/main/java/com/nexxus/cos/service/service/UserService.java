@@ -5,4 +5,6 @@ import com.nexxus.cos.service.entity.UserEntity;
 
 public interface UserService extends IService<UserEntity> {
     UserEntity getByEmail(String email);
+
+    UserEntity getByAccountId(String accountId);
 }

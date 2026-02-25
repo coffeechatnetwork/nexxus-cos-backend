@@ -53,11 +53,11 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             SignedJWT signedJWT = authApi.parseAndVerifyJWT(token);
             JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
 
-            String displayId = claimsSet.getSubject();
+            String accountId = claimsSet.getSubject();
             String orgId = claimsSet.getStringClaim("orgId");
             String email = claimsSet.getStringClaim("email");
 
-            AccountInfo accountInfo = AccountInfo.builder().displayId(displayId).email(email).orgId(Long.valueOf(orgId)).build();
+            AccountInfo accountInfo = AccountInfo.builder().accountId(accountId).email(email).orgId(Long.valueOf(orgId)).build();
             AccountInfoContext.set(accountInfo);
             filterChain.doFilter(request, response);
         } catch (ParseException | JOSEException e) {

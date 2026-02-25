@@ -8,7 +8,7 @@ import java.io.Serializable;
 @SuperBuilder
 @Data
 public class AccountInfo implements Serializable {
-    private String displayId;
+    private String accountId;
     private String email;
     private Long orgId;
 }

@@ -87,7 +87,29 @@ public class UserApiImpl implements UserApi {
 
     @Override
     public UserDto getUserByAccountId(String accountId) {
-        return null;
+        UserEntity userEntity = userService.getByAccountId(accountId);
+        if (userEntity == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("user of this accountId not found"));
+        }
+
+        URL avatarUrl = Optional.ofNullable(userEntity.getAvatarUrl())
+                .map(urlStr -> {
+                    try {
+                        return new URL(urlStr);
+                    } catch (Exception e) {
+                        log.warn("Invalid avatar URL for user: {}", accountId, e);
+                        return null;
+                    }
+                })
+                .orElse(null);
+
+        return UserDto.builder()
+                .accountId(userEntity.getAccountId())
+                .username(userEntity.getUsername())
+                .email(userEntity.getEmail())
+                .avatarUrl(avatarUrl)
+                .status(userEntity.getStatus())
+                .build();
     }
 
     @Override
