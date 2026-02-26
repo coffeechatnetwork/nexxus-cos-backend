@@ -1,4 +1,4 @@
-package com.nexxus.common.typehandler;
+package com.nexxus.common.typehandlers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.nexxus.common.JsonUtils;

@@ -1,5 +1,6 @@
-package com.nexxus.common;
+package com.nexxus.common.typehandlers;
 
+import com.nexxus.common.BaseEnum;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
