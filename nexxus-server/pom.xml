@@ -58,6 +58,11 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
+            <groupId>com.nexxus</groupId>
+            <artifactId>nexxus-file-service</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
