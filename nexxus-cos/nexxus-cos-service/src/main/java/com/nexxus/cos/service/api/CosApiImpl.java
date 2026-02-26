@@ -53,6 +53,7 @@ public class CosApiImpl implements CosApi {
                 .name(name)
                 .slug(req.getSlug())
                 .logoUrl(req.getLogoUrl())
+                .imageUrls(req.getImageUrls())
                 .status(ProjectStatus.ACTIVE)
                 .build();
         projectService.save(newProject);
@@ -63,6 +64,7 @@ public class CosApiImpl implements CosApi {
                 .name(newProject.getName())
                 .slug(newProject.getSlug())
                 .logoUrl(newProject.getLogoUrl())
+                .imageUrls(newProject.getImageUrls())
                 .status(newProject.getStatus())
                 .build();
     }
@@ -80,6 +82,7 @@ public class CosApiImpl implements CosApi {
                         .name(entity.getName())
                         .slug(entity.getSlug())
                         .logoUrl(entity.getLogoUrl())
+                        .imageUrls(entity.getImageUrls())
                         .status(entity.getStatus())
                         .build())
                 .collect(Collectors.toList());

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.nexxus.common.JsonUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+import org.postgresql.util.PGobject;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -27,12 +28,14 @@ public class JsonListTypeHandler<T> extends BaseTypeHandler<List<T>> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, List<T> parameter, JdbcType jdbcType) throws SQLException {
+        PGobject jsonObject = new PGobject();
+        jsonObject.setType("jsonb");
         if (CollectionUtils.isEmpty(parameter)) {
-            ps.setString(i, "[]");
-            return;
+            jsonObject.setValue("[]");
+        } else {
+            jsonObject.setValue(JsonUtils.serialize(parameter));
         }
-        ps.setString(i, JsonUtils.serialize(parameter));
-
+        ps.setObject(i, jsonObject);
     }
 
     @Override

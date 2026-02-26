@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -18,5 +19,6 @@ public class ProjectListItem implements Serializable {
     private String name;
     private String slug;
     private String logoUrl;
+    private List<String> imageUrls;
     private ProjectStatus status;
 }
