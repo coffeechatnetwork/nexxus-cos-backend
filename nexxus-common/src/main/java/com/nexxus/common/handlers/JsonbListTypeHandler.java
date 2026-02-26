@@ -14,15 +14,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public abstract class JsonListTypeHandler<T> extends BaseTypeHandler<List<T>> {
+public abstract class JsonbListTypeHandler<T> extends BaseTypeHandler<List<T>> {
 
     private final Class<T> elementType;
 
-    public JsonListTypeHandler() {
+    public JsonbListTypeHandler() {
         this.elementType = null;
     }
 
-    public JsonListTypeHandler(Class<T> elementType) {
+    public JsonbListTypeHandler(Class<T> elementType) {
         this.elementType = elementType;
     }
 

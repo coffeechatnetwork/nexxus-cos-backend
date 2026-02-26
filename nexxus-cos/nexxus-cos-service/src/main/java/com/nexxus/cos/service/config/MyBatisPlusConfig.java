@@ -1,9 +1,7 @@
 package com.nexxus.cos.service.config;
 
-import cn.hutool.json.JSONObject;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.nexxus.common.handlers.JsonListTypeHandler;
-import com.nexxus.cos.service.entity.handlers.JsonStringListTypeHandler;
+import com.nexxus.cos.service.entity.handlers.JsonbStringListTypeHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,7 +20,7 @@ public class MyBatisPlusConfig {
     @PostConstruct
     public void registerTypeHandlers() {
         TypeHandlerRegistry registry = sqlSessionFactory.getConfiguration().getTypeHandlerRegistry();
-        registry.register(new TypeReference<List<String>>(){}.getClass(), JdbcType.OTHER, JsonStringListTypeHandler.class);
-        registry.register(JsonStringListTypeHandler.class);
+        registry.register(new TypeReference<List<String>>(){}.getClass(), JdbcType.OTHER, JsonbStringListTypeHandler.class);
+        registry.register(JsonbStringListTypeHandler.class);
     }
 }

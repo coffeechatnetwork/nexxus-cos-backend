@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.nexxus.common.BaseEntity;
 import com.nexxus.common.enums.cos.project.ProjectStatus;
-import com.nexxus.cos.service.entity.handlers.JsonStringListTypeHandler;
+import com.nexxus.cos.service.entity.handlers.JsonbStringListTypeHandler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +26,7 @@ public class ProjectEntity extends BaseEntity {
     private String name;
     private String slug;
     private String logoUrl;
-    @TableField(value = "image_urls", typeHandler = JsonStringListTypeHandler.class, jdbcType = JdbcType.OTHER)
+    @TableField(value = "image_urls", typeHandler = JsonbStringListTypeHandler.class, jdbcType = JdbcType.OTHER)
     private List<String> imageUrls;
     private ProjectStatus status;
 }
