@@ -15,7 +15,7 @@ springdoc:
 
 mybatis-plus:
   configuration:
-    default-enum-type-handler: com.nexxus.common.typehandlers.BaseEnumTypeHandler
+    default-enum-type-handler: com.nexxus.common.handlers.BaseEnumTypeHandler
     cache-enabled: false
     map-underscore-to-camel-case: true
   mapper-locations: classpath*:mapper/**/*.xml

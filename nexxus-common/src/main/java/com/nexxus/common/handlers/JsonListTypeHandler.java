@@ -1,4 +1,4 @@
-package com.nexxus.common.typehandlers;
+package com.nexxus.common.handlers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.nexxus.common.JsonUtils;
@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class JsonListTypeHandler<T> extends BaseTypeHandler<List<T>> {
+public abstract class JsonListTypeHandler<T> extends BaseTypeHandler<List<T>> {
 
     private final Class<T> elementType;
 

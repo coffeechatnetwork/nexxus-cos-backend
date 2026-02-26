@@ -1,4 +1,4 @@
-package com.nexxus.common.typehandlers;
+package com.nexxus.common.handlers;
 
 import com.nexxus.common.BaseEnum;
 import org.apache.ibatis.type.BaseTypeHandler;

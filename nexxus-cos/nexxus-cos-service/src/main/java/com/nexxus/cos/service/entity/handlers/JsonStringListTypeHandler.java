@@ -1,6 +1,6 @@
 package com.nexxus.cos.service.entity.handlers;
 
-import com.nexxus.common.typehandlers.JsonListTypeHandler;
+import com.nexxus.common.handlers.JsonListTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
