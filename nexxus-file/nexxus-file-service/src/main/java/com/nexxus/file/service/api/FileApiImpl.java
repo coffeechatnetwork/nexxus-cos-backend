@@ -4,6 +4,8 @@ import com.nexxus.common.vo.Attachment;
 import com.nexxus.file.service.config.S3Config;
 import com.nexxus.file.service.service.S3Service;
 import com.nexxxus.file.api.FileApi;
+import com.nexxxus.file.api.dto.FileSignRequest;
+import com.nexxxus.file.api.dto.FileSignResponse;
 import com.nexxxus.file.api.dto.FileUploadRequest;
 import com.nexxxus.file.api.dto.FileUploadResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,14 +30,19 @@ public class FileApiImpl implements FileApi {
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Override
-    public URL sign(String originalUrl) {
-        return s3Service.sign(originalUrl);
+    public FileSignResponse sign(FileSignRequest req) {
+        String originalUrl = req.getOriginalUrl();
+        Long signDuration = req.getSignDuration();
+        URL signedUrl = s3Service.sign(originalUrl, signDuration);
+        return FileSignResponse.builder()
+                .signedUrl(signedUrl.toString())
+                .build();
     }
 
     @Override
     public List<URL> batchSign(List<URL> orginalUrlList) {
         return orginalUrlList.stream()
-                .map(url -> CompletableFuture.supplyAsync(() -> sign(url.toString()), executorService))
+                .map(url -> CompletableFuture.supplyAsync(() -> s3Service.sign(url.toString()), executorService))
                 .toList()
                 .stream()
                 .map(CompletableFuture::join)
@@ -50,7 +57,7 @@ public class FileApiImpl implements FileApi {
 
         return attachments.stream()
                 .map(attachment -> {
-                    URL signedUrl = sign(attachment.getUrl());
+                    URL signedUrl = s3Service.sign(attachment.getUrl());
                     return Attachment.builder()
                             .name(attachment.getName())
                             .url(signedUrl.toString())
@@ -70,7 +77,7 @@ public class FileApiImpl implements FileApi {
         );
 
         String fileUrl = buildFileUrl(request.getKey());
-        URL signedUrl = this.sign(fileUrl);
+        URL signedUrl = s3Service.sign(fileUrl);
 
         return FileUploadResponse.builder()
                 .key(request.getKey())

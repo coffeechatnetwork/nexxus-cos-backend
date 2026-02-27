@@ -12,7 +12,6 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
-import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.net.URL;
 import java.time.Duration;
@@ -28,9 +27,14 @@ public class S3ServiceImpl implements S3Service {
 
     @Override
     public URL sign(String url) {
+        return sign(url, 24 * 60 * 60L);
+    }
+
+    @Override
+    public URL sign(String url, Long signDuration) {
         String key = extractKeyFromUrl(url);
         String bucket = s3Config.getBucket();
-        return presignGetObject(bucket, key, Duration.ofMinutes(15));
+        return presignGetObject(bucket, key, Duration.ofSeconds(signDuration));
     }
 
     @Override

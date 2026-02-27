@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URL;
 
 @Slf4j
 @RestController
@@ -59,7 +58,6 @@ public class FileController {
 
     @PostMapping("/sign")
     public FileSignResponse signUrl(@RequestBody @Valid FileSignRequest req) {
-        URL signedUrl = fileApi.sign(req.getOriginalUrl());
-        return FileSignResponse.builder().signedUrl(signedUrl.toString()).build();
+        return fileApi.sign(req);
     }
 }
