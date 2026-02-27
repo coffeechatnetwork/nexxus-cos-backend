@@ -4,6 +4,7 @@ import com.nexxus.common.enums.auth.AccountType;
 import com.nexxus.common.validations.ValidPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,6 @@ public class RegisterRequest implements Serializable {
     @NotNull
     private AccountType type;
     @URL
+    @Size(min = 1, max = 2048)
     private String avatarUrl;
 }
