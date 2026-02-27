@@ -6,12 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-import java.net.URL;
 
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileSignResponse implements Serializable {
-    private URL signedUrl;
+    private String signedUrl;
 }

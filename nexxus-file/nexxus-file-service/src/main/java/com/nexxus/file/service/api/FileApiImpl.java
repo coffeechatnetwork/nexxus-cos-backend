@@ -28,14 +28,14 @@ public class FileApiImpl implements FileApi {
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Override
-    public URL sign(URL orginalUrl) {
-        return s3Service.sign(orginalUrl);
+    public URL sign(String originalUrl) {
+        return s3Service.sign(originalUrl);
     }
 
     @Override
     public List<URL> batchSign(List<URL> orginalUrlList) {
         return orginalUrlList.stream()
-                .map(url -> CompletableFuture.supplyAsync(() -> sign(url), executorService))
+                .map(url -> CompletableFuture.supplyAsync(() -> sign(url.toString()), executorService))
                 .toList()
                 .stream()
                 .map(CompletableFuture::join)
@@ -50,18 +50,12 @@ public class FileApiImpl implements FileApi {
 
         return attachments.stream()
                 .map(attachment -> {
-                    try {
-                        URL originalUrl = new URL(attachment.getUrl());
-                        URL signedUrl = sign(originalUrl);
-                        return Attachment.builder()
-                                .name(attachment.getName())
-                                .url(signedUrl.toString())
-                                .build();
-                    } catch (Exception e) {
-                        log.error("Failed to sign attachment URL: {}", attachment.getUrl(), e);
-                        return attachment;
-                    }
-                }).toList();
+                    URL signedUrl = sign(attachment.getUrl());
+                    return Attachment.builder()
+                            .name(attachment.getName())
+                            .url(signedUrl.toString())
+                            .build();
+                }).collect(Collectors.toList());
     }
 
     @Override
@@ -76,12 +70,13 @@ public class FileApiImpl implements FileApi {
         );
 
         String fileUrl = buildFileUrl(request.getKey());
+        URL signedUrl = this.sign(fileUrl);
 
         return FileUploadResponse.builder()
                 .key(request.getKey())
                 .eTag(response.eTag().replace("\"", ""))
                 .message("File uploaded successfully")
-                .signedUrl(fileUrl)
+                .signedUrl(signedUrl.toString())
                 .build();
     }
 

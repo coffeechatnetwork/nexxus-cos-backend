@@ -59,7 +59,7 @@ public class FileController {
 
     @PostMapping("/sign")
     public FileSignResponse signUrl(@RequestBody @Valid FileSignRequest req) {
-        URL signedUrl = fileApi.sign(req.getOrginalUrl());
-        return FileSignResponse.builder().signedUrl(signedUrl).build();
+        URL signedUrl = fileApi.sign(req.getOriginalUrl());
+        return FileSignResponse.builder().signedUrl(signedUrl.toString()).build();
     }
 }

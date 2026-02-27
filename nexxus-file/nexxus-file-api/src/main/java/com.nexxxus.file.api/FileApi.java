@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface FileApi {
 
-    URL sign(URL orginalUrl);
+    URL sign(String originalUrl);
 
     List<URL> batchSign(List<URL> orginalUrlList);
 
