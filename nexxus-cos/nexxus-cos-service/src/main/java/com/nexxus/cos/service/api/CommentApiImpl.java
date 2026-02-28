@@ -1,12 +1,15 @@
 package com.nexxus.cos.service.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.nexxus.common.ErrorDefEnum;
+import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.cos.comment.CommentType;
 import com.nexxus.common.enums.cos.comment.EntityType;
 import com.nexxus.cos.api.CommentApi;
 import com.nexxus.cos.api.dto.CommentDto;
 import com.nexxus.cos.api.dto.CreateCommentRequest;
+import com.nexxus.cos.api.dto.EditCommentRequest;
 import com.nexxus.cos.service.entity.CommentEntity;
 import com.nexxus.cos.service.service.CommentService;
 import com.nexxxus.file.api.FileApi;
@@ -53,8 +56,31 @@ public class CommentApiImpl implements CommentApi {
     }
 
     @Override
-    public CommentDto edit(CreateCommentRequest req) {
-        return null;
+    public CommentDto edit(Long commentId, EditCommentRequest req) {
+        CommentEntity commentEntity = commentService.getById(commentId);
+        if (commentEntity == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("Comment not found"));
+        }
+
+        commentEntity.setContent(req.getContent());
+        if (req.getAttachments() != null) {
+            commentEntity.setAttachments(req.getAttachments());
+        }
+
+        commentService.updateById(commentEntity);
+
+        return CommentDto.builder()
+                .id(commentEntity.getId())
+                .entityId(commentEntity.getEntityId())
+                .entityType(commentEntity.getEntityType())
+                .content(commentEntity.getContent())
+                .type(commentEntity.getType())
+                .attachments(fileApi.signAttachments(commentEntity.getAttachments()))
+                .createdBy(commentEntity.getCreatedBy())
+                .createdAt(commentEntity.getCreatedAt())
+                .updatedBy(commentEntity.getUpdatedBy())
+                .updatedAt(commentEntity.getUpdatedAt())
+                .build();
     }
 
     @Override

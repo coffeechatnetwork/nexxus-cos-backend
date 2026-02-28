@@ -1,15 +1,18 @@
 package com.nexxus.cos.service.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.nexxus.common.BaseEntity;
 import com.nexxus.common.enums.cos.comment.CommentType;
 import com.nexxus.common.enums.cos.comment.EntityType;
 import com.nexxus.common.vo.Attachment;
+import com.nexxus.cos.service.entity.handlers.JsonbAttachmentListTypeHandler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
@@ -24,5 +27,6 @@ public class CommentEntity extends BaseEntity {
     private EntityType entityType;
     private String content;
     private CommentType type;
+    @TableField(typeHandler = JsonbAttachmentListTypeHandler.class, jdbcType = JdbcType.OTHER)
     private List<Attachment> attachments;
 }

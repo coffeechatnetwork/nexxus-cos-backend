@@ -4,10 +4,12 @@ import com.nexxus.common.PageResult;
 import com.nexxus.cos.api.CommentApi;
 import com.nexxus.cos.api.dto.CommentDto;
 import com.nexxus.cos.api.dto.CreateCommentRequest;
+import com.nexxus.cos.api.dto.EditCommentRequest;
 import com.nexxus.cos.api.dto.ListCommentRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,5 +35,10 @@ public class CommentController {
                 req.getEntityType(),
                 req.getPage(),
                 req.getPageSize());
+    }
+
+    @PostMapping("/{commentId}/edit")
+    public CommentDto edit(@PathVariable Long commentId, @RequestBody @Valid EditCommentRequest req) {
+        return commentApi.edit(commentId, req);
     }
 }
