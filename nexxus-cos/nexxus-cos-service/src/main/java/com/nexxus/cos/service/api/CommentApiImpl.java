@@ -85,7 +85,11 @@ public class CommentApiImpl implements CommentApi {
 
     @Override
     public Boolean delete(Long commentId) {
-        return null;
+        CommentEntity commentEntity = commentService.getById(commentId);
+        if (commentEntity == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("Comment not found"));
+        }
+        return commentService.removeById(commentEntity);
     }
 
     @Override

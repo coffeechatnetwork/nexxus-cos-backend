@@ -41,4 +41,9 @@ public class CommentController {
     public CommentDto edit(@PathVariable Long commentId, @RequestBody @Valid EditCommentRequest req) {
         return commentApi.edit(commentId, req);
     }
+
+    @PostMapping("/{commentId}/delete")
+    public Boolean delete(@PathVariable Long commentId) {
+        return commentApi.delete(commentId);
+    }
 }

@@ -21,7 +21,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentEntity
     @Override
     public Page<CommentEntity> listComments(String entityId, EntityType entityType, Long page, Long pageSize) {
         Page<CommentEntity> pageParam = new Page<>(page, pageSize);
-        LambdaQueryWrapper<CommentEntity> queryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<CommentEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(CommentEntity::getEntityId, entityId);
         queryWrapper.eq(CommentEntity::getEntityType, entityType);
         queryWrapper.orderByDesc(CommentEntity::getId);
