@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum EntityType implements BaseEnum {
-    DELIVERABLE("deliverable", "Deliverable"),
-    TASK("task", "Task"),
-    DOCUMENT("document", "Document"),
+    DELIVERABLE("deliverable", "Deliverables"),
+    KEY_DATE("key_date", "Key Dates"),
+    TASK("task", "Tasks"),
+    QA("qa", "Q&A"),
+    DOCUMENT("document", "Documents"),
     ;
 
     private final String value;
