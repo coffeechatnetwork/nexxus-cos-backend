@@ -1,6 +1,8 @@
 package com.nexxus.cos.service.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.nexxus.common.vo.Attachment;
+import com.nexxus.cos.service.entity.handlers.JsonbAttachmentListTypeHandler;
 import com.nexxus.cos.service.entity.handlers.JsonbStringListTypeHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +24,8 @@ public class MyBatisPlusConfig {
         TypeHandlerRegistry registry = sqlSessionFactory.getConfiguration().getTypeHandlerRegistry();
         registry.register(new TypeReference<List<String>>(){}.getClass(), JdbcType.OTHER, JsonbStringListTypeHandler.class);
         registry.register(JsonbStringListTypeHandler.class);
+
+        registry.register(new TypeReference<List<Attachment>>(){}.getClass(), JdbcType.OTHER, JsonbAttachmentListTypeHandler.class);
+        registry.register(JsonbAttachmentListTypeHandler.class);
     }
 }

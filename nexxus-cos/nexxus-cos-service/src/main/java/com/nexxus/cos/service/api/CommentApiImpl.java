@@ -1,7 +1,6 @@
 package com.nexxus.cos.service.api;
 
-import com.nexxus.common.AccountInfo;
-import com.nexxus.common.AccountInfoContext;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.cos.comment.CommentType;
 import com.nexxus.common.enums.cos.comment.EntityType;
@@ -10,9 +9,13 @@ import com.nexxus.cos.api.dto.CommentDto;
 import com.nexxus.cos.api.dto.CreateCommentRequest;
 import com.nexxus.cos.service.entity.CommentEntity;
 import com.nexxus.cos.service.service.CommentService;
+import com.nexxxus.file.api.FileApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -20,10 +23,10 @@ import org.springframework.stereotype.Component;
 public class CommentApiImpl implements CommentApi {
 
     private final CommentService commentService;
+    private final FileApi fileApi;
 
     @Override
     public CommentDto create(CreateCommentRequest req) {
-        AccountInfo accountInfo = AccountInfoContext.get();
 
         CommentEntity commentEntity = CommentEntity.builder()
                 .entityId(req.getEntityId())
@@ -61,6 +64,29 @@ public class CommentApiImpl implements CommentApi {
 
     @Override
     public PageResult<CommentDto> listEntityComments(String entityId, EntityType entityType, Long page, Long pageSize) {
-        return null;
+        Page<CommentEntity> commentEntityPage = commentService.listComments(entityId, entityType, page, pageSize);
+
+        List<CommentDto> commentDtos = commentEntityPage.getRecords().stream()
+                .parallel()
+                .map(entity -> CommentDto.builder()
+                        .id(entity.getId())
+                        .entityId(entity.getEntityId())
+                        .entityType(entity.getEntityType())
+                        .content(entity.getContent())
+                        .type(entity.getType())
+                        .attachments(fileApi.signAttachments(entity.getAttachments()))
+                        .createdBy(entity.getCreatedBy())
+                        .createdAt(entity.getCreatedAt())
+                        .updatedBy(entity.getUpdatedBy())
+                        .updatedAt(entity.getUpdatedAt())
+                        .build())
+                .collect(Collectors.toList());
+
+        return PageResult.<CommentDto>builder()
+                .records(commentDtos)
+                .total(commentEntityPage.getTotal())
+                .pageSize(commentEntityPage.getSize())
+                .page(commentEntityPage.getCurrent())
+                .build();
     }
 }

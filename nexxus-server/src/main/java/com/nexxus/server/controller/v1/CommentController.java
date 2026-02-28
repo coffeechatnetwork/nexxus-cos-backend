@@ -1,8 +1,10 @@
 package com.nexxus.server.controller.v1;
 
+import com.nexxus.common.PageResult;
 import com.nexxus.cos.api.CommentApi;
 import com.nexxus.cos.api.dto.CommentDto;
 import com.nexxus.cos.api.dto.CreateCommentRequest;
+import com.nexxus.cos.api.dto.ListCommentRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,5 +24,14 @@ public class CommentController {
     @PostMapping("")
     public CommentDto create(@RequestBody @Valid CreateCommentRequest req) {
         return commentApi.create(req);
+    }
+
+    @PostMapping("/list")
+    public PageResult<CommentDto> list(@RequestBody @Valid ListCommentRequest req) {
+        return commentApi.listEntityComments(
+                req.getEntityId(),
+                req.getEntityType(),
+                req.getPage(),
+                req.getPageSize());
     }
 }
