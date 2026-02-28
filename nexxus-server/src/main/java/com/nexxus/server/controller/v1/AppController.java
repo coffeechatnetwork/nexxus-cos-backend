@@ -49,6 +49,8 @@ public class AppController {
                 CosAuthRegisterRequest cosRegisterReq = CosAuthRegisterRequest.builder()
                         .email(req.getEmail())
                         .password(req.getPassword())
+                        .firstName(req.getFirstName())
+                        .lastName(req.getLastName())
                         .username(req.getUsername())
                         .orgId(req.getOrgId())
                         .type(req.getType())

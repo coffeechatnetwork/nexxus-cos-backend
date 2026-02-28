@@ -19,6 +19,8 @@ public class UserEntity extends BaseEntity {
     private String accountId;
     private Long orgId;
     private String email;
+    private String firstName;
+    private String lastName;
     private String username;
     private String avatarUrl;
     private UserStatus status;

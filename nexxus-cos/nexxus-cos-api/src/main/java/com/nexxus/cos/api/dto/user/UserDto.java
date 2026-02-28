@@ -14,6 +14,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class UserDto implements Serializable {
     private String accountId;
+    private String firstName;
+    private String lastName;
     private String username;
     private String email;
     private String avatarUrl;
