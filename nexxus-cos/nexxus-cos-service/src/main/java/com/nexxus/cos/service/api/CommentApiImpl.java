@@ -10,9 +10,9 @@ import com.nexxus.cos.api.CommentApi;
 import com.nexxus.cos.api.dto.comment.CommentDto;
 import com.nexxus.cos.api.dto.comment.CreateCommentRequest;
 import com.nexxus.cos.api.dto.comment.EditCommentRequest;
+import com.nexxus.cos.service.api.converter.CommentConverter;
 import com.nexxus.cos.service.entity.CommentEntity;
 import com.nexxus.cos.service.service.CommentService;
-import com.nexxxus.file.api.FileApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class CommentApiImpl implements CommentApi {
 
     private final CommentService commentService;
-    private final FileApi fileApi;
+    private final CommentConverter commentConverter;
 
     @Override
     public CommentDto create(CreateCommentRequest req) {
@@ -42,18 +42,7 @@ public class CommentApiImpl implements CommentApi {
 
         commentService.save(commentEntity);
 
-        return CommentDto.builder()
-                .id(commentEntity.getId())
-                .entityId(commentEntity.getEntityId())
-                .entityType(commentEntity.getEntityType())
-                .content(commentEntity.getContent())
-                .type(commentEntity.getType())
-                .attachments(commentEntity.getAttachments())
-                .createdBy(commentEntity.getCreatedBy())
-                .createdAt(commentEntity.getCreatedAt())
-                .updatedBy(commentEntity.getUpdatedBy())
-                .updatedAt(commentEntity.getUpdatedAt())
-                .build();
+        return commentConverter.toCommentDto(commentEntity);
     }
 
     @Override
@@ -70,18 +59,7 @@ public class CommentApiImpl implements CommentApi {
 
         commentService.updateById(commentEntity);
 
-        return CommentDto.builder()
-                .id(commentEntity.getId())
-                .entityId(commentEntity.getEntityId())
-                .entityType(commentEntity.getEntityType())
-                .content(commentEntity.getContent())
-                .type(commentEntity.getType())
-                .attachments(fileApi.signAttachments(commentEntity.getAttachments()))
-                .createdBy(commentEntity.getCreatedBy())
-                .createdAt(commentEntity.getCreatedAt())
-                .updatedBy(commentEntity.getUpdatedBy())
-                .updatedAt(commentEntity.getUpdatedAt())
-                .build();
+        return commentConverter.toCommentDto(commentEntity);
     }
 
     @Override
@@ -101,18 +79,7 @@ public class CommentApiImpl implements CommentApi {
 
         List<CommentDto> commentDtos = commentEntityPage.getRecords().stream()
                 .parallel()
-                .map(entity -> CommentDto.builder()
-                        .id(entity.getId())
-                        .entityId(entity.getEntityId())
-                        .entityType(entity.getEntityType())
-                        .content(entity.getContent())
-                        .type(entity.getType())
-                        .attachments(fileApi.signAttachments(entity.getAttachments()))
-                        .createdBy(entity.getCreatedBy())
-                        .createdAt(entity.getCreatedAt())
-                        .updatedBy(entity.getUpdatedBy())
-                        .updatedAt(entity.getUpdatedAt())
-                        .build())
+                .map(commentConverter::toCommentDto)
                 .collect(Collectors.toList());
 
         return PageResult.<CommentDto>builder()
