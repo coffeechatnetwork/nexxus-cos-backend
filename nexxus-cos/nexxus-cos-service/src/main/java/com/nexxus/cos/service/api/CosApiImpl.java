@@ -8,12 +8,12 @@ import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.cos.project.ProjectStatus;
 import com.nexxus.cos.api.CosApi;
-import com.nexxus.cos.api.OrgApi;
-import com.nexxus.cos.api.dto.organization.OrganizationDto;
 import com.nexxus.cos.api.dto.project.CreateProjectRequest;
 import com.nexxus.cos.api.dto.project.ProjectDto;
 import com.nexxus.cos.api.dto.project.ProjectListItem;
+import com.nexxus.cos.service.entity.OrganizationEntity;
 import com.nexxus.cos.service.entity.ProjectEntity;
+import com.nexxus.cos.service.service.OrganizationService;
 import com.nexxus.cos.service.service.ProjectService;
 import com.nexxxus.file.api.FileApi;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CosApiImpl implements CosApi {
     private final ProjectService projectService;
-    private final OrgApi orgApi;
+    private final OrganizationService organizationService;
     private final FileApi fileApi;
 
     @Override
@@ -37,8 +37,8 @@ public class CosApiImpl implements CosApi {
         AccountInfo accountInfo = AccountInfoContext.get();
         // check org
         Long orgId = accountInfo.getOrgId();
-        OrganizationDto organizationDto = orgApi.getOrganizationById(orgId);
-        if (organizationDto == null) {
+        OrganizationEntity organizationEntity = organizationService.getById(orgId);
+        if (organizationEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("organization not found"));
         }
         // check project
