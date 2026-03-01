@@ -13,6 +13,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
@@ -32,9 +33,21 @@ public class S3ServiceImpl implements S3Service {
 
     @Override
     public URL sign(String url, Long signDuration) {
-        String key = extractKeyFromUrl(url);
-        String bucket = s3Config.getBucket();
-        return presignGetObject(bucket, key, Duration.ofSeconds(signDuration));
+        URL signedUrl;
+        try {
+            signedUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("malformed url", e);
+        }
+        try {
+            String key = extractKeyFromUrl(url);
+            String bucket = s3Config.getBucket();
+            signedUrl = presignGetObject(bucket, key, Duration.ofSeconds(signDuration));
+        } catch (Exception e) {
+            log.warn("sign url failed, url: {}", url);
+        }
+
+        return signedUrl;
     }
 
     @Override

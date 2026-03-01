@@ -82,7 +82,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public NResponse<?> illegalArgumentException(IllegalArgumentException e) {
         log.error("IllegalArgumentException Exception", e);
-        return new NResponse<>(400, "illegal argument", null);
+        return new NResponse<>(400, e.getMessage(), null);
     }
 
     @ExceptionHandler(Exception.class)

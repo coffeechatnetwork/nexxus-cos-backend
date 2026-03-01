@@ -17,6 +17,7 @@ import com.nexxus.cos.api.dto.auth.CosAuthLoginRequest;
 import com.nexxus.cos.api.dto.auth.CosAuthRegisterRequest;
 import com.nexxus.cos.api.dto.auth.CosAuthResponse;
 import com.nexxus.cos.api.dto.user.UserDto;
+import com.nexxus.cos.service.api.converter.UserConverter;
 import com.nexxus.cos.service.entity.UserEntity;
 import com.nexxus.cos.service.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class UserApiImpl implements UserApi {
 
     private final AuthApi authApi;
     private final UserService userService;
+    private final UserConverter userConverter;
 
     @Override
     public CosAuthResponse register(CosAuthRegisterRequest req) {
@@ -95,15 +97,7 @@ public class UserApiImpl implements UserApi {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("user of this accountId not found"));
         }
 
-        return UserDto.builder()
-                .accountId(userEntity.getAccountId())
-                .firstName(userEntity.getFirstName())
-                .lastName(userEntity.getLastName())
-                .username(userEntity.getUsername())
-                .email(userEntity.getEmail())
-                .avatarUrl(userEntity.getAvatarUrl())
-                .status(userEntity.getStatus())
-                .build();
+        return userConverter.toUserDto(userEntity);
     }
 
     @Override
@@ -113,15 +107,8 @@ public class UserApiImpl implements UserApi {
         Page<UserEntity> entityPage = userService.listUsers(orgId, page, pageSize);
 
         List<UserDto> userDtos = entityPage.getRecords().stream()
-                .map(entity -> UserDto.builder()
-                        .accountId(entity.getAccountId())
-                        .firstName(entity.getFirstName())
-                        .lastName(entity.getLastName())
-                        .username(entity.getUsername())
-                        .email(entity.getEmail())
-                        .avatarUrl(entity.getAvatarUrl())
-                        .status(entity.getStatus())
-                        .build()).collect(Collectors.toList());
+                .parallel()
+                .map(userConverter::toUserDto).collect(Collectors.toList());
 
         return PageResult.<UserDto>builder()
                 .records(userDtos)
