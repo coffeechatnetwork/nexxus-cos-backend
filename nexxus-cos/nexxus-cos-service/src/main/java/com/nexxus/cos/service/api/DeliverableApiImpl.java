@@ -6,6 +6,7 @@ import com.nexxus.common.enums.cos.deliverable.DeliverableStatus;
 import com.nexxus.cos.api.DeliverableApi;
 import com.nexxus.cos.api.dto.deliverable.CreateDeliverableRequest;
 import com.nexxus.cos.api.dto.deliverable.DeliverableDto;
+import com.nexxus.cos.api.dto.deliverable.EditDeliverableRequest;
 import com.nexxus.cos.service.api.converter.DeliverableConverter;
 import com.nexxus.cos.service.entity.DeliverableEntity;
 import com.nexxus.cos.service.entity.UserEntity;
@@ -61,6 +62,19 @@ public class DeliverableApiImpl implements DeliverableApi {
         if (deliverableEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("deliverable not found"));
         }
+        return deliverableConverter.toDeliverableDto(deliverableEntity);
+    }
+
+    @Override
+    public DeliverableDto edit(String displayId, EditDeliverableRequest req) {
+        DeliverableEntity deliverableEntity = deliverableService.getByDisplayId(displayId);
+        if (deliverableEntity == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("deliverable not found"));
+        }
+        deliverableEntity.setAttachments(req.getAttachments());
+        deliverableEntity.setParticipants(req.getParticipants());
+        deliverableEntity.setStatus(req.getStatus());
+        deliverableService.updateById(deliverableEntity);
         return deliverableConverter.toDeliverableDto(deliverableEntity);
     }
 }

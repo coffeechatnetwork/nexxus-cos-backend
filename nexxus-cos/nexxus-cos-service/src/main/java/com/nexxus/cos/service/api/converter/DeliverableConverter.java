@@ -1,14 +1,18 @@
 package com.nexxus.cos.service.api.converter;
 
 import com.nexxus.cos.api.dto.deliverable.DeliverableDto;
+import com.nexxus.cos.api.dto.user.UserDto;
 import com.nexxus.cos.service.entity.DeliverableEntity;
 import com.nexxus.cos.service.entity.UserEntity;
 import com.nexxus.cos.service.service.UserService;
 import com.nexxxus.file.api.FileApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -22,6 +26,13 @@ public class DeliverableConverter {
         UserEntity assignee = userService.getByAccountId(entity.getAssignee());
         UserEntity creator = userService.getByAccountId(entity.getCreatedBy());
         UserEntity updater = userService.getByAccountId(entity.getUpdatedBy());
+        List<UserDto> participants = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entity.getParticipants())) {
+            participants = userService.mapByAccountIds(entity.getParticipants()).values().stream()
+                    .map(userConverter::toUserDto)
+                    .collect(Collectors.toList());
+        }
+
         return DeliverableDto.builder()
                 .displayId(entity.getDisplayId())
                 .title(entity.getTitle())
@@ -29,7 +40,7 @@ public class DeliverableConverter {
                 .longDesc(entity.getLongDesc())
                 .assignee(userConverter.toUserDto(assignee))
                 .deadline(entity.getDeadline())
-                .participants(new ArrayList<>())
+                .participants(participants)
                 .status(entity.getStatus())
                 .attachments(fileApi.signAttachments(entity.getAttachments()))
                 .createdBy(userConverter.toUserDto(creator))

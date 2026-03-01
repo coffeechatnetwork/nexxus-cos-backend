@@ -3,6 +3,7 @@ package com.nexxus.server.controller.v1;
 import com.nexxus.cos.api.DeliverableApi;
 import com.nexxus.cos.api.dto.deliverable.CreateDeliverableRequest;
 import com.nexxus.cos.api.dto.deliverable.DeliverableDto;
+import com.nexxus.cos.api.dto.deliverable.EditDeliverableRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,5 +31,11 @@ public class DeliverableController {
     @GetMapping("/{displayId}")
     public DeliverableDto detail(@PathVariable String displayId) {
         return deliverableApi.getByDisplayId(displayId);
+    }
+
+    @PostMapping("/{displayId}/edit")
+    public DeliverableDto edit(@PathVariable String displayId, @RequestBody @Valid EditDeliverableRequest req) {
+        log.info("edit deliverable req: {}", req);
+        return deliverableApi.edit(displayId, req);
     }
 }

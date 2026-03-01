@@ -5,6 +5,7 @@ import com.nexxus.common.handlers.UuidTypeHandler;
 import com.nexxus.common.vo.Attachment;
 import com.nexxus.cos.service.entity.handlers.JsonbAttachmentListTypeHandler;
 import com.nexxus.cos.service.entity.handlers.JsonbStringListTypeHandler;
+import com.nexxus.cos.service.entity.handlers.JsonbUuidListTypeHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -32,5 +33,8 @@ public class MyBatisPlusConfig {
 
         registry.register(new TypeReference<List<Attachment>>(){}.getClass(), JdbcType.OTHER, JsonbAttachmentListTypeHandler.class);
         registry.register(JsonbAttachmentListTypeHandler.class);
+
+        registry.register(new TypeReference<List<UUID>>(){}.getClass(), JdbcType.OTHER, JsonbUuidListTypeHandler.class);
+        registry.register(JsonbUuidListTypeHandler.class);
     }
 }
