@@ -13,6 +13,8 @@ public interface UserService extends IService<UserEntity> {
 
     UserEntity getByAccountId(UUID accountId);
 
+    UserEntity getByAccountId(String accountIdStr);
+
     Page<UserEntity> listUsers(Long orgId, Long page, Long pageSize);
 
     Map<UUID, UserEntity> mapByAccountIds(List<UUID> accountIds);

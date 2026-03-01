@@ -14,7 +14,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         AccountInfo accountInfo = AccountInfoContext.get();
-        String operator = accountInfo != null ? accountInfo.getEmail() : "system";
+        String operator = accountInfo != null ? accountInfo.getAccountId().toString() : "system";
         this.strictInsertFill(metaObject, "createdAt", Instant.class, Instant.now());
         this.strictInsertFill(metaObject, "updatedAt", Instant.class, Instant.now());
         this.strictInsertFill(metaObject, "createdBy", String.class, operator);
@@ -24,7 +24,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         AccountInfo accountInfo = AccountInfoContext.get();
-        String operator = accountInfo != null ? accountInfo.getEmail() : "system";
+        String operator = accountInfo != null ? accountInfo.getAccountId().toString() : "system";
         this.strictUpdateFill(metaObject, "updatedAt", Instant.class, Instant.now());
         this.strictUpdateFill(metaObject, "updatedBy", String.class, operator);
 

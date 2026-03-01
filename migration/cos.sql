@@ -108,4 +108,5 @@ create table if not exists cos_deliverable
     deleted_at   timestamp                                    null
 );
 
-create index if not exists idx_deliverable_display_id on cos_deliverable (display_id);
+create unique index if not exists uq_deliverable_display_id on cos_deliverable (display_id);
+create unique index if not exists uq_deliverable_title on cos_deliverable (title);

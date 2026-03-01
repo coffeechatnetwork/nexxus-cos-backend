@@ -8,9 +8,11 @@ import com.nexxus.cos.service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
     @Override
     public UserEntity getByEmail(String email) {
+        if (!StringUtils.hasText(email)) {
+            return null;
+        }
         return lambdaQuery()
                 .eq(UserEntity::getEmail, email)
                 .one();
@@ -27,9 +32,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Override
     public UserEntity getByAccountId(UUID accountId) {
+        if (accountId == null) {
+            return null;
+        }
         return lambdaQuery()
                 .eq(UserEntity::getAccountId, accountId)
                 .one();
+    }
+
+    @Override
+    public UserEntity getByAccountId(String accountIdStr) {
+        if (!StringUtils.hasText(accountIdStr)) {
+            return null;
+        }
+        if (Objects.equals(accountIdStr, "system")) {
+            return UserEntity.builder().firstName("system").username("system").build();
+        }
+        UUID accountId = UUID.fromString(accountIdStr);
+        return getByAccountId(accountId);
     }
 
     @Override

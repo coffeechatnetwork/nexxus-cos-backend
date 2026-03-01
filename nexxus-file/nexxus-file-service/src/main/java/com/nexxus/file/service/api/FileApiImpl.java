@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
 import java.net.URL;
@@ -33,20 +34,32 @@ public class FileApiImpl implements FileApi {
     public FileSignResponse sign(FileSignRequest req) {
         String originalUrl = req.getOriginalUrl();
         Long signDuration = req.getSignDuration();
-        URL signedUrl = s3Service.sign(originalUrl, signDuration);
+        String signedUrl = sign(originalUrl, signDuration);
         return FileSignResponse.builder()
-                .signedUrl(signedUrl.toString())
+                .signedUrl(signedUrl)
                 .build();
+    }
+
+    @Override
+    public String sign(String originalUrl) {
+        return sign(originalUrl, 24 * 60 * 60L);
+    }
+
+    public String sign(String originalUrl, Long signDuration) {
+        if (!StringUtils.hasText(originalUrl)) {
+            return null;
+        }
+        URL signedUrl = s3Service.sign(originalUrl, signDuration);
+        return signedUrl.toString();
     }
 
     @Override
     public List<String> batchSign(List<String> originalUrls) {
         return originalUrls.stream()
-                .map(url -> CompletableFuture.supplyAsync(() -> s3Service.sign(url), executorService))
+                .map(url -> CompletableFuture.supplyAsync(() -> sign(url), executorService))
                 .toList()
                 .stream()
                 .map(CompletableFuture::join)
-                .map(URL::toString)
                 .collect(Collectors.toList());
     }
 
@@ -68,10 +81,10 @@ public class FileApiImpl implements FileApi {
 
         return attachments.stream()
                 .map(attachment -> {
-                    URL signedUrl = s3Service.sign(attachment.getUrl());
+                    String signedUrl = sign(attachment.getUrl());
                     return Attachment.builder()
                             .name(attachment.getName())
-                            .url(signedUrl.toString())
+                            .url(signedUrl)
                             .build();
                 }).collect(Collectors.toList());
     }

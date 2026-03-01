@@ -12,4 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DeliverableServiceImpl extends ServiceImpl<DeliverableMapper, DeliverableEntity> implements DeliverableService {
+    @Override
+    public DeliverableEntity getByTitle(String title) {
+        return lambdaQuery()
+                .eq(DeliverableEntity::getTitle, title)
+                .one();
+    }
 }

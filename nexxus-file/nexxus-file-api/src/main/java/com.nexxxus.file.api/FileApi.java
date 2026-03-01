@@ -13,6 +13,10 @@ public interface FileApi {
 
     FileSignResponse sign(FileSignRequest req);
 
+    String sign(String originalUrl);
+
+    String sign(String originalUrl, Long signDuration);
+
     List<String> batchSign(List<String> originalUrls);
 
     List<URL> batchSignURL(List<URL> orginalUrlList);
