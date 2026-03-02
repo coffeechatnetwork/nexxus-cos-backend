@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @TableName("cos_document_file")
 public class DocumentFileEntity extends BaseEntity {
+    private Long orgId;
     private String folderName;
     private String name;
     private String docUrl;

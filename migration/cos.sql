@@ -144,6 +144,7 @@ create table if not exists cos_document_folder
 (
     id         bigserial                           not null primary key,
     version    integer                             null,
+    org_id     bigint                              not null,
     name       varchar(64)                         not null,
     created_by varchar(64)                         not null,
     updated_by varchar(64)                         not null,
@@ -161,6 +162,7 @@ create table if not exists cos_document_file
 (
     id          bigserial                           not null primary key,
     version     integer                             null,
+    org_id      bigint                              not null,
     folder_name varchar(64)                         not null,
     name        varchar(64)                         not null,
     doc_url     text                                not null,

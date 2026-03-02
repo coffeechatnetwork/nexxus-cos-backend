@@ -1,5 +1,7 @@
 package com.nexxus.cos.api.dto.document;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,10 @@ import java.io.Serializable;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DocumentFolderDto implements Serializable {
-    private String name;
-    private Long fileCount;
+public class ListDocumentFolderRequest implements Serializable {
+    @NotNull
+    private Long page;
+    @NotNull
+    @Max(value = 200)
+    private Long pageSize;
 }
