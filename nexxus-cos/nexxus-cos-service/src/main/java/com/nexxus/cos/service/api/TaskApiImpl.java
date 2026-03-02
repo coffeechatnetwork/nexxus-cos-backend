@@ -60,14 +60,24 @@ public class TaskApiImpl implements TaskApi {
     public TaskDto getByDisplayId(String displayId) {
         TaskEntity taskEntity = taskService.getByDisplayId(displayId);
         if (taskEntity == null) {
-            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("task not found for this id"));
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("[detail]task not found"));
         }
         return taskConverter.toTaskDto(taskEntity);
     }
 
     @Override
     public TaskDto edit(String displayId, EditTaskRequest req) {
-        return null;
+        TaskEntity taskEntity = taskService.getByDisplayId(displayId);
+        if (taskEntity == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("[edit]task not found"));
+        }
+        taskEntity.setAttachments(req.getAttachments());
+        taskEntity.setParticipants(req.getParticipants());
+        taskEntity.setStatus(req.getStatus());
+        taskEntity.setRelatedDeliverables(req.getRelatedDeliverables());
+
+        taskService.updateById(taskEntity);
+        return taskConverter.toTaskDto(taskEntity);
     }
 
     @Override

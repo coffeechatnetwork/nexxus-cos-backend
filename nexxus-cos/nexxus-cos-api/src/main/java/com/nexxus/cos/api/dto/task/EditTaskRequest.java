@@ -19,5 +19,5 @@ public class EditTaskRequest implements Serializable {
     private List<Attachment> attachments;
     private List<UUID> participants;
     private TaskStatus status;
-    private List<UUID> relatedDeliverables;
+    private List<String> relatedDeliverables;
 }
