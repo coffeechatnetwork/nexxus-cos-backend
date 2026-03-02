@@ -1,6 +1,8 @@
 package com.nexxus.cos.service.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.nexxus.common.AccountInfo;
+import com.nexxus.common.AccountInfoContext;
 import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
@@ -34,6 +36,10 @@ public class TaskApiImpl implements TaskApi {
 
     @Override
     public TaskDto createTask(CreateTaskRequest req) {
+        // get orgId from context
+        AccountInfo accountInfo = AccountInfoContext.get();
+        Long orgId = accountInfo.getOrgId();
+
         TaskEntity taskEntity = taskService.getByTitle(req.getTitle());
         if (taskEntity != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("task already exist"));
@@ -46,6 +52,7 @@ public class TaskApiImpl implements TaskApi {
         }
 
         TaskEntity newTask = TaskEntity.builder()
+                .orgId(orgId)
                 .displayId(UUID.randomUUID().toString())
                 .title(req.getTitle())
                 .shortDesc(req.getShortDesc())

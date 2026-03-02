@@ -47,6 +47,7 @@ public class TaskConverter {
                 .toList();
 
         return TaskDto.builder()
+                .orgId(entity.getOrgId())
                 .displayId(entity.getDisplayId())
                 .title(entity.getTitle())
                 .shortDesc(entity.getShortDesc())
@@ -73,6 +74,7 @@ public class TaskConverter {
             daysToDeadline = (int) days;
         }
         return TaskListItem.builder()
+                .orgId(entity.getOrgId())
                 .displayId(entity.getDisplayId())
                 .title(entity.getTitle())
                 .assignee(userConverter.toUserDto(assignee))

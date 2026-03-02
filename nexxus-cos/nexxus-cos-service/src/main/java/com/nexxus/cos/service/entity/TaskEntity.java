@@ -27,6 +27,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @TableName(value = "cos_task", autoResultMap = true)
 public class TaskEntity extends BaseEntity {
+    private Long orgId;
     private String displayId;
     private String title;
     private String shortDesc;
