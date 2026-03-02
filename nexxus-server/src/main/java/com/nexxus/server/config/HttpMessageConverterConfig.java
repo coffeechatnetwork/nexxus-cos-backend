@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.nexxus.common.BaseEnum;
 import com.nexxus.common.BaseEnumDeserializer;
 import com.nexxus.common.BaseEnumSerializer;
+import com.nexxus.common.InstantDeserializer;
+import com.nexxus.common.InstantSerializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
@@ -14,6 +16,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.time.Instant;
 import java.util.List;
 
 @Configuration
@@ -21,6 +24,9 @@ public class HttpMessageConverterConfig implements WebMvcConfigurer {
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         SimpleModule simpleModule = new SimpleModule();
+
+        simpleModule.addSerializer(Instant.class, new InstantSerializer());
+        simpleModule.addDeserializer(Instant.class, new InstantDeserializer());
 
         simpleModule.addSerializer(Enum.class, new BaseEnumSerializer());
         simpleModule.addDeserializer(Enum.class, new BaseEnumDeserializer());
