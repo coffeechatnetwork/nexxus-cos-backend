@@ -218,7 +218,8 @@ create table if not exists cos_dev_checklist
     org_id      bigint                                       not null,
     project_id  bigint                                       not null,
     display_id  varchar(64)                                  not null,
-    name        varchar(64)                                  not null,
+    title       varchar(64)                                  not null,
+    description text                                         null,
     category    varchar(32)                                  not null,
     status      varchar(32)                                  not null,
     waitingOn   varchar(128)                                 null,
@@ -232,4 +233,4 @@ create table if not exists cos_dev_checklist
 );
 
 create unique index if not exists uq_dev_checklist_display_id on cos_dev_checklist (display_id);
-create unique index if not exists uq_dev_checklist_project_name on cos_dev_checklist (project_id, name);
+create unique index if not exists uq_dev_checklist_project_name on cos_dev_checklist (project_id, title);
