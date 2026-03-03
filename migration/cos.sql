@@ -160,7 +160,7 @@ create table if not exists cos_document_folder
     deleted_at timestamp                           null
 );
 
-create unique index if not exists uq_doc_folder_project_name on cos_document_folder (project_id, name);
+create unique index if not exists uq_doc_folder_project_name on cos_document_folder (project_id, name) where deleted_at is null;
 
 -- =============================================
 
@@ -181,7 +181,7 @@ create table if not exists cos_document_file
     deleted_at  timestamp                           null
 );
 
-create unique index if not exists uq_doc_file_project_folder_name on cos_document_file (project_id, folder_name, name);
+create unique index if not exists uq_doc_file_project_folder_name on cos_document_file (project_id, folder_name, name) where deleted_at is null;
 
 -- =============================================
 
