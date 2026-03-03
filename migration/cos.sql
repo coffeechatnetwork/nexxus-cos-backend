@@ -182,3 +182,29 @@ create table if not exists cos_document_file
 );
 
 create unique index if not exists uq_doc_file_project_folder_name on cos_document_file (project_id, folder_name, name);
+
+-- =============================================
+
+create table if not exists cos_key_date
+(
+    id             bigserial                                    not null primary key,
+    version        integer                                      null,
+    org_id         bigint                                       not null,
+    project_id     bigint                                       not null,
+    display_id     varchar(64)                                  not null,
+    title          varchar(128)                                 not null,
+    short_desc     varchar(64)                                  null,
+    long_desc      text                                         null,
+    category       varchar(128)                                 not null,
+    reference_date timestamp                                    null,
+    attachments    jsonb     default JSON_ARRAY(RETURNING json) not null,
+    created_by     varchar(64)                                  not null,
+    updated_by     varchar(64)                                  not null,
+    deleted_by     varchar(64)                                  null,
+    created_at     timestamp DEFAULT CURRENT_TIMESTAMP          not null,
+    updated_at     timestamp DEFAULT CURRENT_TIMESTAMP          not null,
+    deleted_at     timestamp                                    null
+);
+
+create unique index if not exists uq_key_date_display_id on cos_key_date (display_id);
+create unique index if not exists uq_key_date_project_title on cos_key_date (project_id, title);
