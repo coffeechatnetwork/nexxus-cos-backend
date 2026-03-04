@@ -32,6 +32,7 @@ public class QuestionEntity extends BaseEntity {
     private String content;
     private QuestionPriority priority;
     private QuestionCategory category;
+    private Long followUpId;
     private QuestionStatus status;
     @TableField(typeHandler = JsonbUuidListTypeHandler.class, jdbcType = JdbcType.OTHER)
     private List<UUID> assignees;

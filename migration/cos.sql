@@ -239,23 +239,24 @@ create unique index if not exists uq_dev_checklist_project_name on cos_dev_check
 
 create table if not exists cos_question
 (
-    id          bigserial                                    not null primary key,
-    version     integer                                      null,
-    org_id      bigint                                       not null,
-    project_id  bigint                                       not null,
-    display_id  varchar(64)                                  not null,
-    content     text                                         not null,
-    priority    varchar(32)                                  not null,
-    category    varchar(32)                                  not null,
-    status      varchar(32)                                  not null,
-    assignees   jsonb     default JSON_ARRAY(RETURNING json) not null,
-    attachments jsonb     default JSON_ARRAY(RETURNING json) not null,
-    created_by  varchar(64)                                  not null,
-    updated_by  varchar(64)                                  not null,
-    deleted_by  varchar(64)                                  null,
-    created_at  timestamp DEFAULT CURRENT_TIMESTAMP          not null,
-    updated_at  timestamp DEFAULT CURRENT_TIMESTAMP          not null,
-    deleted_at  timestamp                                    null
+    id           bigserial                                    not null primary key,
+    version      integer                                      null,
+    org_id       bigint                                       not null,
+    project_id   bigint                                       not null,
+    display_id   varchar(64)                                  not null,
+    content      text                                         not null,
+    priority     varchar(32)                                  not null,
+    category     varchar(32)                                  not null,
+    follow_up_id bigint                                       null,
+    status       varchar(32)                                  not null,
+    assignees    jsonb     default JSON_ARRAY(RETURNING json) not null,
+    attachments  jsonb     default JSON_ARRAY(RETURNING json) not null,
+    created_by   varchar(64)                                  not null,
+    updated_by   varchar(64)                                  not null,
+    deleted_by   varchar(64)                                  null,
+    created_at   timestamp DEFAULT CURRENT_TIMESTAMP          not null,
+    updated_at   timestamp DEFAULT CURRENT_TIMESTAMP          not null,
+    deleted_at   timestamp                                    null
 );
 
 create unique index if not exists uq_question_display_id on cos_question (display_id);
