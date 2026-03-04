@@ -15,5 +15,7 @@ public interface UserApi {
 
     UserDto getUserByAccountId(UUID accountId);
 
+    UserDto getUserByAccountId(String accountIdStr);
+
     PageResult<UserDto> listUsers(Long page, Long pageSize);
 }

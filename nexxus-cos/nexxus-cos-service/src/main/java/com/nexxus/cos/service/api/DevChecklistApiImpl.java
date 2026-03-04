@@ -21,7 +21,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -77,7 +79,16 @@ public class DevChecklistApiImpl implements DevChecklistApi {
 
     @Override
     public PageResult<DevChecklistListItem> listDevChecklists(Long projectId, Long page, Long pageSize, DevChecklistCategory category) {
-        return null;
+        var pageResult = devChecklistService.listDevChecklists(projectId, page, pageSize, category);
+        List<DevChecklistListItem> items = pageResult.getRecords().stream()
+                .map(devChecklistConverter::toDevChecklistListItem)
+                .collect(Collectors.toList());
+        return PageResult.<DevChecklistListItem>builder()
+                .records(items)
+                .total(pageResult.getTotal())
+                .pageSize(pageResult.getSize())
+                .page(pageResult.getCurrent())
+                .build();
     }
 
     @Override

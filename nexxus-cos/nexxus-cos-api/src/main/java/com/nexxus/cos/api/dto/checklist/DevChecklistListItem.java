@@ -1,5 +1,6 @@
 package com.nexxus.cos.api.dto.checklist;
 
+import com.nexxus.common.enums.cos.checklist.DevChecklistCategory;
 import com.nexxus.common.enums.cos.checklist.DevChecklistStatus;
 import com.nexxus.cos.api.dto.user.UserDto;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class DevChecklistListItem implements Serializable {
     private String displayId;
     private String name;
     private DevChecklistStatus status;
+    private DevChecklistCategory category;
     private String waitingOn;
     private UserDto createdBy;
     private Instant createdAt;

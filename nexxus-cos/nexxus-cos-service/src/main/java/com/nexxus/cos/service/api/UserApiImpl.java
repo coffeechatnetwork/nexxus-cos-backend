@@ -23,6 +23,7 @@ import com.nexxus.cos.service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -98,6 +99,15 @@ public class UserApiImpl implements UserApi {
         }
 
         return userConverter.toUserDto(userEntity);
+    }
+
+    @Override
+    public UserDto getUserByAccountId(String accountIdStr) {
+        if (!StringUtils.hasText(accountIdStr)) {
+            return null;
+        }
+        UUID accountId = UUID.fromString(accountIdStr);
+        return getUserByAccountId(accountId);
     }
 
     @Override
