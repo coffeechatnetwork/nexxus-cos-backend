@@ -260,3 +260,23 @@ create table if not exists cos_question
 
 create unique index if not exists uq_question_display_id on cos_question (display_id);
 create index if not exists idx_question_project_id on cos_question (project_id);
+
+-- =============================================
+
+create table if not exists cos_question_resp
+(
+    id          bigserial                           not null primary key,
+    version     integer                             null,
+    org_id      bigint                              not null,
+    question_id bigint                              not null,
+    content     text                                not null,
+    status      varchar(32)                         not null,
+    created_by  varchar(64)                         not null,
+    updated_by  varchar(64)                         not null,
+    deleted_by  varchar(64)                         null,
+    created_at  timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    updated_at  timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    deleted_at  timestamp                           null
+);
+
+create index if not exists idx_question_resp_question_id on cos_question_resp (question_id);
