@@ -28,13 +28,16 @@ public class MyBatisPlusConfig {
         registry.register(UUID.class, JdbcType.VARCHAR, UuidTypeHandler.class);
         registry.register(UuidTypeHandler.class);
 
-        registry.register(new TypeReference<List<String>>(){}.getClass(), JdbcType.OTHER, JsonbStringListTypeHandler.class);
+        registry.register(new TypeReference<List<String>>() {
+        }.getClass(), JdbcType.OTHER, JsonbStringListTypeHandler.class);
         registry.register(JsonbStringListTypeHandler.class);
 
-        registry.register(new TypeReference<List<Attachment>>(){}.getClass(), JdbcType.OTHER, JsonbAttachmentListTypeHandler.class);
+        registry.register(new TypeReference<List<Attachment>>() {
+        }.getClass(), JdbcType.OTHER, JsonbAttachmentListTypeHandler.class);
         registry.register(JsonbAttachmentListTypeHandler.class);
 
-        registry.register(new TypeReference<List<UUID>>(){}.getClass(), JdbcType.OTHER, JsonbUuidListTypeHandler.class);
+        registry.register(new TypeReference<List<UUID>>() {
+        }.getClass(), JdbcType.OTHER, JsonbUuidListTypeHandler.class);
         registry.register(JsonbUuidListTypeHandler.class);
     }
 }

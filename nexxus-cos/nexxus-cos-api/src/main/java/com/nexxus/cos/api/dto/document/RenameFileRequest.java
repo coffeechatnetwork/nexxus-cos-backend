@@ -14,13 +14,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class RenameFileRequest {
     @NotNull
-    private String projectId;
-    @NotBlank
-    @Size(max = 64)
-    private String folderName;
-    @NotBlank
-    @Size(max = 64)
-    private String originalName;
+    private Long projectId;
+    @NotNull
+    private Long folderId;
+    @NotNull
+    private Long fileId;
     @NotBlank
     @Size(max = 64)
     private String newName;

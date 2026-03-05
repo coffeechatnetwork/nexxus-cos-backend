@@ -4,5 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.nexxus.cos.service.entity.DocumentFileEntity;
 
 public interface DocumentFileService extends IService<DocumentFileEntity> {
-    Long countFilesByFolderName(Long projectId, String folderName);
+    Long countFilesByFolder(Long projectId, Long folderId);
+
+    DocumentFileEntity getFileInFolder(Long projectId, Long folderId, String name);
+
 }

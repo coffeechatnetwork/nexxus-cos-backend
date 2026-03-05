@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 public class DocumentFileEntity extends BaseEntity {
     private Long orgId;
     private Long projectId;
-    private String folderName;
+    private Long folderId;
     private String name;
     private String docUrl;
 }

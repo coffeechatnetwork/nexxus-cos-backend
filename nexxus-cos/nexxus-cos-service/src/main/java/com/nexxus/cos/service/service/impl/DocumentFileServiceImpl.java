@@ -13,10 +13,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DocumentFileServiceImpl extends ServiceImpl<DocumentFileMapper, DocumentFileEntity> implements DocumentFileService {
     @Override
-    public Long countFilesByFolderName(Long projectId, String folderName) {
+    public Long countFilesByFolder(Long projectId, Long folderId) {
         return lambdaQuery()
                 .eq(DocumentFileEntity::getProjectId, projectId)
-                .eq(DocumentFileEntity::getFolderName, folderName)
+                .eq(DocumentFileEntity::getFolderId, folderId)
                 .count();
+    }
+
+    @Override
+    public DocumentFileEntity getFileInFolder(Long projectId, Long folderId, String name) {
+        return lambdaQuery()
+                .eq(DocumentFileEntity::getProjectId, projectId)
+                .eq(DocumentFileEntity::getFolderId, folderId)
+                .eq(DocumentFileEntity::getName, name)
+                .one();
     }
 }

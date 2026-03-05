@@ -2,7 +2,6 @@ package com.nexxus.cos.api.dto.document;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +13,22 @@ import java.io.Serializable;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RenameFolderRequest implements Serializable {
+public class UploadFileRequest implements Serializable {
     @NotNull
     private Long projectId;
-    @NotNull
-    private Long folderId;
+
     @NotBlank
-    @Size(max = 64)
-    private String newName;
+    private String folderName;
+
+    @NotBlank
+    private String fileName;
+
+    @NotBlank
+    private String key;
+
+    @NotNull
+    private byte[] content;
+
+    @NotBlank
+    private String contentType;
 }

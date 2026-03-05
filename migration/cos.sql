@@ -170,7 +170,7 @@ create table if not exists cos_document_file
     version     integer                             null,
     org_id      bigint                              not null,
     project_id  bigint                              not null,
-    folder_name varchar(64)                         not null,
+    folder_id   bigint                              not null,
     name        varchar(64)                         not null,
     doc_url     text                                not null,
     created_by  varchar(64)                         not null,
@@ -181,7 +181,7 @@ create table if not exists cos_document_file
     deleted_at  timestamp                           null
 );
 
-create unique index if not exists uq_doc_file_project_folder_name on cos_document_file (project_id, folder_name, name) where deleted_at is null;
+create unique index if not exists uq_doc_file_project_folder_id on cos_document_file (project_id, folder_id, name) where deleted_at is null;
 
 -- =============================================
 
