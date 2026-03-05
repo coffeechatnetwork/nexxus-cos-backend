@@ -1,6 +1,5 @@
 package com.nexxus.cos.api.dto.question;
 
-import com.nexxus.common.enums.cos.question.ResponseStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,6 @@ import java.io.Serializable;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateResponseRequest implements Serializable {
+public class PublishResponseRequest implements Serializable {
     private Long responseId;
-    private String content;
-    private ResponseStatus status;
 }

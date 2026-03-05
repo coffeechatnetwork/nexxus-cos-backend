@@ -5,6 +5,7 @@ import com.nexxus.cos.api.dto.question.CreateQuestionRequest;
 import com.nexxus.cos.api.dto.question.CreateResponseRequest;
 import com.nexxus.cos.api.dto.question.EditQuestionRequest;
 import com.nexxus.cos.api.dto.question.EditResponseRequest;
+import com.nexxus.cos.api.dto.question.PublishResponseRequest;
 import com.nexxus.cos.api.dto.question.QuestionDto;
 import com.nexxus.cos.api.dto.question.QuestionListItem;
 import com.nexxus.cos.api.dto.question.ResponseDto;
@@ -21,4 +22,6 @@ public interface QuestionApi {
     ResponseDto createResponse(CreateResponseRequest req);
 
     ResponseDto editResponse(EditResponseRequest req);
+
+    ResponseDto publishResponse(PublishResponseRequest req);
 }

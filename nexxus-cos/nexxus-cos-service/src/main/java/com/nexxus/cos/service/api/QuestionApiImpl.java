@@ -6,9 +6,11 @@ import com.nexxus.cos.api.dto.question.CreateQuestionRequest;
 import com.nexxus.cos.api.dto.question.CreateResponseRequest;
 import com.nexxus.cos.api.dto.question.EditQuestionRequest;
 import com.nexxus.cos.api.dto.question.EditResponseRequest;
+import com.nexxus.cos.api.dto.question.PublishResponseRequest;
 import com.nexxus.cos.api.dto.question.QuestionDto;
 import com.nexxus.cos.api.dto.question.QuestionListItem;
 import com.nexxus.cos.api.dto.question.ResponseDto;
+import com.nexxus.cos.service.api.converter.QuestionConverter;
 import com.nexxus.cos.service.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Component;
 public class QuestionApiImpl implements QuestionApi {
 
     private final QuestionService questionService;
+    private final QuestionConverter questionConverter;
 
     @Override
     public QuestionDto createQuestion(CreateQuestionRequest req) {
@@ -48,6 +51,11 @@ public class QuestionApiImpl implements QuestionApi {
 
     @Override
     public ResponseDto editResponse(EditResponseRequest req) {
+        return null;
+    }
+
+    @Override
+    public ResponseDto publishResponse(PublishResponseRequest req) {
         return null;
     }
 }
