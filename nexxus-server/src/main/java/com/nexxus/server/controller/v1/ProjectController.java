@@ -4,11 +4,14 @@ import com.nexxus.common.PageResult;
 import com.nexxus.cos.api.CosApi;
 import com.nexxus.cos.api.dto.project.CreateProjectRequest;
 import com.nexxus.cos.api.dto.project.ListProjectRequest;
+import com.nexxus.cos.api.dto.project.ProjectDashboardDto;
 import com.nexxus.cos.api.dto.project.ProjectDto;
 import com.nexxus.cos.api.dto.project.ProjectListItem;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ public class ProjectController {
 
     @PostMapping("")
     public ProjectDto createProject(@RequestBody @Valid CreateProjectRequest req) {
+        log.info("create project req: {}", req);
         return cosApi.createProject(req);
     }
 
@@ -30,4 +34,10 @@ public class ProjectController {
     public PageResult<ProjectListItem> listProject(@RequestBody @Valid ListProjectRequest req) {
         return cosApi.listProject(req.getPage(), req.getPageSize());
     }
+
+    @GetMapping("/{displayId}/dashboard")
+    public ProjectDashboardDto getProjectDashboard(@PathVariable String displayId) {
+        return cosApi.dashboard(displayId);
+    }
+
 }

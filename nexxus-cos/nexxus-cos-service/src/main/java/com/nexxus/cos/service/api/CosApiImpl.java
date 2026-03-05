@@ -9,13 +9,14 @@ import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.cos.project.ProjectStatus;
 import com.nexxus.cos.api.CosApi;
 import com.nexxus.cos.api.dto.project.CreateProjectRequest;
+import com.nexxus.cos.api.dto.project.ProjectDashboardDto;
 import com.nexxus.cos.api.dto.project.ProjectDto;
 import com.nexxus.cos.api.dto.project.ProjectListItem;
+import com.nexxus.cos.service.api.converter.ProjectConverter;
 import com.nexxus.cos.service.entity.OrganizationEntity;
 import com.nexxus.cos.service.entity.ProjectEntity;
 import com.nexxus.cos.service.service.OrganizationService;
 import com.nexxus.cos.service.service.ProjectService;
-import com.nexxxus.file.api.FileApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 public class CosApiImpl implements CosApi {
     private final ProjectService projectService;
     private final OrganizationService organizationService;
-    private final FileApi fileApi;
+    private final ProjectConverter projectConverter;
 
     @Override
     public ProjectDto createProject(CreateProjectRequest req) {
@@ -60,15 +61,7 @@ public class CosApiImpl implements CosApi {
                 .build();
         projectService.save(newProject);
 
-        return ProjectDto.builder()
-                .displayId(newProject.getDisplayId())
-                .orgId(newProject.getOrgId())
-                .name(newProject.getName())
-                .slug(newProject.getSlug())
-                .logoUrl(newProject.getLogoUrl())
-                .imageUrls(newProject.getImageUrls())
-                .status(newProject.getStatus())
-                .build();
+        return projectConverter.toProjectDto(newProject);
     }
 
     @Override
@@ -79,15 +72,7 @@ public class CosApiImpl implements CosApi {
 
         List<ProjectListItem> dtoList = entityPage.getRecords().stream()
                 .parallel()
-                .map(entity -> ProjectListItem.builder()
-                        .displayId(entity.getDisplayId())
-                        .orgId(entity.getOrgId())
-                        .name(entity.getName())
-                        .slug(entity.getSlug())
-                        .logoUrl(entity.getLogoUrl())
-                        .imageUrls(fileApi.batchSign(entity.getImageUrls()))
-                        .status(entity.getStatus())
-                        .build())
+                .map(projectConverter::toProjectListItem`)
                 .collect(Collectors.toList());
 
         return PageResult.<ProjectListItem>builder()
@@ -96,5 +81,10 @@ public class CosApiImpl implements CosApi {
                 .pageSize(entityPage.getSize())
                 .page(entityPage.getCurrent())
                 .build();
+    }
+
+    @Override
+    public ProjectDashboardDto dashboard(String displayId) {
+        return null;
     }
 }
