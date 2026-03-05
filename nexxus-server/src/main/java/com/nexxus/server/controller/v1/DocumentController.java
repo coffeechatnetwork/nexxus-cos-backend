@@ -66,21 +66,25 @@ public class DocumentController {
 
     @PostMapping("/folders/rename")
     public FolderDto renameFolder(@RequestBody @Valid RenameFolderRequest req) {
+        log.info("rename folder req: {}", req);
         return documentApi.renameFolder(req);
     }
 
     @PostMapping("/folders/delete")
     public Boolean deleteFolder(@RequestBody @Valid DeleteFolderRequest req) {
+        log.info("delete folder req: {}", req);
         return documentApi.deleteFolder(req);
     }
 
     @PostMapping("/files/rename")
     public FileDto renameFile(@RequestBody @Valid RenameFileRequest req) {
+        log.info("rename file req: {}", req);
         return documentApi.renameFile(req);
     }
 
     @PostMapping("/files/delete")
     public Boolean deleteFile(@RequestBody @Valid DeleteFileRequest req) {
+        log.info("delete file req: {}", req);
         return documentApi.deleteFile(req);
     }
 }
