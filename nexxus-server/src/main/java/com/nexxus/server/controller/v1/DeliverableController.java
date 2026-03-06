@@ -3,6 +3,8 @@ package com.nexxus.server.controller.v1;
 import com.nexxus.common.PageResult;
 import com.nexxus.cos.api.DeliverableApi;
 import com.nexxus.cos.api.dto.deliverable.CreateDeliverableRequest;
+import com.nexxus.cos.api.dto.deliverable.DeliverableDashboardDto;
+import com.nexxus.cos.api.dto.deliverable.DeliverableDashboardRequest;
 import com.nexxus.cos.api.dto.deliverable.DeliverableDto;
 import com.nexxus.cos.api.dto.deliverable.DeliverableListItem;
 import com.nexxus.cos.api.dto.deliverable.EditDeliverableRequest;
@@ -46,5 +48,10 @@ public class DeliverableController {
     public PageResult<DeliverableListItem> list(@RequestBody @Valid ListDeliverableRequest req) {
         log.info("list deliverable req: {}", req);
         return deliverableApi.list(req.getProjectId(), req.getPage(), req.getPageSize());
+    }
+
+    @PostMapping("/dashboard")
+    public DeliverableDashboardDto dashboard(@RequestBody @Valid DeliverableDashboardRequest req) {
+        return null;
     }
 }
