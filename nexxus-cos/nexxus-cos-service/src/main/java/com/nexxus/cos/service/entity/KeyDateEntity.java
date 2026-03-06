@@ -21,10 +21,11 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("cos_key_date")
+@TableName(value = "cos_key_date", autoResultMap = true)
 public class KeyDateEntity extends BaseEntity {
     private Long orgId;
     private Long projectId;
+    private String displayId;
     private String title;
     private String shortDesc;
     private String longDesc;
