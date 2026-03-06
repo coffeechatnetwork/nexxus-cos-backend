@@ -26,6 +26,6 @@ public class CreateQuestionRequest implements Serializable {
     private QuestionCategory category;
     @NotNull
     private QuestionPriority priority;
-    private String followUpId;
+    private Long followUpId;
     private List<UUID> assignees;
 }

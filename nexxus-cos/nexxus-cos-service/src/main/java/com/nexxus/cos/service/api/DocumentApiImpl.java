@@ -66,6 +66,7 @@ public class DocumentApiImpl implements DocumentApi {
         Page<DocumentFolderEntity> folderEntityPage = documentFolderService.listFolders(req.getProjectId(), req.getPage(), req.getPageSize());
 
         List<FolderListItem> folderListItems = folderEntityPage.getRecords().stream()
+                .parallel()
                 .map(documentConverter::toFolderListItem)
                 .collect(Collectors.toList());
 

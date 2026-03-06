@@ -69,7 +69,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         List<UserEntity> userEntities = lambdaQuery()
                 .in(UserEntity::getAccountId, accountIdStrList)
                 .list();
-        return userEntities.stream()
+        Map<UUID, UserEntity> userMap = userEntities.stream()
                 .collect(Collectors.toMap(UserEntity::getAccountId, user -> user));
+        accountIds.forEach(accountId -> userMap.putIfAbsent(accountId, null));
+        return userMap;
     }
 }
