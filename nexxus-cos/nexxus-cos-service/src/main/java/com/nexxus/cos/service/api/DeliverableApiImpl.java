@@ -8,6 +8,8 @@ import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.cos.deliverable.DeliverableStatus;
 import com.nexxus.cos.api.DeliverableApi;
 import com.nexxus.cos.api.dto.deliverable.CreateDeliverableRequest;
+import com.nexxus.cos.api.dto.deliverable.DeliverableDashboardDto;
+import com.nexxus.cos.api.dto.deliverable.DeliverableDashboardRequest;
 import com.nexxus.cos.api.dto.deliverable.DeliverableDto;
 import com.nexxus.cos.api.dto.deliverable.DeliverableListItem;
 import com.nexxus.cos.api.dto.deliverable.EditDeliverableRequest;
@@ -16,6 +18,7 @@ import com.nexxus.cos.service.entity.DeliverableEntity;
 import com.nexxus.cos.service.entity.UserEntity;
 import com.nexxus.cos.service.service.DeliverableService;
 import com.nexxus.cos.service.service.UserService;
+import com.nexxus.cos.service.service.query.DeliverableQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -93,7 +96,10 @@ public class DeliverableApiImpl implements DeliverableApi {
 
     @Override
     public PageResult<DeliverableListItem> list(Long projectId, Long page, Long pageSize) {
-        var entityPage = deliverableService.listDeliverables(projectId, page, pageSize);
+        DeliverableQuery query = DeliverableQuery.builder()
+                .projectId(projectId).page(page).pageSize(pageSize)
+                .build();
+        var entityPage = deliverableService.listDeliverables(query);
 
         List<DeliverableListItem> items = entityPage.getRecords().stream()
                 .map(deliverableConverter::toDeliverableListItem)
@@ -105,5 +111,10 @@ public class DeliverableApiImpl implements DeliverableApi {
                 .pageSize(entityPage.getSize())
                 .page(entityPage.getCurrent())
                 .build();
+    }
+
+    @Override
+    public DeliverableDashboardDto dashboard(DeliverableDashboardRequest req) {
+        return null;
     }
 }

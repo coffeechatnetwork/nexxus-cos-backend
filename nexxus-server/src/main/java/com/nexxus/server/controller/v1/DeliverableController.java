@@ -52,6 +52,6 @@ public class DeliverableController {
 
     @PostMapping("/dashboard")
     public DeliverableDashboardDto dashboard(@RequestBody @Valid DeliverableDashboardRequest req) {
-        return null;
+        return deliverableApi.dashboard(req);
     }
 }

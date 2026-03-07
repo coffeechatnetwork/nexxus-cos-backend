@@ -1,11 +1,11 @@
 package com.nexxus.cos.service.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nexxus.cos.service.entity.DeliverableEntity;
 import com.nexxus.cos.service.mapper.DeliverableMapper;
 import com.nexxus.cos.service.service.DeliverableService;
+import com.nexxus.cos.service.service.query.DeliverableQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -38,12 +38,14 @@ public class DeliverableServiceImpl extends ServiceImpl<DeliverableMapper, Deliv
     }
 
     @Override
-    public Page<DeliverableEntity> listDeliverables(Long projectId, Long page, Long pageSize) {
-        Page<DeliverableEntity> pageParam = new Page<>(page, pageSize);
-        LambdaQueryWrapper<DeliverableEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(DeliverableEntity::getProjectId, projectId);
-        queryWrapper.orderByDesc(DeliverableEntity::getId);
-        return deliverableMapper.selectPage(pageParam, queryWrapper);
+    public Page<DeliverableEntity> listDeliverables(DeliverableQuery query) {
+        return lambdaQuery()
+                .eq(DeliverableEntity::getProjectId, query.getProjectId())
+                .ge(query.getStartDate() != null, DeliverableEntity::getDeadline, query.getStartDate())
+                .le(query.getEndDate() != null, DeliverableEntity::getDeadline, query.getEndDate())
+                .eq(query.getStatus() != null, DeliverableEntity::getStatus, query.getStatus())
+                .orderByDesc(DeliverableEntity::getId)
+                .page(new Page<>(query.getPage(), query.getPageSize()));
     }
 
     @Override
