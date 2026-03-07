@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nexxus.cos.service.entity.KeyDateEntity;
 import com.nexxus.cos.service.mapper.KeyDateMapper;
 import com.nexxus.cos.service.service.KeyDateService;
+import com.nexxus.cos.service.service.query.KeyDateQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,13 +37,15 @@ public class KeyDateServiceImpl extends ServiceImpl<KeyDateMapper, KeyDateEntity
     }
 
     @Override
-    public Page<KeyDateEntity> listKeyDates(Long projectId, Long page, Long pageSize, Instant startDate, Instant endDate) {
-        Page<KeyDateEntity> pageParam = new Page<>(page, pageSize);
+    public Page<KeyDateEntity> listKeyDates(KeyDateQuery query) {
+        Page<KeyDateEntity> pageParam = new Page<>(query.getPage(), query.getPageSize());
         LambdaQueryWrapper<KeyDateEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(KeyDateEntity::getProjectId, projectId);
+        queryWrapper.eq(KeyDateEntity::getProjectId, query.getProjectId());
+        Instant startDate = query.getStartDate();
         if (Objects.nonNull(startDate)) {
             queryWrapper.ge(KeyDateEntity::getReferenceDate, startDate);
         }
+        Instant endDate = query.getEndDate();
         if (Objects.nonNull(endDate)) {
             queryWrapper.le(KeyDateEntity::getReferenceDate, endDate);
         }

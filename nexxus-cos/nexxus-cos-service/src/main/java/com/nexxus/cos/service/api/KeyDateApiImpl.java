@@ -13,6 +13,7 @@ import com.nexxus.cos.api.dto.keydate.KeyDateListItem;
 import com.nexxus.cos.service.api.converter.KeyDateConverter;
 import com.nexxus.cos.service.entity.KeyDateEntity;
 import com.nexxus.cos.service.service.KeyDateService;
+import com.nexxus.cos.service.service.query.KeyDateQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -74,7 +75,14 @@ public class KeyDateApiImpl implements KeyDateApi {
 
     @Override
     public PageResult<KeyDateListItem> list(Long projectId, Long page, Long pageSize, Instant startDate, Instant endDate) {
-        var entityPage = keyDateService.listKeyDates(projectId, page, pageSize, startDate, endDate);
+        KeyDateQuery query = KeyDateQuery.builder()
+                .projectId(projectId)
+                .page(page)
+                .pageSize(pageSize)
+                .startDate(startDate)
+                .endDate(endDate)
+                .build();
+        var entityPage = keyDateService.listKeyDates(query);
 
         List<KeyDateListItem> items = entityPage.getRecords().stream()
                 .map(keyDateConverter::toKeyDateListItem)
