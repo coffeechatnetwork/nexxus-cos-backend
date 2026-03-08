@@ -20,7 +20,7 @@ public class DevChecklistSummaryDto implements Serializable {
     @SuperBuilder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CategorySummaryItem {
+    public static class CategorySummaryItem implements Serializable {
 
         private DevChecklistCategory category;
 
