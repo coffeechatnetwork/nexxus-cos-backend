@@ -1,8 +1,11 @@
 package com.nexxus.cos.service.api.converter;
 
 import com.nexxus.cos.api.dto.question.QuestionDto;
+import com.nexxus.cos.api.dto.question.QuestionListItem;
+import com.nexxus.cos.api.dto.question.ResponseDto;
 import com.nexxus.cos.api.dto.user.UserDto;
 import com.nexxus.cos.service.entity.QuestionEntity;
+import com.nexxus.cos.service.service.QuestionResponseService;
 import com.nexxus.cos.service.service.QuestionService;
 import com.nexxus.cos.service.service.UserService;
 import com.nexxxus.file.api.FileApi;
@@ -23,6 +26,7 @@ public class QuestionConverter {
     private final UserConverter userConverter;
     private final FileApi fileApi;
     private final QuestionService questionService;
+    private final QuestionResponseService responseService;
 
     public QuestionDto toQuestionDto(QuestionEntity entity) {
         List<UUID> assigneeIds = entity.getAssignees();
@@ -50,4 +54,20 @@ public class QuestionConverter {
                 .responses(null)
                 .build();
     }
+
+    public QuestionListItem toQuestionListItem(QuestionEntity entity) {
+        ResponseDto responses = responseService.getLastestResponse(entity.getId());
+
+        return QuestionListItem.builder()
+                .orgId(entity.getOrgId())
+                .projectId(entity.getProjectId())
+                .content(entity.getContent())
+                .priority(entity.getPriority())
+                .category(entity.getCategory())
+                .status(entity.getStatus())
+                .createdAt(entity.getCreatedAt())
+                .lastestResponse(responses)
+                .build();
+    }
+
 }

@@ -6,6 +6,7 @@ import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.cos.question.QuestionStatus;
+import com.nexxus.common.enums.cos.question.ResponseStatus;
 import com.nexxus.cos.api.QuestionApi;
 import com.nexxus.cos.api.dto.question.CreateQuestionRequest;
 import com.nexxus.cos.api.dto.question.CreateResponseRequest;
@@ -14,9 +15,14 @@ import com.nexxus.cos.api.dto.question.EditResponseRequest;
 import com.nexxus.cos.api.dto.question.PublishResponseRequest;
 import com.nexxus.cos.api.dto.question.QuestionDto;
 import com.nexxus.cos.api.dto.question.QuestionListItem;
+import com.nexxus.cos.api.dto.question.QuestionSummaryDto;
+import com.nexxus.cos.api.dto.question.QuestionSummaryRequest;
 import com.nexxus.cos.api.dto.question.ResponseDto;
 import com.nexxus.cos.service.api.converter.QuestionConverter;
+import com.nexxus.cos.service.api.converter.QuestionResponseConverter;
 import com.nexxus.cos.service.entity.QuestionEntity;
+import com.nexxus.cos.service.entity.QuestionResponseEntity;
+import com.nexxus.cos.service.service.QuestionResponseService;
 import com.nexxus.cos.service.service.QuestionService;
 import com.nexxus.cos.service.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +32,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -35,6 +42,8 @@ public class QuestionApiImpl implements QuestionApi {
     private final QuestionService questionService;
     private final QuestionConverter questionConverter;
     private final UserService userService;
+    private final QuestionResponseService responseService;
+    private final QuestionResponseConverter responseConverter;
 
     @Override
     public QuestionDto createQuestion(CreateQuestionRequest req) {
@@ -71,31 +80,87 @@ public class QuestionApiImpl implements QuestionApi {
 
     @Override
     public QuestionDto getByDisplayId(String displayId) {
-        return null;
+        QuestionEntity question = questionService.getByDisplayId(displayId);
+        if (question == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("question not found"));
+        }
+        return questionConverter.toQuestionDto(question);
     }
 
     @Override
     public QuestionDto edit(String displayId, EditQuestionRequest req) {
-        return null;
+        QuestionEntity question = questionService.getByDisplayId(displayId);
+        if (question == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("question not found"));
+        }
+        question.setPriority(req.getPriority());
+        question.setCategory(req.getCategory());
+        question.setStatus(req.getStatus());
+        question.setAssignees(req.getAssignees());
+        question.setAttachments(req.getAttachments());
+        questionService.updateById(question);
+        return questionConverter.toQuestionDto(question);
     }
 
     @Override
     public PageResult<QuestionListItem> listQuestions(Long projectId, Long page, Long pageSize, String searchQuery) {
-        return null;
+        var pageResult = questionService.listDevChecklists(projectId, page, pageSize, searchQuery);
+        List<QuestionListItem> items = pageResult.getRecords().stream()
+                .map(questionConverter::toQuestionListItem)
+                .collect(Collectors.toList());
+        return PageResult.<QuestionListItem>builder()
+                .records(items)
+                .total(pageResult.getTotal())
+                .pageSize(pageResult.getSize())
+                .page(pageResult.getCurrent())
+                .build();
     }
 
     @Override
     public ResponseDto createResponse(CreateResponseRequest req) {
-        return null;
+        Long questionId = req.getQuestionId();
+        QuestionEntity question = questionService.getById(questionId);
+        if (question == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("question not found"));
+        }
+
+        QuestionResponseEntity responseEntity = QuestionResponseEntity.builder()
+                .orgId(question.getOrgId())
+                .questionId(questionId)
+                .content(req.getContent())
+                .status(req.getStatus())
+                .build();
+        responseService.save(responseEntity);
+        return responseConverter.toResponseDto(responseEntity);
     }
 
     @Override
     public ResponseDto editResponse(EditResponseRequest req) {
-        return null;
+        QuestionResponseEntity response = responseService.getById(req.getResponseId());
+        if (response == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("response not found"));
+        }
+        response.setContent(req.getContent());
+        responseService.updateById(response);
+        return responseConverter.toResponseDto(response);
     }
 
     @Override
     public ResponseDto publishResponse(PublishResponseRequest req) {
-        return null;
+        QuestionResponseEntity response = responseService.getById(req.getResponseId());
+        if (response == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("response not found"));
+        }
+        response.setStatus(ResponseStatus.PUBLISHED);
+        responseService.updateById(response);
+        return responseConverter.toResponseDto(response);
+    }
+
+    @Override
+    public QuestionSummaryDto summary(QuestionSummaryRequest req) {
+        var priorities = questionService.summary(req.getProjectId());
+        return QuestionSummaryDto.builder()
+                .priorities(priorities)
+                .build();
     }
 }

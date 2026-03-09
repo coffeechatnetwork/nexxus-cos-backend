@@ -8,6 +8,8 @@ import com.nexxus.cos.api.dto.question.EditResponseRequest;
 import com.nexxus.cos.api.dto.question.PublishResponseRequest;
 import com.nexxus.cos.api.dto.question.QuestionDto;
 import com.nexxus.cos.api.dto.question.QuestionListItem;
+import com.nexxus.cos.api.dto.question.QuestionSummaryDto;
+import com.nexxus.cos.api.dto.question.QuestionSummaryRequest;
 import com.nexxus.cos.api.dto.question.ResponseDto;
 
 public interface QuestionApi {
@@ -24,4 +26,6 @@ public interface QuestionApi {
     ResponseDto editResponse(EditResponseRequest req);
 
     ResponseDto publishResponse(PublishResponseRequest req);
+
+    QuestionSummaryDto summary(QuestionSummaryRequest req);
 }

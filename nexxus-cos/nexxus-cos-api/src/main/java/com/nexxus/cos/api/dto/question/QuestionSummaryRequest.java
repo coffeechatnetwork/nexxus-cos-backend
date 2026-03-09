@@ -1,7 +1,5 @@
 package com.nexxus.cos.api.dto.question;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,9 +11,6 @@ import java.io.Serializable;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class EditResponseRequest implements Serializable {
-    @NotNull
-    private Long responseId;
-    @NotBlank
-    private String content;
+public class QuestionSummaryRequest implements Serializable {
+    Long projectId;
 }

@@ -10,6 +10,8 @@ import com.nexxus.cos.api.dto.question.ListQuestionRequest;
 import com.nexxus.cos.api.dto.question.PublishResponseRequest;
 import com.nexxus.cos.api.dto.question.QuestionDto;
 import com.nexxus.cos.api.dto.question.QuestionListItem;
+import com.nexxus.cos.api.dto.question.QuestionSummaryDto;
+import com.nexxus.cos.api.dto.question.QuestionSummaryRequest;
 import com.nexxus.cos.api.dto.question.ResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -62,5 +64,10 @@ public class QuestionController {
     @PostMapping("/responses/publish")
     public ResponseDto publishResponse(@RequestBody @Valid PublishResponseRequest req) {
         return questionApi.publishResponse(req);
+    }
+
+    @PostMapping("/summary")
+    public QuestionSummaryDto summary(@RequestBody @Valid QuestionSummaryRequest req) {
+        return questionApi.summary(req);
     }
 }

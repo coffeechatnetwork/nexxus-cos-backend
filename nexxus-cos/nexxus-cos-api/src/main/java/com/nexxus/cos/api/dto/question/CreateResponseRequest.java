@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class CreateResponseRequest implements Serializable {
     @NotNull
-    private Long responseId;
+    private Long questionId;
     @NotBlank
     private String content;
     @NotNull
