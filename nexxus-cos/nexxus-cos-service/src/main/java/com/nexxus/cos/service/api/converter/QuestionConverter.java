@@ -16,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -39,8 +41,14 @@ public class QuestionConverter {
                     .toList();
         }
         Long followUpId = entity.getFollowUpId();
+        Map<String, String> followUpQuestion = new HashMap<>();
         if (followUpId != null && followUpId != 0L) {
-            questionService.getById(followUpId);
+            QuestionEntity followUpEntity = questionService.getById(followUpId);
+            followUpQuestion = Map.of(
+                    "id", String.valueOf(followUpEntity.getId()),
+                    "displayId", followUpEntity.getDisplayId(),
+                    "content", followUpEntity.getContent()
+            );
         }
 
         List<QuestionResponseEntity> responseEntities = responseService.getResponsesByQuestionId(entity.getId());
@@ -54,6 +62,7 @@ public class QuestionConverter {
                 .category(entity.getCategory())
                 .priority(entity.getPriority())
                 .status(entity.getStatus())
+                .followUpQuestion(followUpQuestion)
                 .assignees(assignees)
                 .attachments(fileApi.signAttachments(entity.getAttachments()))
                 .responses(responses)

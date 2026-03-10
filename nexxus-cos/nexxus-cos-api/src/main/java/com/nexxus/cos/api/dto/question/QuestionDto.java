@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @SuperBuilder
@@ -25,6 +26,7 @@ public class QuestionDto implements Serializable {
     private QuestionCategory category;
     private QuestionPriority priority;
     private QuestionStatus status;
+    private Map<String, String> followUpQuestion;
     private List<UserDto> assignees;
     private List<Attachment> attachments;
     private List<ResponseDto> responses;
