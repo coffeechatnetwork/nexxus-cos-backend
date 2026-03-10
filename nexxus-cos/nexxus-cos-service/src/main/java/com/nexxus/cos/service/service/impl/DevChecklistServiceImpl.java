@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -54,11 +55,13 @@ public class DevChecklistServiceImpl extends ServiceImpl<DevChecklistMapper, Dev
         wrapper.isNotNull(DevChecklistEntity::getCategory);
         List<DevChecklistEntity> allChecklists = list(wrapper);
 
-        return allChecklists.stream()
-                .collect(Collectors.groupingBy(DevChecklistEntity::getCategory))
-                .entrySet().stream()
-                .map(entry -> {
-                    Map<DevChecklistStatus, Integer> statusCount = entry.getValue().stream()
+        Map<DevChecklistCategory, List<DevChecklistEntity>> groupedByCategory = allChecklists.stream()
+                .collect(Collectors.groupingBy(DevChecklistEntity::getCategory));
+
+        return Stream.of(DevChecklistCategory.values())
+                .map(category -> {
+                    List<DevChecklistEntity> checklists = groupedByCategory.getOrDefault(category, List.of());
+                    Map<DevChecklistStatus, Integer> statusCount = checklists.stream()
                             .collect(Collectors.groupingBy(
                                     DevChecklistEntity::getStatus,
                                     Collectors.collectingAndThen(Collectors.counting(), Long::intValue)
@@ -67,7 +70,7 @@ public class DevChecklistServiceImpl extends ServiceImpl<DevChecklistMapper, Dev
                         statusCount.putIfAbsent(status, 0);
                     }
                     return DevChecklistSummaryDto.CategorySummaryItem.builder()
-                            .category(entry.getKey())
+                            .category(category)
                             .statusCount(statusCount)
                             .build();
                 })

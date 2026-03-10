@@ -290,6 +290,7 @@ create table if not exists cos_risk_log
     version            integer                             null,
     org_id             bigint                              not null,
     project_id         bigint                              not null,
+    display_id         varchar(64)                         not null,
     topic              varchar(64)                         not null,
     description        text                                null,
     risk               text                                null,
@@ -304,5 +305,5 @@ create table if not exists cos_risk_log
     deleted_at         timestamp                           null
 );
 
-
+create unique index if not exists uq_risk_log_display_id on cos_risk_log (display_id);
 create index if not exists idx_risk_log_project_category_topic on cos_risk_log (project_id, category, topic);

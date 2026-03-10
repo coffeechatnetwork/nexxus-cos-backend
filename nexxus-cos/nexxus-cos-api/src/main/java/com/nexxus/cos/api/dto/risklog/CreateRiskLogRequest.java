@@ -1,6 +1,7 @@
 package com.nexxus.cos.api.dto.risklog;
 
 import com.nexxus.common.enums.cos.risklog.RiskLogCategory;
+import com.nexxus.common.enums.cos.risklog.RiskLogLevel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,6 @@ public class CreateRiskLogRequest implements Serializable {
     private String mitigationOfRisk;
     @NotNull
     private RiskLogCategory category;
+    @NotNull
+    private RiskLogLevel level;
 }

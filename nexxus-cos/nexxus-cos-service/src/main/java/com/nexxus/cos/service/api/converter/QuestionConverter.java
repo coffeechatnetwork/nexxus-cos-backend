@@ -41,6 +41,8 @@ public class QuestionConverter {
             questionService.getById(followUpId);
         }
 
+        List<ResponseDto> responses = responseService.getResponsesByQuestionId(entity.getId());
+
         return QuestionDto.builder()
                 .orgId(entity.getOrgId())
                 .projectId(entity.getProjectId())
@@ -51,7 +53,7 @@ public class QuestionConverter {
                 .status(entity.getStatus())
                 .assignees(assignees)
                 .attachments(fileApi.signAttachments(entity.getAttachments()))
-                .responses(null)
+                .responses(responses)
                 .build();
     }
 

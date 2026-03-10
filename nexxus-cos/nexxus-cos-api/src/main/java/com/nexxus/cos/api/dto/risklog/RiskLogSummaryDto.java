@@ -19,7 +19,7 @@ public class RiskLogSummaryDto implements Serializable {
     @SuperBuilder
     @AllArgsConstructor
     @NoArgsConstructor
-    private static class RiskLogSummaryItem implements Serializable {
+    public static class RiskLogSummaryItem implements Serializable {
         private RiskLogLevel level;
         private Long count;
     }

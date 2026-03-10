@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.nexxus.common.enums.cos.question.QuestionPriority;
 import com.nexxus.common.enums.cos.question.QuestionStatus;
 import com.nexxus.cos.api.dto.question.QuestionSummaryDto;
 import com.nexxus.cos.service.entity.QuestionEntity;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -50,11 +52,13 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, QuestionEnt
         wrapper.isNotNull(QuestionEntity::getPriority);
         List<QuestionEntity> allChecklists = list(wrapper);
 
-        return allChecklists.stream()
-                .collect(Collectors.groupingBy(QuestionEntity::getPriority))
-                .entrySet().stream()
-                .map(entry -> {
-                    Map<QuestionStatus, Integer> statusCount = entry.getValue().stream()
+        Map<QuestionPriority, List<QuestionEntity>> groupedByPriority = allChecklists.stream()
+                .collect(Collectors.groupingBy(QuestionEntity::getPriority));
+
+        return Stream.of(QuestionPriority.values())
+                .map(priority -> {
+                    List<QuestionEntity> questions = groupedByPriority.getOrDefault(priority, List.of());
+                    Map<QuestionStatus, Integer> statusCount = questions.stream()
                             .collect(Collectors.groupingBy(
                                     QuestionEntity::getStatus,
                                     Collectors.collectingAndThen(Collectors.counting(), Long::intValue)
@@ -63,7 +67,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, QuestionEnt
                         statusCount.putIfAbsent(status, 0);
                     }
                     return QuestionSummaryDto.PrioritySummaryItem.builder()
-                            .priority(entry.getKey())
+                            .priority(priority)
                             .statusCount(statusCount)
                             .build();
                 })

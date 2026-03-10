@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -32,5 +34,22 @@ public class QuestionResponseServiceImpl extends ServiceImpl<QuestionResponseMap
             return null;
         }
         return questionResponseConverter.toResponseDto(responseEntity);
+    }
+
+    @Override
+    public List<ResponseDto> getResponsesByQuestionId(Long questionId) {
+        LambdaQueryWrapper<QuestionResponseEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(QuestionResponseEntity::getQuestionId, questionId);
+        queryWrapper.eq(QuestionResponseEntity::getStatus, ResponseStatus.PUBLISHED);
+        queryWrapper.orderByDesc(QuestionResponseEntity::getUpdatedAt);
+
+        List<QuestionResponseEntity> responses = list(queryWrapper);
+        if (responses == null || responses.isEmpty()) {
+            return List.of();
+        }
+
+        return responses.stream()
+                .map(questionResponseConverter::toResponseDto)
+                .toList();
     }
 }
