@@ -5,6 +5,8 @@ import com.nexxus.cos.api.dto.question.QuestionListItem;
 import com.nexxus.cos.api.dto.question.ResponseDto;
 import com.nexxus.cos.api.dto.user.UserDto;
 import com.nexxus.cos.service.entity.QuestionEntity;
+import com.nexxus.cos.service.entity.QuestionResponseEntity;
+import com.nexxus.cos.service.entity.UserEntity;
 import com.nexxus.cos.service.service.QuestionResponseService;
 import com.nexxus.cos.service.service.QuestionService;
 import com.nexxus.cos.service.service.UserService;
@@ -41,7 +43,8 @@ public class QuestionConverter {
             questionService.getById(followUpId);
         }
 
-        List<ResponseDto> responses = responseService.getResponsesByQuestionId(entity.getId());
+        List<QuestionResponseEntity> responseEntities = responseService.getResponsesByQuestionId(entity.getId());
+        List<ResponseDto> responses = responseEntities.stream().map(this::toResponseDto).toList();
 
         return QuestionDto.builder()
                 .orgId(entity.getOrgId())
@@ -58,7 +61,7 @@ public class QuestionConverter {
     }
 
     public QuestionListItem toQuestionListItem(QuestionEntity entity) {
-        ResponseDto responses = responseService.getLastestResponse(entity.getId());
+        QuestionResponseEntity responseEntity = responseService.getLastestResponse(entity.getId());
 
         return QuestionListItem.builder()
                 .orgId(entity.getOrgId())
@@ -68,7 +71,20 @@ public class QuestionConverter {
                 .category(entity.getCategory())
                 .status(entity.getStatus())
                 .createdAt(entity.getCreatedAt())
-                .lastestResponse(responses)
+                .lastestResponse(toResponseDto(responseEntity))
+                .build();
+    }
+
+    public ResponseDto toResponseDto(QuestionResponseEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        UserEntity creator = userService.getByAccountId(entity.getCreatedBy());
+        return ResponseDto.builder()
+                .content(entity.getContent())
+                .status(entity.getStatus())
+                .createdBy(userConverter.toUserDto(creator))
+                .createdAt(entity.getCreatedAt())
                 .build();
     }
 

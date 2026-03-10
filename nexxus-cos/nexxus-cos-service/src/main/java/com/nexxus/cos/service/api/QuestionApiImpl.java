@@ -19,7 +19,6 @@ import com.nexxus.cos.api.dto.question.QuestionSummaryDto;
 import com.nexxus.cos.api.dto.question.QuestionSummaryRequest;
 import com.nexxus.cos.api.dto.question.ResponseDto;
 import com.nexxus.cos.service.api.converter.QuestionConverter;
-import com.nexxus.cos.service.api.converter.QuestionResponseConverter;
 import com.nexxus.cos.service.entity.QuestionEntity;
 import com.nexxus.cos.service.entity.QuestionResponseEntity;
 import com.nexxus.cos.service.service.QuestionResponseService;
@@ -43,7 +42,6 @@ public class QuestionApiImpl implements QuestionApi {
     private final QuestionConverter questionConverter;
     private final UserService userService;
     private final QuestionResponseService responseService;
-    private final QuestionResponseConverter responseConverter;
 
     @Override
     public QuestionDto createQuestion(CreateQuestionRequest req) {
@@ -131,7 +129,7 @@ public class QuestionApiImpl implements QuestionApi {
                 .status(req.getStatus())
                 .build();
         responseService.save(responseEntity);
-        return responseConverter.toResponseDto(responseEntity);
+        return questionConverter.toResponseDto(responseEntity);
     }
 
     @Override
@@ -142,7 +140,7 @@ public class QuestionApiImpl implements QuestionApi {
         }
         response.setContent(req.getContent());
         responseService.updateById(response);
-        return responseConverter.toResponseDto(response);
+        return questionConverter.toResponseDto(response);
     }
 
     @Override
@@ -153,7 +151,7 @@ public class QuestionApiImpl implements QuestionApi {
         }
         response.setStatus(ResponseStatus.PUBLISHED);
         responseService.updateById(response);
-        return responseConverter.toResponseDto(response);
+        return questionConverter.toResponseDto(response);
     }
 
     @Override

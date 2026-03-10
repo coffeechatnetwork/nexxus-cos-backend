@@ -12,6 +12,6 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CalendarDto <T> implements Serializable {
+public class CalendarDto<T> implements Serializable {
     List<CalendarEventDto<T>> events;
 }
