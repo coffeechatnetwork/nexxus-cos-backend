@@ -35,7 +35,7 @@ public class TaskApiImpl implements TaskApi {
     private final TaskConverter taskConverter;
 
     @Override
-    public TaskDto createTask(CreateTaskRequest req) {
+    public TaskDto createTask(Long projectId, CreateTaskRequest req) {
         // get orgId from context
         AccountInfo accountInfo = AccountInfoContext.get();
         Long orgId = accountInfo.getOrgId();
@@ -68,7 +68,7 @@ public class TaskApiImpl implements TaskApi {
     }
 
     @Override
-    public TaskDto getByDisplayId(String displayId) {
+    public TaskDto getByDisplayId(Long projectId, String displayId) {
         TaskEntity taskEntity = taskService.getByDisplayId(displayId);
         if (taskEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("[detail]task not found"));
@@ -77,7 +77,7 @@ public class TaskApiImpl implements TaskApi {
     }
 
     @Override
-    public TaskDto edit(String displayId, EditTaskRequest req) {
+    public TaskDto edit(Long projectId, String displayId, EditTaskRequest req) {
         TaskEntity taskEntity = taskService.getByDisplayId(displayId);
         if (taskEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("[edit]task not found"));

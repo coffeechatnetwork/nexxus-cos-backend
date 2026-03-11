@@ -7,11 +7,11 @@ import com.nexxus.cos.api.dto.task.TaskDto;
 import com.nexxus.cos.api.dto.task.TaskListItem;
 
 public interface TaskApi {
-    TaskDto createTask(CreateTaskRequest req);
+    TaskDto createTask(Long projectId, CreateTaskRequest req);
 
-    TaskDto getByDisplayId(String displayId);
+    TaskDto getByDisplayId(Long projectId, String displayId);
 
-    TaskDto edit(String displayId, EditTaskRequest req);
+    TaskDto edit(Long projectId, String displayId, EditTaskRequest req);
 
     PageResult<TaskListItem> listTasks(Long projectId, Long page, Long pageSize);
 }
