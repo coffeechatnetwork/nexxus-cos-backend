@@ -84,7 +84,7 @@ public class CosApiImpl implements CosApi {
     }
 
     @Override
-    public ProjectDashboardDto dashboard(String displayId) {
+    public ProjectDashboardDto dashboard(Long projectId) {
         return null;
     }
 }

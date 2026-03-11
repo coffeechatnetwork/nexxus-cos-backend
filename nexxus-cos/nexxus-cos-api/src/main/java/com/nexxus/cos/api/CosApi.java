@@ -11,5 +11,5 @@ public interface CosApi {
 
     PageResult<ProjectListItem> listProject(Long page, Long pageSize);
 
-    ProjectDashboardDto dashboard(String displayId);
+    ProjectDashboardDto dashboard(Long projectId);
 }
