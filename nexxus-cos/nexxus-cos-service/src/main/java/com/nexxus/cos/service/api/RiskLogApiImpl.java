@@ -31,7 +31,7 @@ public class RiskLogApiImpl implements RiskLogApi {
     private final RiskLogConverter riskLogConverter;
 
     @Override
-    public RiskLogDto createRiskLog(CreateRiskLogRequest req) {
+    public RiskLogDto createRiskLog(Long projectId, CreateRiskLogRequest req) {
         AccountInfo accountInfo = AccountInfoContext.get();
         RiskLogEntity riskLogEntity = riskLogService.getByProjectIdAndTopic(req.getProjectId(), req.getTopic());
         if (riskLogEntity != null) {
@@ -54,7 +54,7 @@ public class RiskLogApiImpl implements RiskLogApi {
     }
 
     @Override
-    public RiskLogListResponse listRiskLogs(RiskLogListRequest req) {
+    public RiskLogListResponse listRiskLogs(Long projectId, RiskLogListRequest req) {
         List<RiskLogCategoryList> categories = riskLogService.listRiskLogs(req.getProjectId(), req.getCategory());
 
         return RiskLogListResponse.builder()
@@ -63,7 +63,7 @@ public class RiskLogApiImpl implements RiskLogApi {
     }
 
     @Override
-    public RiskLogSummaryDto summary(RiskLogSummaryRequest req) {
+    public RiskLogSummaryDto summary(Long projectId, RiskLogSummaryRequest req) {
         var categories = riskLogService.summary(req.getProjectId(), req.getCategory());
 
         return RiskLogSummaryDto.builder()

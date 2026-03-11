@@ -8,9 +8,9 @@ import com.nexxus.cos.api.dto.risklog.RiskLogSummaryDto;
 import com.nexxus.cos.api.dto.risklog.RiskLogSummaryRequest;
 
 public interface RiskLogApi {
-    RiskLogDto createRiskLog(CreateRiskLogRequest req);
+    RiskLogDto createRiskLog(Long projectId, CreateRiskLogRequest req);
 
-    RiskLogListResponse listRiskLogs(RiskLogListRequest req);
+    RiskLogListResponse listRiskLogs(Long projectId, RiskLogListRequest req);
 
-    RiskLogSummaryDto summary(RiskLogSummaryRequest req);
+    RiskLogSummaryDto summary(Long projectId, RiskLogSummaryRequest req);
 }

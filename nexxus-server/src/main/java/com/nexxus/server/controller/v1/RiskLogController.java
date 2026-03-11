@@ -10,6 +10,7 @@ import com.nexxus.cos.api.dto.risklog.RiskLogSummaryRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,24 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/risk-logs")
+@RequestMapping("/api/v1/projects/{projectId}/risk-logs")
 @RequiredArgsConstructor
 public class RiskLogController {
 
     private final RiskLogApi riskLogApi;
 
     @PostMapping("")
-    public RiskLogDto createRiskLog(@RequestBody @Valid CreateRiskLogRequest req) {
-        return riskLogApi.createRiskLog(req);
+    public RiskLogDto createRiskLog(@PathVariable Long projectId, @RequestBody @Valid CreateRiskLogRequest req) {
+        return riskLogApi.createRiskLog(projectId, req);
     }
 
     @PostMapping("/list")
-    public RiskLogListResponse listRiskLogs(@RequestBody @Valid RiskLogListRequest req) {
-        return riskLogApi.listRiskLogs(req);
+    public RiskLogListResponse listRiskLogs(@PathVariable Long projectId, @RequestBody @Valid RiskLogListRequest req) {
+        return riskLogApi.listRiskLogs(projectId, req);
     }
 
     @PostMapping("/summary")
-    public RiskLogSummaryDto summary(@RequestBody @Valid RiskLogSummaryRequest req) {
-        return riskLogApi.summary(req);
+    public RiskLogSummaryDto summary(@PathVariable Long projectId, @RequestBody @Valid RiskLogSummaryRequest req) {
+        return riskLogApi.summary(projectId, req);
     }
 }
