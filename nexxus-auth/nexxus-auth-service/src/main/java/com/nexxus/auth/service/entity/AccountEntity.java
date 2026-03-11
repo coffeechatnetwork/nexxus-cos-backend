@@ -21,7 +21,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("account")
+@TableName(value = "account", autoResultMap = true)
 public class AccountEntity extends BaseEntity {
     @TableField(typeHandler = UuidTypeHandler.class, jdbcType = JdbcType.VARCHAR)
     private UUID displayId;

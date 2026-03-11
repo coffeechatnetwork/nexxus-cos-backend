@@ -31,7 +31,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountEntity
     @Override
     public AccountEntity getByDisplayId(UUID displayId) {
         LambdaQueryWrapper<AccountEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(AccountEntity::getDisplayId, displayId);
+        queryWrapper.eq(AccountEntity::getDisplayId, displayId.toString());
         return accountMapper.selectOne(queryWrapper);
     }
 
