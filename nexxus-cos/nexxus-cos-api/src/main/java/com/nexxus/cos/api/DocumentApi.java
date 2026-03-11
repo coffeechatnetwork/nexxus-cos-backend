@@ -14,17 +14,17 @@ import com.nexxus.cos.api.dto.document.UploadFileRequest;
 import com.nexxus.cos.api.dto.document.UploadToFolderResponse;
 
 public interface DocumentApi {
-    FolderDto createFolder(CreateFolderRequest req);
+    FolderDto createFolder(Long projectId, CreateFolderRequest req);
 
-    PageResult<FolderListItem> listFolders(ListFolderRequest req);
+    PageResult<FolderListItem> listFolders(Long projectId, ListFolderRequest req);
 
-    UploadToFolderResponse uploadToFolder(UploadFileRequest req);
+    UploadToFolderResponse uploadToFolder(Long projectId, UploadFileRequest req);
 
-    FolderDto renameFolder(RenameFolderRequest req);
+    FolderDto renameFolder(Long projectId, RenameFolderRequest req);
 
-    Boolean deleteFolder(DeleteFolderRequest req);
+    Boolean deleteFolder(Long projectId, DeleteFolderRequest req);
 
-    FileDto renameFile(RenameFileRequest req);
+    FileDto renameFile(Long projectId, RenameFileRequest req);
 
-    Boolean deleteFile(DeleteFileRequest req);
+    Boolean deleteFile(Long projectId, DeleteFileRequest req);
 }

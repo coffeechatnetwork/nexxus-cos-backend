@@ -16,6 +16,7 @@ import com.nexxus.cos.api.dto.document.UploadToFolderResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,26 +28,26 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/documents")
+@RequestMapping("/api/v1/projects/{projectId}/documents")
 @RequiredArgsConstructor
 public class DocumentController {
 
     private final DocumentApi documentApi;
 
     @PostMapping("/folders")
-    public FolderDto createFolder(@RequestBody @Valid CreateFolderRequest req) {
+    public FolderDto createFolder(@PathVariable Long projectId, @RequestBody @Valid CreateFolderRequest req) {
         log.info("create folder req: {}", req);
-        return documentApi.createFolder(req);
+        return documentApi.createFolder(projectId, req);
     }
 
     @PostMapping("/folders/list")
-    public PageResult<FolderListItem> listFolders(@RequestBody @Valid ListFolderRequest req) {
-        return documentApi.listFolders(req);
+    public PageResult<FolderListItem> listFolders(@PathVariable Long projectId, @RequestBody @Valid ListFolderRequest req) {
+        return documentApi.listFolders(projectId, req);
     }
 
     @PostMapping(value = "/folders/upload", consumes = "multipart/form-data")
-    public UploadToFolderResponse uploadToFolder(@RequestParam("file") MultipartFile file,
-                                                 @RequestParam("projectId") Long projectId,
+    public UploadToFolderResponse uploadToFolder(@PathVariable Long projectId,
+                                                 @RequestParam("file") MultipartFile file,
                                                  @RequestParam("folderName") String folderName) throws IOException {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("file is not provided.");
@@ -61,30 +62,30 @@ public class DocumentController {
                 .folderName(folderName)
                 .fileName(fileName)
                 .contentType(contentType).build();
-        return documentApi.uploadToFolder(fileRequest);
+        return documentApi.uploadToFolder(projectId, fileRequest);
     }
 
     @PostMapping("/folders/rename")
-    public FolderDto renameFolder(@RequestBody @Valid RenameFolderRequest req) {
+    public FolderDto renameFolder(@PathVariable Long projectId, @RequestBody @Valid RenameFolderRequest req) {
         log.info("rename folder req: {}", req);
-        return documentApi.renameFolder(req);
+        return documentApi.renameFolder(projectId, req);
     }
 
     @PostMapping("/folders/delete")
-    public Boolean deleteFolder(@RequestBody @Valid DeleteFolderRequest req) {
+    public Boolean deleteFolder(@PathVariable Long projectId, @RequestBody @Valid DeleteFolderRequest req) {
         log.info("delete folder req: {}", req);
-        return documentApi.deleteFolder(req);
+        return documentApi.deleteFolder(projectId, req);
     }
 
     @PostMapping("/files/rename")
-    public FileDto renameFile(@RequestBody @Valid RenameFileRequest req) {
+    public FileDto renameFile(@PathVariable Long projectId, @RequestBody @Valid RenameFileRequest req) {
         log.info("rename file req: {}", req);
-        return documentApi.renameFile(req);
+        return documentApi.renameFile(projectId, req);
     }
 
     @PostMapping("/files/delete")
-    public Boolean deleteFile(@RequestBody @Valid DeleteFileRequest req) {
+    public Boolean deleteFile(@PathVariable Long projectId, @RequestBody @Valid DeleteFileRequest req) {
         log.info("delete file req: {}", req);
-        return documentApi.deleteFile(req);
+        return documentApi.deleteFile(projectId, req);
     }
 }

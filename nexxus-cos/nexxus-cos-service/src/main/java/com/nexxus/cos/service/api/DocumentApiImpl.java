@@ -45,7 +45,7 @@ public class DocumentApiImpl implements DocumentApi {
     private final FileApi fileApi;
 
     @Override
-    public FolderDto createFolder(CreateFolderRequest req) {
+    public FolderDto createFolder(Long projectId, CreateFolderRequest req) {
         AccountInfo accountInfo = AccountInfoContext.get();
         DocumentFolderEntity folderEntity = documentFolderService.getByProjectIdAndName(
                 req.getProjectId(), req.getName());
@@ -62,7 +62,7 @@ public class DocumentApiImpl implements DocumentApi {
     }
 
     @Override
-    public PageResult<FolderListItem> listFolders(ListFolderRequest req) {
+    public PageResult<FolderListItem> listFolders(Long projectId, ListFolderRequest req) {
         Page<DocumentFolderEntity> folderEntityPage = documentFolderService.listFolders(req.getProjectId(), req.getPage(), req.getPageSize());
 
         List<FolderListItem> folderListItems = folderEntityPage.getRecords().stream()
@@ -79,11 +79,10 @@ public class DocumentApiImpl implements DocumentApi {
     }
 
     @Override
-    public UploadToFolderResponse uploadToFolder(UploadFileRequest req) {
+    public UploadToFolderResponse uploadToFolder(Long projectId, UploadFileRequest req) {
 
         AccountInfo accountInfo = AccountInfoContext.get();
         Long orgId = accountInfo.getOrgId();
-        Long projectId = req.getProjectId();
         String folderName = req.getFolderName();
 
         DocumentFolderEntity folderEntity = documentFolderService.getByProjectIdAndName(projectId, folderName);
@@ -112,8 +111,7 @@ public class DocumentApiImpl implements DocumentApi {
     }
 
     @Override
-    public FolderDto renameFolder(RenameFolderRequest req) {
-        Long projectId = req.getProjectId();
+    public FolderDto renameFolder(Long projectId, RenameFolderRequest req) {
         Long folderId = req.getFolderId();
         String newName = req.getNewName();
 
@@ -139,7 +137,7 @@ public class DocumentApiImpl implements DocumentApi {
     }
 
     @Override
-    public Boolean deleteFolder(DeleteFolderRequest req) {
+    public Boolean deleteFolder(Long projectId, DeleteFolderRequest req) {
         DocumentFolderEntity folderEntity = documentFolderService.getById(req.getFolderId());
         if (folderEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("folder not found"));
@@ -149,7 +147,7 @@ public class DocumentApiImpl implements DocumentApi {
     }
 
     @Override
-    public FileDto renameFile(RenameFileRequest req) {
+    public FileDto renameFile(Long projectId, RenameFileRequest req) {
         DocumentFileEntity fileEntity = documentFileService.getById(req.getFileId());
         if (fileEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("file not found"));
@@ -168,7 +166,7 @@ public class DocumentApiImpl implements DocumentApi {
     }
 
     @Override
-    public Boolean deleteFile(DeleteFileRequest req) {
+    public Boolean deleteFile(Long projectId, DeleteFileRequest req) {
         DocumentFileEntity fileEntity = documentFileService.getById(req.getFileId());
         if (fileEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("file not found"));
