@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/files")
+@RequestMapping("/api/v1/files")
 @RequiredArgsConstructor
 public class FileController {
 
