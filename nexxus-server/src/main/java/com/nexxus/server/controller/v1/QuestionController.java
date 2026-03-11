@@ -25,49 +25,49 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/questions")
+@RequestMapping("/api/v1/projects/{projectId}/questions")
 @RequiredArgsConstructor
 public class QuestionController {
 
     public final QuestionApi questionApi;
 
     @PostMapping("")
-    public QuestionDto createQuestion(@RequestBody @Valid CreateQuestionRequest req) {
-        return questionApi.createQuestion(req);
+    public QuestionDto createQuestion(@PathVariable Long projectId, @RequestBody @Valid CreateQuestionRequest req) {
+        return questionApi.createQuestion(projectId, req);
     }
 
     @GetMapping("/{displayId}")
-    public QuestionDto getByDisplayId(@PathVariable String displayId) {
-        return questionApi.getByDisplayId(displayId);
+    public QuestionDto getByDisplayId(@PathVariable Long projectId, @PathVariable String displayId) {
+        return questionApi.getByDisplayId(projectId, displayId);
     }
 
     @PostMapping("/{displayId}/edit")
-    public QuestionDto edit(@PathVariable String displayId, @RequestBody @Valid EditQuestionRequest req) {
-        return questionApi.edit(displayId, req);
+    public QuestionDto edit(@PathVariable Long projectId, @PathVariable String displayId, @RequestBody @Valid EditQuestionRequest req) {
+        return questionApi.edit(projectId, displayId, req);
     }
 
     @PostMapping("/list")
-    public PageResult<QuestionListItem> listQuestions(@RequestBody @Valid ListQuestionRequest req) {
+    public PageResult<QuestionListItem> listQuestions(@PathVariable Long projectId, @RequestBody @Valid ListQuestionRequest req) {
         return questionApi.listQuestions(req.getProjectId(), req.getPage(), req.getPageSize(), req.getSearchQuery());
     }
 
     @PostMapping("/responses")
-    public ResponseDto createResponse(@RequestBody @Valid CreateResponseRequest req) {
-        return questionApi.createResponse(req);
+    public ResponseDto createResponse(@PathVariable Long projectId, @RequestBody @Valid CreateResponseRequest req) {
+        return questionApi.createResponse(projectId, req);
     }
 
     @PostMapping("/responses/edit")
-    public ResponseDto editResponse(@RequestBody @Valid EditResponseRequest req) {
-        return questionApi.editResponse(req);
+    public ResponseDto editResponse(@PathVariable Long projectId, @RequestBody @Valid EditResponseRequest req) {
+        return questionApi.editResponse(projectId, req);
     }
 
     @PostMapping("/responses/publish")
-    public ResponseDto publishResponse(@RequestBody @Valid PublishResponseRequest req) {
-        return questionApi.publishResponse(req);
+    public ResponseDto publishResponse(@PathVariable Long projectId, @RequestBody @Valid PublishResponseRequest req) {
+        return questionApi.publishResponse(projectId, req);
     }
 
     @PostMapping("/summary")
-    public QuestionSummaryDto summary(@RequestBody @Valid QuestionSummaryRequest req) {
-        return questionApi.summary(req);
+    public QuestionSummaryDto summary(@PathVariable Long projectId, @RequestBody @Valid QuestionSummaryRequest req) {
+        return questionApi.summary(projectId, req);
     }
 }

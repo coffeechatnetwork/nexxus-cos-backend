@@ -44,7 +44,7 @@ public class QuestionApiImpl implements QuestionApi {
     private final QuestionResponseService responseService;
 
     @Override
-    public QuestionDto createQuestion(CreateQuestionRequest req) {
+    public QuestionDto createQuestion(Long projectId, CreateQuestionRequest req) {
         Long followUpId = req.getFollowUpId();
         if (followUpId != null) {
             QuestionEntity followUpQuestion = questionService.getById(followUpId);
@@ -77,7 +77,7 @@ public class QuestionApiImpl implements QuestionApi {
     }
 
     @Override
-    public QuestionDto getByDisplayId(String displayId) {
+    public QuestionDto getByDisplayId(Long projectId, String displayId) {
         QuestionEntity question = questionService.getByDisplayId(displayId);
         if (question == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("question not found"));
@@ -86,7 +86,7 @@ public class QuestionApiImpl implements QuestionApi {
     }
 
     @Override
-    public QuestionDto edit(String displayId, EditQuestionRequest req) {
+    public QuestionDto edit(Long projectId, String displayId, EditQuestionRequest req) {
         QuestionEntity question = questionService.getByDisplayId(displayId);
         if (question == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("question not found"));
@@ -115,7 +115,7 @@ public class QuestionApiImpl implements QuestionApi {
     }
 
     @Override
-    public ResponseDto createResponse(CreateResponseRequest req) {
+    public ResponseDto createResponse(Long projectId, CreateResponseRequest req) {
         Long questionId = req.getQuestionId();
         QuestionEntity question = questionService.getById(questionId);
         if (question == null) {
@@ -133,7 +133,7 @@ public class QuestionApiImpl implements QuestionApi {
     }
 
     @Override
-    public ResponseDto editResponse(EditResponseRequest req) {
+    public ResponseDto editResponse(Long projectId, EditResponseRequest req) {
         QuestionResponseEntity response = responseService.getById(req.getResponseId());
         if (response == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("response not found"));
@@ -144,7 +144,7 @@ public class QuestionApiImpl implements QuestionApi {
     }
 
     @Override
-    public ResponseDto publishResponse(PublishResponseRequest req) {
+    public ResponseDto publishResponse(Long projectId, PublishResponseRequest req) {
         QuestionResponseEntity response = responseService.getById(req.getResponseId());
         if (response == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("response not found"));
@@ -155,7 +155,7 @@ public class QuestionApiImpl implements QuestionApi {
     }
 
     @Override
-    public QuestionSummaryDto summary(QuestionSummaryRequest req) {
+    public QuestionSummaryDto summary(Long projectId, QuestionSummaryRequest req) {
         var priorities = questionService.summary(req.getProjectId());
         return QuestionSummaryDto.builder()
                 .priorities(priorities)

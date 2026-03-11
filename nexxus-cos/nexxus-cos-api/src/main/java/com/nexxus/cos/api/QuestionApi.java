@@ -13,19 +13,19 @@ import com.nexxus.cos.api.dto.question.QuestionSummaryRequest;
 import com.nexxus.cos.api.dto.question.ResponseDto;
 
 public interface QuestionApi {
-    QuestionDto createQuestion(CreateQuestionRequest req);
+    QuestionDto createQuestion(Long projectId, CreateQuestionRequest req);
 
-    QuestionDto getByDisplayId(String displayId);
+    QuestionDto getByDisplayId(Long projectId, String displayId);
 
-    QuestionDto edit(String displayId, EditQuestionRequest req);
+    QuestionDto edit(Long projectId, String displayId, EditQuestionRequest req);
 
     PageResult<QuestionListItem> listQuestions(Long projectId, Long page, Long pageSize, String searchQuery);
 
-    ResponseDto createResponse(CreateResponseRequest req);
+    ResponseDto createResponse(Long projectId, CreateResponseRequest req);
 
-    ResponseDto editResponse(EditResponseRequest req);
+    ResponseDto editResponse(Long projectId, EditResponseRequest req);
 
-    ResponseDto publishResponse(PublishResponseRequest req);
+    ResponseDto publishResponse(Long projectId, PublishResponseRequest req);
 
-    QuestionSummaryDto summary(QuestionSummaryRequest req);
+    QuestionSummaryDto summary(Long projectId, QuestionSummaryRequest req);
 }
