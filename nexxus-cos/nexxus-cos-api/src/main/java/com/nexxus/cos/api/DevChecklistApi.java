@@ -10,16 +10,16 @@ import com.nexxus.cos.api.dto.checklist.DevChecklistSummaryRequest;
 import com.nexxus.cos.api.dto.checklist.EditDevChecklistRequest;
 
 public interface DevChecklistApi {
-    DevChecklistDto createDevChecklist(CreateDevChecklistRequest req);
+    DevChecklistDto createDevChecklist(Long projectId, CreateDevChecklistRequest req);
 
-    DevChecklistDto getByDisplayId(String displayId);
+    DevChecklistDto getByDisplayId(Long projectId, String displayId);
 
-    DevChecklistDto edit(String displayId, EditDevChecklistRequest req);
+    DevChecklistDto edit(Long projectId, String displayId, EditDevChecklistRequest req);
 
     PageResult<DevChecklistListItem> listDevChecklists(Long projectId,
                                                        Long page,
                                                        Long pageSize,
                                                        DevChecklistCategory category);
 
-    DevChecklistSummaryDto summary(DevChecklistSummaryRequest req);
+    DevChecklistSummaryDto summary(Long projectId, DevChecklistSummaryRequest req);
 }

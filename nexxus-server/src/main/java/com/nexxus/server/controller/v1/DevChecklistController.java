@@ -21,36 +21,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/checklists")
+@RequestMapping("/api/v1/projects/{projectId}/checklists")
 @RequiredArgsConstructor
 public class DevChecklistController {
 
     private final DevChecklistApi devChecklistApi;
 
     @PostMapping("")
-    public DevChecklistDto createDevChecklist(@RequestBody @Valid CreateDevChecklistRequest req) {
+    public DevChecklistDto createDevChecklist(@PathVariable Long projectId, @RequestBody @Valid CreateDevChecklistRequest req) {
         log.info("create devChecklist req: {}", req);
-        return devChecklistApi.createDevChecklist(req);
+        return devChecklistApi.createDevChecklist(projectId, req);
     }
 
     @GetMapping("/{displayId}")
-    public DevChecklistDto getByDisplayId(@PathVariable String displayId) {
-        return devChecklistApi.getByDisplayId(displayId);
+    public DevChecklistDto getByDisplayId(@PathVariable Long projectId, @PathVariable String displayId) {
+        return devChecklistApi.getByDisplayId(projectId, displayId);
     }
 
     @PostMapping("/{displayId}/edit")
-    public DevChecklistDto edit(@PathVariable String displayId, @RequestBody @Valid EditDevChecklistRequest req) {
+    public DevChecklistDto edit(@PathVariable Long projectId, @PathVariable String displayId, @RequestBody @Valid EditDevChecklistRequest req) {
         log.info("edit devChecklist req {}", req);
-        return devChecklistApi.edit(displayId, req);
+        return devChecklistApi.edit(projectId, displayId, req);
     }
 
     @PostMapping("/list")
-    public PageResult<DevChecklistListItem> list(@RequestBody @Valid ListDevChecklistRequest req) {
-        return devChecklistApi.listDevChecklists(req.getProjectId(), req.getPage(), req.getPageSize(), req.getCategory());
+    public PageResult<DevChecklistListItem> list(@PathVariable Long projectId, @RequestBody @Valid ListDevChecklistRequest req) {
+        return devChecklistApi.listDevChecklists(projectId, req.getPage(), req.getPageSize(), req.getCategory());
     }
 
     @PostMapping("/summary")
-    public DevChecklistSummaryDto summary(@RequestBody @Valid DevChecklistSummaryRequest req) {
-        return devChecklistApi.summary(req);
+    public DevChecklistSummaryDto summary(@PathVariable Long projectId, @RequestBody @Valid DevChecklistSummaryRequest req) {
+        return devChecklistApi.summary(projectId, req);
     }
 }

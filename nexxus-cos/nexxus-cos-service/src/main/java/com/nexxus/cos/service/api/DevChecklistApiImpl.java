@@ -34,7 +34,7 @@ public class DevChecklistApiImpl implements DevChecklistApi {
     private final DevChecklistConverter devChecklistConverter;
 
     @Override
-    public DevChecklistDto createDevChecklist(CreateDevChecklistRequest req) {
+    public DevChecklistDto createDevChecklist(Long projectId, CreateDevChecklistRequest req) {
         AccountInfo accountInfo = AccountInfoContext.get();
         Long orgId = accountInfo.getOrgId();
 
@@ -57,7 +57,7 @@ public class DevChecklistApiImpl implements DevChecklistApi {
     }
 
     @Override
-    public DevChecklistDto getByDisplayId(String displayId) {
+    public DevChecklistDto getByDisplayId(Long projectId, String displayId) {
         DevChecklistEntity devChecklist = devChecklistService.getByDisplayId(displayId);
         if (devChecklist == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("devChecklist not found"));
@@ -66,7 +66,7 @@ public class DevChecklistApiImpl implements DevChecklistApi {
     }
 
     @Override
-    public DevChecklistDto edit(String displayId, EditDevChecklistRequest req) {
+    public DevChecklistDto edit(Long projectId, String displayId, EditDevChecklistRequest req) {
         DevChecklistEntity devChecklist = devChecklistService.getByDisplayId(displayId);
         if (devChecklist == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("devChecklist not found"));
@@ -92,7 +92,7 @@ public class DevChecklistApiImpl implements DevChecklistApi {
     }
 
     @Override
-    public DevChecklistSummaryDto summary(DevChecklistSummaryRequest req) {
+    public DevChecklistSummaryDto summary(Long projectId, DevChecklistSummaryRequest req) {
         var categories = devChecklistService.summary(req.getProjectId());
         return DevChecklistSummaryDto.builder()
                 .categories(categories)
