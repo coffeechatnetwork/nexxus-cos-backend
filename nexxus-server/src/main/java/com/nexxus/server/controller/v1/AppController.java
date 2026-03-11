@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/apps")
+@RequestMapping("/api/v1/apps")
 @RequiredArgsConstructor
 public class AppController {
 

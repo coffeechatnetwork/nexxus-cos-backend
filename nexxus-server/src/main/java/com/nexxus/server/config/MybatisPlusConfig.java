@@ -41,7 +41,8 @@ public class MybatisPlusConfig {
 
             @Override
             public boolean ignoreTable(String tableName) {
-                return tableName.equals("account") ||
+                return tableName.equals("app") ||
+                        tableName.equals("account") ||
                         tableName.equals("cos_user") ||
                         tableName.equals("cos_comment") ||
                         tableName.equals("cos_organization");
