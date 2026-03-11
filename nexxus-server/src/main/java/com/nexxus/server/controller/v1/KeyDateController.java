@@ -19,30 +19,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/key-dates")
+@RequestMapping("/api/v1/projects/{projectId}/key-dates")
 @RequiredArgsConstructor
 public class KeyDateController {
 
     private final KeyDateApi keyDateApi;
 
     @PostMapping("")
-    public KeyDateDto createKeyDate(@RequestBody @Valid CreateKeyDateRequest req) {
-        return keyDateApi.createKeyDate(req);
+    public KeyDateDto createKeyDate(@PathVariable Long projectId, @RequestBody @Valid CreateKeyDateRequest req) {
+        return keyDateApi.createKeyDate(projectId, req);
     }
 
     @GetMapping("/{displayId}")
-    public KeyDateDto detail(@PathVariable String displayId) {
-        return keyDateApi.getByDisplayId(displayId);
+    public KeyDateDto detail(@PathVariable Long projectId, @PathVariable String displayId) {
+        return keyDateApi.getByDisplayId(projectId, displayId);
     }
 
     @PostMapping("/{displayId}/edit")
-    public KeyDateDto edit(@PathVariable String displayId, @RequestBody @Valid EditKeyDateRequest req) {
-        return keyDateApi.edit(displayId, req);
+    public KeyDateDto edit(@PathVariable Long projectId, @PathVariable String displayId, @RequestBody @Valid EditKeyDateRequest req) {
+        return keyDateApi.edit(projectId, displayId, req);
     }
 
     @PostMapping("/list")
-    public PageResult<KeyDateListItem> list(@RequestBody @Valid ListKeyDateRequest req) {
-        return keyDateApi.list(req.getProjectId(), req.getPage(), req.getPageSize(),
+    public PageResult<KeyDateListItem> list(@PathVariable Long projectId, @RequestBody @Valid ListKeyDateRequest req) {
+        return keyDateApi.list(projectId, req.getPage(), req.getPageSize(),
                 req.getStartDate(), req.getEndDate());
     }
 }

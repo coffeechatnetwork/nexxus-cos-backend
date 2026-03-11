@@ -32,7 +32,7 @@ public class KeyDateApiImpl implements KeyDateApi {
     private final KeyDateConverter keyDateConverter;
 
     @Override
-    public KeyDateDto createKeyDate(CreateKeyDateRequest req) {
+    public KeyDateDto createKeyDate(Long projectId, CreateKeyDateRequest req) {
         AccountInfo accountInfo = AccountInfoContext.get();
         KeyDateEntity keyDateEntity = keyDateService.getByProjectIdAndTitle(req.getProjectId(), req.getTitle());
         if (keyDateEntity != null) {
@@ -54,7 +54,7 @@ public class KeyDateApiImpl implements KeyDateApi {
     }
 
     @Override
-    public KeyDateDto getByDisplayId(String displayId) {
+    public KeyDateDto getByDisplayId(Long projectId, String displayId) {
         KeyDateEntity keyDateEntity = keyDateService.getByDisplayId(displayId);
         if (keyDateEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("keyDate not found"));
@@ -63,7 +63,7 @@ public class KeyDateApiImpl implements KeyDateApi {
     }
 
     @Override
-    public KeyDateDto edit(String displayId, EditKeyDateRequest req) {
+    public KeyDateDto edit(Long projectId, String displayId, EditKeyDateRequest req) {
         KeyDateEntity keyDateEntity = keyDateService.getByDisplayId(displayId);
         if (keyDateEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("keyDate not found"));
