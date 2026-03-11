@@ -17,6 +17,7 @@ public class ProjectConverter {
 
     public ProjectDto toProjectDto(ProjectEntity entity) {
         return ProjectDto.builder()
+                .id(entity.getId())
                 .displayId(entity.getDisplayId())
                 .orgId(entity.getOrgId())
                 .name(entity.getName())
@@ -29,6 +30,7 @@ public class ProjectConverter {
 
     public ProjectListItem toProjectListItem(ProjectEntity entity) {
         return ProjectListItem.builder()
+                .id(entity.getId())
                 .displayId(entity.getDisplayId())
                 .orgId(entity.getOrgId())
                 .name(entity.getName())

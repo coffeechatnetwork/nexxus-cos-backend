@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectListItem implements Serializable {
+    private Long id;
     private String displayId;
     private Long orgId;
     private String name;
