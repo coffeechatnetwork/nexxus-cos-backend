@@ -198,6 +198,7 @@ create table if not exists user_role
     id         bigserial                           not null primary key,
     version    integer                             null,
     account_id bigint                              not null,
+    project_id bigint                              not null,
     role_id    bigint                              not null,
     created_by varchar(64)                         not null,
     updated_by varchar(64)                         not null,
@@ -206,5 +207,5 @@ create table if not exists user_role
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at timestamp                           null
 );
-create unique index if not exists uq_user_role_account_id_role_id on user_role (account_id, role_id);
+create unique index if not exists uq_user_role_account_id_project_id_role_id on user_role (account_id, project_id, role_id);
 

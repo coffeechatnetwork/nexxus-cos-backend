@@ -37,7 +37,7 @@ public class DeliverableApiImpl implements DeliverableApi {
     private final DeliverableConverter deliverableConverter;
 
     @Override
-    public DeliverableDto createDeliverable(CreateDeliverableRequest req) {
+    public DeliverableDto createDeliverable(Long projectId, CreateDeliverableRequest req) {
         // get orgId from context
         AccountInfo accountInfo = AccountInfoContext.get();
         Long orgId = accountInfo.getOrgId();
@@ -72,7 +72,7 @@ public class DeliverableApiImpl implements DeliverableApi {
     }
 
     @Override
-    public DeliverableDto getByDisplayId(String displayId) {
+    public DeliverableDto getByDisplayId(Long projectId, String displayId) {
         DeliverableEntity deliverableEntity = deliverableService.getByDisplayId(displayId);
         if (deliverableEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("deliverable not found"));
@@ -81,7 +81,7 @@ public class DeliverableApiImpl implements DeliverableApi {
     }
 
     @Override
-    public DeliverableDto edit(String displayId, EditDeliverableRequest req) {
+    public DeliverableDto edit(Long projectId, String displayId, EditDeliverableRequest req) {
         DeliverableEntity deliverableEntity = deliverableService.getByDisplayId(displayId);
         if (deliverableEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("deliverable not found"));
@@ -114,7 +114,7 @@ public class DeliverableApiImpl implements DeliverableApi {
     }
 
     @Override
-    public DeliverableDashboardDto dashboard(DeliverableDashboardRequest req) {
+    public DeliverableDashboardDto dashboard(Long projectId, DeliverableDashboardRequest req) {
         return null;
     }
 }

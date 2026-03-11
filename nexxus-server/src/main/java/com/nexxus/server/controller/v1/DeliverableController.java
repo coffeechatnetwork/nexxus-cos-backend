@@ -21,37 +21,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/deliverables")
+@RequestMapping("/api/v1/projects/{projectId}/deliverables")
 @RequiredArgsConstructor
 public class DeliverableController {
 
     private final DeliverableApi deliverableApi;
 
     @PostMapping("")
-    public DeliverableDto create(@RequestBody @Valid CreateDeliverableRequest req) {
+    public DeliverableDto create(@PathVariable Long projectId, @RequestBody @Valid CreateDeliverableRequest req) {
         log.info("create deliverable req: {}", req);
-        return deliverableApi.createDeliverable(req);
+        return deliverableApi.createDeliverable(projectId, req);
     }
 
     @GetMapping("/{displayId}")
-    public DeliverableDto detail(@PathVariable String displayId) {
-        return deliverableApi.getByDisplayId(displayId);
+    public DeliverableDto detail(@PathVariable Long projectId, @PathVariable String displayId) {
+        return deliverableApi.getByDisplayId(projectId, displayId);
     }
 
     @PostMapping("/{displayId}/edit")
-    public DeliverableDto edit(@PathVariable String displayId, @RequestBody @Valid EditDeliverableRequest req) {
+    public DeliverableDto edit(@PathVariable Long projectId, @PathVariable String displayId, @RequestBody @Valid EditDeliverableRequest req) {
         log.info("edit deliverable req: {}", req);
-        return deliverableApi.edit(displayId, req);
+        return deliverableApi.edit(projectId, displayId, req);
     }
 
     @PostMapping("/list")
-    public PageResult<DeliverableListItem> list(@RequestBody @Valid ListDeliverableRequest req) {
+    public PageResult<DeliverableListItem> list(@PathVariable Long projectId, @RequestBody @Valid ListDeliverableRequest req) {
         log.info("list deliverable req: {}", req);
-        return deliverableApi.list(req.getProjectId(), req.getPage(), req.getPageSize());
+        return deliverableApi.list(projectId, req.getPage(), req.getPageSize());
     }
 
     @PostMapping("/dashboard")
-    public DeliverableDashboardDto dashboard(@RequestBody @Valid DeliverableDashboardRequest req) {
-        return deliverableApi.dashboard(req);
+    public DeliverableDashboardDto dashboard(@PathVariable Long projectId, @RequestBody @Valid DeliverableDashboardRequest req) {
+        return deliverableApi.dashboard(projectId, req);
     }
 }

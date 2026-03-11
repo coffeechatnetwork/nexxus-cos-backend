@@ -9,13 +9,13 @@ import com.nexxus.cos.api.dto.deliverable.DeliverableListItem;
 import com.nexxus.cos.api.dto.deliverable.EditDeliverableRequest;
 
 public interface DeliverableApi {
-    DeliverableDto createDeliverable(CreateDeliverableRequest req);
+    DeliverableDto createDeliverable(Long projectId, CreateDeliverableRequest req);
 
-    DeliverableDto getByDisplayId(String displayId);
+    DeliverableDto getByDisplayId(Long projectId, String displayId);
 
-    DeliverableDto edit(String displayId, EditDeliverableRequest req);
+    DeliverableDto edit(Long projectId, String displayId, EditDeliverableRequest req);
 
     PageResult<DeliverableListItem> list(Long projectId, Long page, Long pageSize);
 
-    DeliverableDashboardDto dashboard(DeliverableDashboardRequest req);
+    DeliverableDashboardDto dashboard(Long projectId, DeliverableDashboardRequest req);
 }
