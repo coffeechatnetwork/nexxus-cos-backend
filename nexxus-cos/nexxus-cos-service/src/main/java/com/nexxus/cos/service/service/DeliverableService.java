@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.nexxus.cos.service.entity.DeliverableEntity;
 import com.nexxus.cos.service.service.query.DeliverableQuery;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
@@ -16,4 +17,6 @@ public interface DeliverableService extends IService<DeliverableEntity> {
     Page<DeliverableEntity> listDeliverables(DeliverableQuery query);
 
     Map<String, DeliverableEntity> mapByDisplayIds(List<String> displayIds);
+
+    List<DeliverableEntity> getByProjectIdAndDate(Long projectId, Instant startDate, Instant endDate);
 }

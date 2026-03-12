@@ -25,6 +25,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectEntity
     }
 
     @Override
+    public ProjectEntity getByDisplayId(String displayId) {
+        LambdaQueryWrapper<ProjectEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ProjectEntity::getDisplayId, displayId);
+        return projectMapper.selectOne(queryWrapper);    }
+
+    @Override
     public Page<ProjectEntity> listProjects(Long orgId, Long page, Long pageSize) {
         Page<ProjectEntity> pageParam = new Page<>(page, pageSize);
         LambdaQueryWrapper<ProjectEntity> queryWrapper = new LambdaQueryWrapper<>();

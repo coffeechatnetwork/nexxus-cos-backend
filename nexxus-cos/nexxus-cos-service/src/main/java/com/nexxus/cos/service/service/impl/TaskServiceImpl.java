@@ -56,4 +56,11 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, TaskEntity> impleme
         return taskEntities.stream()
                 .collect(Collectors.toMap(TaskEntity::getDisplayId, task -> task));
     }
+
+    @Override
+    public List<TaskEntity> getByProjectId(Long projectId) {
+        return lambdaQuery()
+                .eq(TaskEntity::getProjectId, projectId)
+                .list();
+    }
 }

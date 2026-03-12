@@ -8,6 +8,9 @@ import com.nexxus.common.NexxusException;
 import com.nexxus.common.PageResult;
 import com.nexxus.common.enums.cos.project.ProjectStatus;
 import com.nexxus.cos.api.CosApi;
+import com.nexxus.cos.api.DeliverableApi;
+import com.nexxus.cos.api.TaskApi;
+import com.nexxus.cos.api.dto.deliverable.DeliverableDashboardRequest;
 import com.nexxus.cos.api.dto.project.CreateProjectRequest;
 import com.nexxus.cos.api.dto.project.ProjectDashboardDto;
 import com.nexxus.cos.api.dto.project.ProjectDto;
@@ -32,6 +35,8 @@ public class CosApiImpl implements CosApi {
     private final ProjectService projectService;
     private final OrganizationService organizationService;
     private final ProjectConverter projectConverter;
+    private final DeliverableApi deliverableApi;
+    private final TaskApi taskApi;
 
     @Override
     public ProjectDto createProject(CreateProjectRequest req) {
@@ -85,6 +90,30 @@ public class CosApiImpl implements CosApi {
 
     @Override
     public ProjectDashboardDto dashboard(Long projectId) {
-        return null;
+        ProjectEntity projectEntity = projectService.getById(projectId);
+        if (projectEntity == null) {
+            throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("project not found"));
+        }
+
+        //deliverableDashboard
+        DeliverableDashboardRequest deliverableRequest = DeliverableDashboardRequest.builder()
+                .projectId(projectId)
+                .startDate(null)
+                .endDate(null)
+                .build();
+        var deliverableDashboard = deliverableApi.dashboard(projectId, deliverableRequest);
+
+        //taskDashboard
+        var taskDashboard = taskApi.dashboard(projectId);
+
+        return ProjectDashboardDto.builder()
+                .displayId(projectEntity.getDisplayId())
+                .name(projectEntity.getName())
+                .logoUrl(projectEntity.getLogoUrl())
+                .imageUrls(projectEntity.getImageUrls())
+                .status(projectEntity.getStatus())
+                .deliverableDashboard(deliverableDashboard)
+                .taskDashboard(taskDashboard)
+                .build();
     }
 }

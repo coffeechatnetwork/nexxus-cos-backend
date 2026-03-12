@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,5 +60,15 @@ public class DeliverableServiceImpl extends ServiceImpl<DeliverableMapper, Deliv
         return deliverableEntities.stream()
                 .collect(Collectors.toMap(DeliverableEntity::getDisplayId,
                         deliverableEntity -> deliverableEntity));
+    }
+
+    @Override
+    public List<DeliverableEntity> getByProjectIdAndDate(Long projectId, Instant startDate, Instant endDate) {
+        return lambdaQuery()
+                .eq(DeliverableEntity::getProjectId, projectId)
+                .ge(startDate != null, DeliverableEntity::getDeadline, startDate)
+                .le(endDate != null, DeliverableEntity::getDeadline, endDate)
+                .orderByDesc(DeliverableEntity::getId)
+                .list();
     }
 }

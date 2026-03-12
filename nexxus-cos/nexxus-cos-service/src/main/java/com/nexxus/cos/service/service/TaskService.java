@@ -15,4 +15,6 @@ public interface TaskService extends IService<TaskEntity> {
     Page<TaskEntity> listTasks(Long projectId, Long page, Long pageSize);
 
     Map<String, TaskEntity> mapByDisplayIds(List<String> displayIds);
+
+    List<TaskEntity> getByProjectId(Long projectId);
 }
