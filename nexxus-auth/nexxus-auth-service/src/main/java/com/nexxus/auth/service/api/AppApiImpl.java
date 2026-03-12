@@ -3,6 +3,7 @@ package com.nexxus.auth.service.api;
 import com.nexxus.auth.api.AppApi;
 import com.nexxus.auth.api.dto.AppDto;
 import com.nexxus.auth.api.dto.CreateAppRequest;
+import com.nexxus.auth.service.api.converter.AppConverter;
 import com.nexxus.auth.service.entity.AppEntity;
 import com.nexxus.auth.service.service.AppService;
 import com.nexxus.common.ErrorDefEnum;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AppApiImpl implements AppApi {
     private final AppService appService;
+    private final AppConverter appConverter;
 
     @Override
     public AppDto createApp(CreateAppRequest req) {
@@ -32,11 +34,7 @@ public class AppApiImpl implements AppApi {
 
         appService.save(appEntity);
 
-        return AppDto.builder()
-                .id(appEntity.getId())
-                .name(appEntity.getName())
-                .code(appEntity.getCode())
-                .build();
+        return appConverter.toAppDto(appEntity);
     }
 
     @Override
@@ -45,10 +43,6 @@ public class AppApiImpl implements AppApi {
         if (appEntity == null) {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("app not found"));
         }
-        return AppDto.builder()
-                .id(appEntity.getId())
-                .name(appEntity.getName())
-                .code(appEntity.getCode())
-                .build();
+        return appConverter.toAppDto(appEntity);
     }
 }

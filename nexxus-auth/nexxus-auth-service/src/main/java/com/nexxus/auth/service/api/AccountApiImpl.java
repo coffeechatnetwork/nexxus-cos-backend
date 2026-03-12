@@ -3,6 +3,7 @@ package com.nexxus.auth.service.api;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nexxus.auth.api.AccountApi;
 import com.nexxus.auth.api.dto.AccountDto;
+import com.nexxus.auth.service.api.converter.AccountConverter;
 import com.nexxus.auth.service.entity.AccountEntity;
 import com.nexxus.auth.service.service.AccountService;
 import com.nexxus.common.ErrorDefEnum;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountApiImpl implements AccountApi {
     private final AccountService accountService;
+    private final AccountConverter accountConverter;
 
     @Override
     public AccountDto getByDisplayId(UUID displayId) {
@@ -27,17 +29,7 @@ public class AccountApiImpl implements AccountApi {
             throw new NexxusException(ErrorDefEnum.NOT_FOUND_EXCEPTION.desc("account not found"));
         }
 
-        return AccountDto.builder()
-                .displayId(accountEntity.getDisplayId())
-                .appCode(accountEntity.getAppCode())
-                .orgId(accountEntity.getOrgId())
-                .type(accountEntity.getType())
-                .countryCode(accountEntity.getCountryCode())
-                .phoneNumber(accountEntity.getPhoneNumber())
-                .email(accountEntity.getEmail())
-                .externalId(accountEntity.getExternalId())
-                .status(accountEntity.getStatus())
-                .build();
+        return accountConverter.toAccountDto(accountEntity);
     }
 
     @Override
@@ -45,17 +37,7 @@ public class AccountApiImpl implements AccountApi {
         Page<AccountEntity> entityPage = accountService.listAccounts(page, pageSize);
 
         List<AccountDto> dtoList = entityPage.getRecords().stream()
-                .map(entity -> AccountDto.builder()
-                        .displayId(entity.getDisplayId())
-                        .appCode(entity.getAppCode())
-                        .orgId(entity.getOrgId())
-                        .type(entity.getType())
-                        .countryCode(entity.getCountryCode())
-                        .phoneNumber(entity.getPhoneNumber())
-                        .email(entity.getEmail())
-                        .externalId(entity.getExternalId())
-                        .status(entity.getStatus())
-                        .build())
+                .map(accountConverter::toAccountDto)
                 .collect(Collectors.toList());
 
         return PageResult.<AccountDto>builder()
