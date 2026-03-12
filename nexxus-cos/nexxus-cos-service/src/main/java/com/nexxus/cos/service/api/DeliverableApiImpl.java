@@ -51,7 +51,7 @@ public class DeliverableApiImpl implements DeliverableApi {
         Long orgId = accountInfo.getOrgId();
 
         // check the duplicate
-        DeliverableEntity deliverableEntity = deliverableService.getByProjectIdAndTitle(req.getProjectId(), req.getTitle());
+        DeliverableEntity deliverableEntity = deliverableService.getByProjectIdAndTitle(projectId, req.getTitle());
         if (deliverableEntity != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("deliverable already exist in this project"));
         }
@@ -65,7 +65,7 @@ public class DeliverableApiImpl implements DeliverableApi {
 
         DeliverableEntity newDeliverable = DeliverableEntity.builder()
                 .orgId(orgId)
-                .projectId(req.getProjectId())
+                .projectId(projectId)
                 .displayId(UUID.randomUUID().toString())
                 .title(req.getTitle())
                 .shortDesc(req.getShortDesc())
@@ -124,7 +124,7 @@ public class DeliverableApiImpl implements DeliverableApi {
     @Override
     public DeliverableDashboardDto dashboard(Long projectId, DeliverableDashboardRequest req) {
         List<DeliverableEntity> deliverableEntities = deliverableService.getByProjectIdAndDate(
-                req.getProjectId(), req.getStartDate(), req.getEndDate());
+                projectId, req.getStartDate(), req.getEndDate());
 
         List<DeliverableListItem> deliverableListItems = deliverableEntities.stream()
                 .map(deliverableConverter::toDeliverableListItem)

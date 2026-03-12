@@ -17,6 +17,4 @@ public class DeliverableDashboardRequest implements Serializable {
     @NotNull
     private Instant startDate;
     private Instant endDate;
-    @NotNull
-    private Long projectId;
 }
