@@ -18,8 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateDevChecklistRequest implements Serializable {
-    @NotNull
-    private Long projectId;
     @NotBlank
     @Size(max = 64)
     private String title;

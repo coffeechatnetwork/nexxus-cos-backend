@@ -97,7 +97,6 @@ public class CosApiImpl implements CosApi {
 
         //deliverableDashboard
         DeliverableDashboardRequest deliverableRequest = DeliverableDashboardRequest.builder()
-                .projectId(projectId)
                 .startDate(null)
                 .endDate(null)
                 .build();

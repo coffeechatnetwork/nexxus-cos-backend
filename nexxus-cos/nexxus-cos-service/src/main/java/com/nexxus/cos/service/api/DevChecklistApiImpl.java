@@ -38,13 +38,13 @@ public class DevChecklistApiImpl implements DevChecklistApi {
         AccountInfo accountInfo = AccountInfoContext.get();
         Long orgId = accountInfo.getOrgId();
 
-        DevChecklistEntity devChecklistEntity = devChecklistService.getByProjectIdAndTitle(req.getProjectId(), req.getTitle());
+        DevChecklistEntity devChecklistEntity = devChecklistService.getByProjectIdAndTitle(projectId, req.getTitle());
         if (devChecklistEntity != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("checklist with this title already exist"));
         }
         DevChecklistEntity newEntity = DevChecklistEntity.builder()
                 .orgId(orgId)
-                .projectId(req.getProjectId())
+                .projectId(projectId)
                 .displayId(UUID.randomUUID().toString())
                 .title(req.getTitle())
                 .description(req.getDescription())
@@ -93,7 +93,7 @@ public class DevChecklistApiImpl implements DevChecklistApi {
 
     @Override
     public DevChecklistSummaryDto summary(Long projectId, DevChecklistSummaryRequest req) {
-        var categories = devChecklistService.summary(req.getProjectId());
+        var categories = devChecklistService.summary(projectId);
         return DevChecklistSummaryDto.builder()
                 .categories(categories)
                 .build();
