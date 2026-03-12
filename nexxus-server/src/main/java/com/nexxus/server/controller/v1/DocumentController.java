@@ -57,7 +57,6 @@ public class DocumentController {
         String contentType = file.getContentType();
         UploadFileRequest fileRequest = UploadFileRequest.builder()
                 .key(key)
-                .projectId(projectId)
                 .content(file.getBytes())
                 .folderName(folderName)
                 .fileName(fileName)

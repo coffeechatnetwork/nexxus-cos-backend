@@ -14,8 +14,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class RenameFileRequest {
     @NotNull
-    private Long projectId;
-    @NotNull
     private Long folderId;
     @NotNull
     private Long fileId;

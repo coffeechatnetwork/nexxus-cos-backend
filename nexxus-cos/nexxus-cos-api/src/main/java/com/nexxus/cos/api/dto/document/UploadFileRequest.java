@@ -14,9 +14,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UploadFileRequest implements Serializable {
-    @NotNull
-    private Long projectId;
-
     @NotBlank
     private String folderName;
 

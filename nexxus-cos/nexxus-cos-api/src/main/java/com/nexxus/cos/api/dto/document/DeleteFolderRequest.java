@@ -14,7 +14,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class DeleteFolderRequest implements Serializable {
     @NotNull
-    private Long projectId;
-    @NotNull
     private Long folderId;
 }

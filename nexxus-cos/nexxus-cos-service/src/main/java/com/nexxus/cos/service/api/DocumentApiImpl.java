@@ -48,13 +48,13 @@ public class DocumentApiImpl implements DocumentApi {
     public FolderDto createFolder(Long projectId, CreateFolderRequest req) {
         AccountInfo accountInfo = AccountInfoContext.get();
         DocumentFolderEntity folderEntity = documentFolderService.getByProjectIdAndName(
-                req.getProjectId(), req.getName());
+                projectId, req.getName());
         if (folderEntity != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("folder already exist"));
         }
         DocumentFolderEntity newFolder = DocumentFolderEntity.builder()
                 .orgId(accountInfo.getOrgId())
-                .projectId(req.getProjectId())
+                .projectId(projectId)
                 .name(req.getName())
                 .build();
         documentFolderService.save(newFolder);
@@ -63,7 +63,7 @@ public class DocumentApiImpl implements DocumentApi {
 
     @Override
     public PageResult<FolderListItem> listFolders(Long projectId, ListFolderRequest req) {
-        Page<DocumentFolderEntity> folderEntityPage = documentFolderService.listFolders(req.getProjectId(), req.getPage(), req.getPageSize());
+        Page<DocumentFolderEntity> folderEntityPage = documentFolderService.listFolders(projectId, req.getPage(), req.getPageSize());
 
         List<FolderListItem> folderListItems = folderEntityPage.getRecords().stream()
                 .parallel()
@@ -156,7 +156,7 @@ public class DocumentApiImpl implements DocumentApi {
         if (originalName.equals(req.getNewName())) {
             throw new IllegalArgumentException("new name is the same as the original name");
         }
-        DocumentFileEntity fileEntity1 = documentFileService.getFileInFolder(req.getProjectId(), req.getFolderId(), req.getNewName());
+        DocumentFileEntity fileEntity1 = documentFileService.getFileInFolder(projectId, req.getFolderId(), req.getNewName());
         if (fileEntity1 != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("file with new name already exists"));
         }

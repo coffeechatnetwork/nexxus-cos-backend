@@ -16,8 +16,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class RenameFolderRequest implements Serializable {
     @NotNull
-    private Long projectId;
-    @NotNull
     private Long folderId;
     @NotBlank
     @Size(max = 64)

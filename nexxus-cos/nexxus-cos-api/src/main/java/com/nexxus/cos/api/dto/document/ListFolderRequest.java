@@ -16,8 +16,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ListFolderRequest implements Serializable {
     @NotNull
-    private Long projectId;
-    @NotNull
     @Min(value = 1)
     private Long page;
     @NotNull
