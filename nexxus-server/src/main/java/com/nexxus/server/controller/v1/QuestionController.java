@@ -48,7 +48,7 @@ public class QuestionController {
 
     @PostMapping("/list")
     public PageResult<QuestionListItem> listQuestions(@PathVariable Long projectId, @RequestBody @Valid ListQuestionRequest req) {
-        return questionApi.listQuestions(req.getProjectId(), req.getPage(), req.getPageSize(), req.getSearchQuery());
+        return questionApi.listQuestions(projectId, req.getPage(), req.getPageSize(), req.getSearchQuery());
     }
 
     @PostMapping("/responses")

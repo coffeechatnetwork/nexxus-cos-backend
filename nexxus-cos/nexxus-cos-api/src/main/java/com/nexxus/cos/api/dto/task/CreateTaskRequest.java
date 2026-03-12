@@ -19,8 +19,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateTaskRequest implements Serializable {
-    @NotNull
-    private Long projectId;
     @NotBlank
     @Size(min = 1, max = 128)
     private String title;

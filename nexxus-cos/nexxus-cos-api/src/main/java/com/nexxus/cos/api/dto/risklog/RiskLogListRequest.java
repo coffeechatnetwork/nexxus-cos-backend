@@ -13,6 +13,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RiskLogListRequest implements Serializable {
-    private Long projectId;
     private RiskLogCategory category;
 }

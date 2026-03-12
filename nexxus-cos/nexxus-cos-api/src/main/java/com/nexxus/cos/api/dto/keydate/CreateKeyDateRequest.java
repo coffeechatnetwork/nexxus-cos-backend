@@ -19,8 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateKeyDateRequest implements Serializable {
-    @NotNull
-    private Long projectId;
     @NotBlank
     @Size(min = 1, max = 128)
     private String title;

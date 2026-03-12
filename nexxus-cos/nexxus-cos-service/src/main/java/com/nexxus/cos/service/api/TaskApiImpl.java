@@ -49,7 +49,7 @@ public class TaskApiImpl implements TaskApi {
         AccountInfo accountInfo = AccountInfoContext.get();
         Long orgId = accountInfo.getOrgId();
 
-        TaskEntity taskEntity = taskService.getByProjectIdAndTitle(req.getProjectId(), req.getTitle());
+        TaskEntity taskEntity = taskService.getByProjectIdAndTitle(projectId, req.getTitle());
         if (taskEntity != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("task already exist in this project"));
         }
@@ -62,7 +62,7 @@ public class TaskApiImpl implements TaskApi {
 
         TaskEntity newTask = TaskEntity.builder()
                 .orgId(orgId)
-                .projectId(req.getProjectId())
+                .projectId(projectId)
                 .displayId(UUID.randomUUID().toString())
                 .title(req.getTitle())
                 .shortDesc(req.getShortDesc())

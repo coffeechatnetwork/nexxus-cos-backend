@@ -16,8 +16,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateRiskLogRequest implements Serializable {
-    @NotNull
-    private Long projectId;
     @NotBlank
     private String topic;
     private String description;

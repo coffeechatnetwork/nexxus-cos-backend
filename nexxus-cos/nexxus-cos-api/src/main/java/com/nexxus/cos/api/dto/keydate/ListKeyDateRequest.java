@@ -17,8 +17,6 @@ import java.time.Instant;
 @NoArgsConstructor
 public class ListKeyDateRequest implements Serializable {
     @NotNull
-    private Long projectId;
-    @NotNull
     @Min(value = 1)
     private Long page;
     @NotNull

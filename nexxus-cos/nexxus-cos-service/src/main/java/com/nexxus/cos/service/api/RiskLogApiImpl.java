@@ -33,13 +33,13 @@ public class RiskLogApiImpl implements RiskLogApi {
     @Override
     public RiskLogDto createRiskLog(Long projectId, CreateRiskLogRequest req) {
         AccountInfo accountInfo = AccountInfoContext.get();
-        RiskLogEntity riskLogEntity = riskLogService.getByProjectIdAndTopic(req.getProjectId(), req.getTopic());
+        RiskLogEntity riskLogEntity = riskLogService.getByProjectIdAndTopic(projectId, req.getTopic());
         if (riskLogEntity != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("riskLog already exist"));
         }
         RiskLogEntity newRiskLog = RiskLogEntity.builder()
                 .orgId(accountInfo.getOrgId())
-                .projectId(req.getProjectId())
+                .projectId(projectId)
                 .displayId(UUID.randomUUID().toString())
                 .topic(req.getTopic())
                 .description(req.getDescription())
@@ -55,7 +55,7 @@ public class RiskLogApiImpl implements RiskLogApi {
 
     @Override
     public RiskLogListResponse listRiskLogs(Long projectId, RiskLogListRequest req) {
-        List<RiskLogCategoryList> categories = riskLogService.listRiskLogs(req.getProjectId(), req.getCategory());
+        List<RiskLogCategoryList> categories = riskLogService.listRiskLogs(projectId, req.getCategory());
 
         return RiskLogListResponse.builder()
                 .categories(categories)
@@ -64,7 +64,7 @@ public class RiskLogApiImpl implements RiskLogApi {
 
     @Override
     public RiskLogSummaryDto summary(Long projectId, RiskLogSummaryRequest req) {
-        var categories = riskLogService.summary(req.getProjectId(), req.getCategory());
+        var categories = riskLogService.summary(projectId, req.getCategory());
 
         return RiskLogSummaryDto.builder()
                 .items(categories)

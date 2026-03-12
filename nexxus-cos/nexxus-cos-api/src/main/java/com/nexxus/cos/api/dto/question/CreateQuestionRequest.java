@@ -18,8 +18,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateQuestionRequest implements Serializable {
-    @NotNull
-    private Long projectId;
     @NotBlank
     private String content;
     @NotNull

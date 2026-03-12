@@ -63,7 +63,7 @@ public class QuestionApiImpl implements QuestionApi {
         AccountInfo accountInfo = AccountInfoContext.get();
         QuestionEntity newQuestionEntity = QuestionEntity.builder()
                 .orgId(accountInfo.getOrgId())
-                .projectId(req.getProjectId())
+                .projectId(projectId)
                 .displayId(UUID.randomUUID().toString())
                 .content(req.getContent())
                 .priority(req.getPriority())

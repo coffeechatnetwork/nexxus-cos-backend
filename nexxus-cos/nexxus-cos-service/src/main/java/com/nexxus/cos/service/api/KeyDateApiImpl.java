@@ -34,13 +34,13 @@ public class KeyDateApiImpl implements KeyDateApi {
     @Override
     public KeyDateDto createKeyDate(Long projectId, CreateKeyDateRequest req) {
         AccountInfo accountInfo = AccountInfoContext.get();
-        KeyDateEntity keyDateEntity = keyDateService.getByProjectIdAndTitle(req.getProjectId(), req.getTitle());
+        KeyDateEntity keyDateEntity = keyDateService.getByProjectIdAndTitle(projectId, req.getTitle());
         if (keyDateEntity != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("keyDate already exist"));
         }
         KeyDateEntity newKeyDate = KeyDateEntity.builder()
                 .orgId(accountInfo.getOrgId())
-                .projectId(req.getProjectId())
+                .projectId(projectId)
                 .displayId(UUID.randomUUID().toString())
                 .title(req.getTitle())
                 .shortDesc(req.getShortDesc())
