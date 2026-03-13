@@ -45,7 +45,8 @@ public class MybatisPlusConfig {
                         tableName.equals("account") ||
                         tableName.equals("cos_user") ||
                         tableName.equals("cos_comment") ||
-                        tableName.equals("cos_organization");
+                        tableName.equals("cos_organization") ||
+                        tableName.equals("cos_role");
             }
         });
 

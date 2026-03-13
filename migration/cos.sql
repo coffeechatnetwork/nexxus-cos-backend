@@ -307,3 +307,21 @@ create table if not exists cos_risk_log
 
 create unique index if not exists uq_risk_log_display_id on cos_risk_log (display_id);
 create index if not exists idx_risk_log_project_category_topic on cos_risk_log (project_id, category, topic);
+
+-- =============================================
+
+create table if not exists cos_role
+(
+    id          bigserial                           not null primary key,
+    version     integer                             null,
+    name        varchar(64)                         not null,
+    description varchar(255)                        null,
+    status      varchar(16)                         not null,
+    created_by  varchar(64)                         not null,
+    updated_by  varchar(64)                         not null,
+    deleted_by  varchar(64)                         null,
+    created_at  timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    updated_at  timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    deleted_at  timestamp                           null
+);
+create unique index if not exists uq_role_name on role (name);
