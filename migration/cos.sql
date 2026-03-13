@@ -325,3 +325,23 @@ create table if not exists cos_role
     deleted_at  timestamp                           null
 );
 create unique index if not exists uq_role_name on role (name);
+
+-- =============================================
+
+create table if not exists cos_user_role
+(
+    id         bigserial                           not null primary key,
+    version    integer                             null,
+    account_id bigint                              not null,
+    project_id bigint                              not null,
+    role_id    bigint                              not null,
+    created_by varchar(64)                         not null,
+    updated_by varchar(64)                         not null,
+    deleted_by varchar(64)                         null,
+    created_at timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    updated_at timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    deleted_at timestamp                           null
+);
+create unique index if not exists uq_user_role_account_id_project_id_role_id on user_role (account_id, project_id, role_id);
+
+
