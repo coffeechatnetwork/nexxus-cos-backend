@@ -13,8 +13,16 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
 public class MybatisPlusConfig {
+
+    public static final List<String> IGNORE_TABLES = List.of(
+            "app", "account",
+            "cos_user", "cos_comment", "cos_organization",
+            "cos_role", "cos_user_role", "cos_permission"
+    );
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -41,12 +49,7 @@ public class MybatisPlusConfig {
 
             @Override
             public boolean ignoreTable(String tableName) {
-                return tableName.equals("app") ||
-                        tableName.equals("account") ||
-                        tableName.equals("cos_user") ||
-                        tableName.equals("cos_comment") ||
-                        tableName.equals("cos_organization") ||
-                        tableName.equals("cos_role");
+                return IGNORE_TABLES.contains(tableName);
             }
         });
 
