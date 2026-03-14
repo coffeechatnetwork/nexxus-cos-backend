@@ -1,6 +1,6 @@
 package com.nexxus.common.enums.cos.comment;
 
-import com.nexxus.common.BaseEnum;
+import com.nexxus.common.enums.BaseEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

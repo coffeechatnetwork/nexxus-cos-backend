@@ -1,7 +1,7 @@
 package com.nexxus.common.handlers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.nexxus.common.JsonUtils;
+import com.nexxus.common.serialization.JsonUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.postgresql.util.PGobject;

@@ -1,4 +1,4 @@
-package com.nexxus.common;
+package com.nexxus.common.enums;
 
 import java.io.Serializable;
 

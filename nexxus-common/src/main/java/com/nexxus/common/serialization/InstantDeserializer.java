@@ -1,4 +1,4 @@
-package com.nexxus.common;
+package com.nexxus.common.serialization;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;

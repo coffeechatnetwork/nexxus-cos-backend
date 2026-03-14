@@ -1,9 +1,10 @@
-package com.nexxus.common;
+package com.nexxus.common.serialization;
 
 import cn.hutool.core.text.CharSequenceUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.nexxus.common.enums.BaseEnum;
 
 import java.io.IOException;
 
