@@ -324,7 +324,7 @@ create table if not exists cos_role
     updated_at  timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at  timestamp                           null
 );
-create unique index if not exists uq_role_name on role (name);
+create unique index if not exists uq_role_name on cos_role (name);
 
 -- =============================================
 
@@ -333,7 +333,7 @@ create table if not exists cos_user_role
     id         bigserial                           not null primary key,
     version    integer                             null,
     account_id bigint                              not null,
-    project_id bigint                              not null,
+    project_id bigint                              null,
     role_id    bigint                              not null,
     created_by varchar(64)                         not null,
     updated_by varchar(64)                         not null,
@@ -342,7 +342,7 @@ create table if not exists cos_user_role
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at timestamp                           null
 );
-create unique index if not exists uq_user_role_account_id_project_id_role_id on user_role (account_id, project_id, role_id);
+create unique index if not exists uq_user_role_account_id_project_id_role_id on cos_user_role (account_id, project_id, role_id);
 
 -- =============================================
 
@@ -366,8 +366,8 @@ create table if not exists cos_permission
     updated_at     timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at     timestamp                           null
 );
-create unique index if not exists uq_permission_code on permission (code);
-create unique index if not exists uq_permission_module_feature_operation on permission (module_code, feature_code, operation_code, deleted_at);
+create unique index if not exists uq_permission_code on cos_permission (code);
+create unique index if not exists uq_permission_module_feature_operation on cos_permission (module_code, feature_code, operation_code, deleted_at);
 
 -- =============================================
 
@@ -384,4 +384,4 @@ create table if not exists cos_role_permission
     updated_at    timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at    timestamp                           null
     );
-create unique index if not exists uq_role_permission_role_id_permission_id on role_permission (role_id, permission_id);
+create unique index if not exists uq_role_permission_role_id_permission_id on cos_role_permission (role_id, permission_id);
