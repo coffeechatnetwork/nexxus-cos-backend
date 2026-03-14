@@ -21,7 +21,7 @@ public class MybatisPlusConfig {
     public static final List<String> IGNORE_TABLES = List.of(
             "app", "account",
             "cos_user", "cos_comment", "cos_organization",
-            "cos_role", "cos_user_role", "cos_permission"
+            "cos_role", "cos_user_role", "cos_permission", "cos_role_permission"
     );
 
     @Bean

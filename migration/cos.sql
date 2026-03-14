@@ -368,3 +368,20 @@ create table if not exists cos_permission
 );
 create unique index if not exists uq_permission_code on permission (code);
 create unique index if not exists uq_permission_module_feature_operation on permission (module_code, feature_code, operation_code, deleted_at);
+
+-- =============================================
+
+create table if not exists cos_role_permission
+(
+    id            bigserial                           not null primary key,
+    version       integer                             null,
+    role_id       bigint                              not null,
+    permission_id bigint                              not null,
+    created_by    varchar(64)                         not null,
+    updated_by    varchar(64)                         not null,
+    deleted_by    varchar(64)                         null,
+    created_at    timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    updated_at    timestamp DEFAULT CURRENT_TIMESTAMP not null,
+    deleted_at    timestamp                           null
+    );
+create unique index if not exists uq_role_permission_role_id_permission_id on role_permission (role_id, permission_id);
