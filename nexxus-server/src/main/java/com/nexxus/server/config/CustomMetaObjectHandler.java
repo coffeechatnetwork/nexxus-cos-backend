@@ -13,6 +13,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
+        this.strictInsertFill(metaObject, "version", Integer.class, 0);
         AccountInfo accountInfo = AccountInfoContext.get();
         String operator = accountInfo != null ? accountInfo.getAccountId().toString() : "system";
         this.strictInsertFill(metaObject, "createdAt", Instant.class, Instant.now());

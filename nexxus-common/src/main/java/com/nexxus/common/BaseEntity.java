@@ -20,6 +20,7 @@ import java.time.Instant;
 public class BaseEntity implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long id;
+    @TableField(fill = FieldFill.INSERT)
     private Integer version;
     @TableField(fill = FieldFill.INSERT)
     private Instant createdAt;

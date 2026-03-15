@@ -12,4 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> implements RoleService {
+    @Override
+    public RoleEntity getByName(String name) {
+        return lambdaQuery().eq(RoleEntity::getName, name).one();
+    }
 }
