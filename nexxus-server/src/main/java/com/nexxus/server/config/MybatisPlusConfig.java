@@ -3,6 +3,7 @@ package com.nexxus.server.config;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.nexxus.common.AccountInfo;
@@ -58,6 +59,7 @@ public class MybatisPlusConfig {
 
         interceptor.addInnerInterceptor(tenantInterceptor);
         interceptor.addInnerInterceptor(pagination);
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
 
         return interceptor;
     }
