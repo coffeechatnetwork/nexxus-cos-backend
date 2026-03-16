@@ -348,9 +348,9 @@ create unique index if not exists uq_user_role_account_id_project_id_role_id on 
 
 create table if not exists cos_permission
 (
-    id             bigint                              not null primary key,
+    id             bigserial                           not null primary key,
     version        integer                             null,
-    code           varchar(128)                        not null,
+    code           varchar(255)                        not null,
     type           varchar(16)                         not null,
     module_name    varchar(64)                         not null,
     module_code    varchar(64)                         not null,
@@ -383,5 +383,5 @@ create table if not exists cos_role_permission
     created_at    timestamp DEFAULT CURRENT_TIMESTAMP not null,
     updated_at    timestamp DEFAULT CURRENT_TIMESTAMP not null,
     deleted_at    timestamp                           null
-    );
+);
 create unique index if not exists uq_role_permission_role_id_permission_id on cos_role_permission (role_id, permission_id);

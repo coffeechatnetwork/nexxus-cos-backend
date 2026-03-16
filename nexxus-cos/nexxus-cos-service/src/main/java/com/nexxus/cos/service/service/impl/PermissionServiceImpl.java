@@ -12,4 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, PermissionEntity> implements PermissionService {
+    @Override
+    public PermissionEntity getPermissionByCode(String code) {
+        return lambdaQuery().eq(PermissionEntity::getCode, code).one();
+    }
 }

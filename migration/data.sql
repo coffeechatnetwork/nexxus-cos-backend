@@ -1,7 +1,12 @@
-INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'PCI', 'Internal Project Consultant', 'active', '0138d23a-32c1-4504-bd14-d68f621e690c', '0138d23a-32c1-4504-bd14-d68f621e690c', now(), now());
-INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'PCE', 'External Project Consultant', 'active', '0138d23a-32c1-4504-bd14-d68f621e690c', '0138d23a-32c1-4504-bd14-d68f621e690c', now(), now());
-INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'CCS', 'Senior Client Contact', 'active', '0138d23a-32c1-4504-bd14-d68f621e690c', '0138d23a-32c1-4504-bd14-d68f621e690c', now(), now());
-INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'CCA', 'Active Client Contact', 'active', '0138d23a-32c1-4504-bd14-d68f621e690c', '0138d23a-32c1-4504-bd14-d68f621e690c', now(), now());
-INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'EV', 'External Viewer', 'active', '0138d23a-32c1-4504-bd14-d68f621e690c', '0138d23a-32c1-4504-bd14-d68f621e690c', now(), now());
-INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'CM', 'Client Manager', 'active', '0138d23a-32c1-4504-bd14-d68f621e690c', '0138d23a-32c1-4504-bd14-d68f621e690c', now(), now());
-INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'PM', 'Project Manager', 'active', '0138d23a-32c1-4504-bd14-d68f621e690c', '0138d23a-32c1-4504-bd14-d68f621e690c', now(), now());
+-- =============================================
+
+INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'PCI', 'Internal Project Consultant', 'active', 'system', 'system', now(), now());
+INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'PCE', 'External Project Consultant', 'active', 'system', 'system', now(), now());
+INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'CCS', 'Senior Client Contact', 'active', 'system', 'system', now(), now());
+INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'CCA', 'Active Client Contact', 'active', 'system', 'system', now(), now());
+INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'EV', 'External Viewer', 'active', 'system', 'system', now(), now());
+INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'CM', 'Client Manager', 'active', 'system', 'system', now(), now());
+INSERT INTO public.cos_role (version, name, description, status, created_by, updated_by, created_at, updated_at) VALUES (0, 'PM', 'Project Manager', 'active', 'system', 'system', now(), now());
+
+-- =============================================
+

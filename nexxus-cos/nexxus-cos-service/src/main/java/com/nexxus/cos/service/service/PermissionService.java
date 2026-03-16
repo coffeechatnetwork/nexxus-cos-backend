@@ -4,4 +4,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.nexxus.cos.service.entity.PermissionEntity;
 
 public interface PermissionService extends IService<PermissionEntity> {
+    PermissionEntity getPermissionByCode(String code);
 }
