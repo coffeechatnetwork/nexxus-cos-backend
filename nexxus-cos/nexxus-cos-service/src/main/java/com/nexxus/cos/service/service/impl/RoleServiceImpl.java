@@ -1,6 +1,7 @@
 package com.nexxus.cos.service.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.nexxus.common.enums.cos.role.Role;
 import com.nexxus.cos.service.entity.RoleEntity;
 import com.nexxus.cos.service.mapper.RoleMapper;
 import com.nexxus.cos.service.service.RoleService;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> implements RoleService {
     @Override
-    public RoleEntity getByName(String name) {
+    public RoleEntity getByName(Role name) {
         return lambdaQuery().eq(RoleEntity::getName, name).one();
     }
 }

@@ -1,5 +1,6 @@
 package com.nexxus.cos.api.dto.role;
 
+import com.nexxus.common.enums.cos.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class RoleDto implements Serializable {
     private Long id;
-    private String name;
+    private Role name;
     private String description;
 }

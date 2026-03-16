@@ -2,6 +2,7 @@ package com.nexxus.cos.service.api;
 
 import com.nexxus.common.ErrorDefEnum;
 import com.nexxus.common.NexxusException;
+import com.nexxus.common.enums.cos.role.Role;
 import com.nexxus.common.enums.cos.role.RoleStatus;
 import com.nexxus.cos.api.RoleApi;
 import com.nexxus.cos.api.dto.role.CreateRoleRequest;
@@ -23,7 +24,7 @@ public class RoleApiImpl implements RoleApi {
 
     @Override
     public RoleDto createRole(CreateRoleRequest req) {
-        String roleName = req.getName();
+        Role roleName = req.getName();
         RoleEntity roleEntity = roleService.getByName(roleName);
         if (roleEntity != null) {
             throw new NexxusException(ErrorDefEnum.RESOURCE_CONFLICT.desc("role already exists"));
