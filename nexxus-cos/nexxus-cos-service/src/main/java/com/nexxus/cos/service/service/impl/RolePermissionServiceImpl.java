@@ -12,4 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper, RolePermissionEntity> implements RolePermissionService {
+    @Override
+    public Boolean hasPermission(Long roleId, Long permissionId) {
+        return lambdaQuery()
+                .eq(RolePermissionEntity::getRoleId, roleId)
+                .eq(RolePermissionEntity::getPermissionId, permissionId)
+                .exists();
+    }
 }
